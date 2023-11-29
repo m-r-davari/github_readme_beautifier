@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:github_readme_beautifier/home_page.dart';
 import 'package:github_readme_beautifier/splash_page.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
@@ -18,45 +19,46 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MainPage(),
+      getPages: [
+        GetPage(
+            name: "/splash_page",
+            page: () => const SplashPage(),
+            transition: Transition.fade,
+        ),
+        GetPage(
+          name: "/home_page",
+          page: () => const HomePage(),
+          transition: Transition.fade,
+        )
+      ],
+      initialRoute: "/splash_page",
+      home: const SplashPage(),
+
     );
   }
-}
 
-class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  /*Widget temp(){
+    return ResponsiveBuilder(
+      builder: (context, sizingInformation) {
+        if (sizingInformation.deviceScreenType == DeviceScreenType.desktop) {
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: const HomePage(),
+          );
+        }
 
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
+        // if (sizingInformation.deviceScreenType == DeviceScreenType.tablet) {
+        //   return Container(color:Colors.red);
+        // }
+        //
+        // if (sizingInformation.deviceScreenType == DeviceScreenType.watch) {
+        //   return Container(color:Colors.yellow);
+        // }
 
-class _MainPageState extends State<MainPage> {
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ResponsiveBuilder(
-        builder: (context, sizingInformation) {
-          if (sizingInformation.deviceScreenType == DeviceScreenType.desktop) {
-            return Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: const SplashPage(),
-            );
-          }
-
-          // if (sizingInformation.deviceScreenType == DeviceScreenType.tablet) {
-          //   return Container(color:Colors.red);
-          // }
-          //
-          // if (sizingInformation.deviceScreenType == DeviceScreenType.watch) {
-          //   return Container(color:Colors.yellow);
-          // }
-
-          return Container(color:Colors.purple);
-        },
-      )
+        return Container(color:Colors.purple);
+      },
     );
-  }
+  }*/
+
 }
