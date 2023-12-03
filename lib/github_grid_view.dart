@@ -1,6 +1,7 @@
-import 'dart:math';
+import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
 import 'package:github_readme_beautifier/utils/utils.dart';
 
 class GithubGridView extends StatefulWidget {
@@ -14,10 +15,13 @@ class GithubGridView extends StatefulWidget {
 
 class _GithubGridViewState extends State<GithubGridView> {
 
-  List<int> grids = List.filled(368, 0);//368
+  List<int> grids = List.filled(368, 0);
+  String themeName = 'Default';
+  GithubGridThemes themes = GithubGridThemes();
 
   @override
   Widget build(BuildContext context) {
+    print('---------p---------');
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Column(
@@ -36,24 +40,101 @@ class _GithubGridViewState extends State<GithubGridView> {
                     mainAxisSpacing: 5,
                   ),
                   itemBuilder: (ctx, index) {
-                    return const GithubGridItem();
+                    return GithubGridItem(
+                      index: index,
+                      themeName: themeName,
+                      initialColorNum: grids[index],
+                      onClick: (int colorNum){
+                        print('----index : $index ---- colorNum : $colorNum');
+                        grids[index] = colorNum;
+                        print(grids);
+                      },
+                    );
                   }),
             ),
           ),
           const SizedBox(height: 16,),
-          ElevatedButton(
-              onPressed: (){},
-              child: const Text('Play')
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(width: 24,)
+              ,
+              ElevatedButton(
+                  onPressed: (){
+                    grids.fillRange(0, grids.length,0);
+                    print('-------aftch---${grids[0]}---');
+                    setState(() {
+                      //List.filled(368, 0);
+                    });
+                  },
+                  child: const Text('Reset')
+              )
+              ,
+              const SizedBox(width: 24,)
+              ,
+              ElevatedButton(
+                  onPressed: ()async{
+                    var result = await showThemePickerDialog(themes.themeMap.keys.toList(),themeName);
+                    if(result!=null){
+                      themeName = result;
+                      print('--------tht-- $themeName -- $result -- ');
+                      setState((){});
+                    }
+                  },
+                  child: const Text('Choose Theme')
+              ),
+            ],
           )
         ],
       ),
     );
   }
+
+  Future<String?> showThemePickerDialog(List<String> themes,[String? chosenTheme])async{
+    return await showModalBottomSheet<String>(context: context, builder: (ctx){
+      return SizedBox(
+        height: 250,
+        child: ListView.separated(
+          itemCount: themes.length,
+          padding: const EdgeInsets.only(top: 16),
+          itemBuilder: (ctx,index){
+            return InkWell(
+              onTap: (){
+                Navigator.pop(context,themes[index]);
+              },
+              child: Container(
+                height: 50,
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('${index+1}'),
+                    Text(themes[index]),
+                    Icon(chosenTheme == themes[index] ? Icons.check_box : Icons.check_box_outline_blank)
+                  ],
+                ),
+              ),
+            );
+          },
+          separatorBuilder: (ctx,index){
+            return const Divider(color: Colors.grey,thickness: 0.6,indent: 10,endIndent: 10,);
+          },
+        ),
+      );
+    });
+  }
+
+
 }
 
 
 class GithubGridItem extends StatefulWidget {
-  const GithubGridItem({Key? key}) : super(key: key);
+
+  final int index;
+  final String themeName;
+  final int initialColorNum;
+  final Function(int colorNum) onClick;
+  const GithubGridItem({Key? key,required this.index,required this.themeName,required this.onClick,required this.initialColorNum}) : super(key: key);
 
   @override
   State<GithubGridItem> createState() => _GithubGridItemState();
@@ -61,16 +142,22 @@ class GithubGridItem extends StatefulWidget {
 
 class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProviderStateMixin {
 
+
   bool isSelected = false;
+  int colorNum = 0;
   late AnimationController _animationController;
   late Animation _colorTween;
   late Utils _utils;
-
-  Color initialColor = const Color(0xffebedf0);
+  late Color initialColor;
+  late GithubGridThemes themes;
 
   @override
   void initState() {
     _utils = Utils();
+    themes = GithubGridThemes();
+    colorNum = widget.initialColorNum;
+    isSelected = widget.initialColorNum != 0;
+    initialColor = themes.themeMap[widget.themeName]?[colorNum] ?? themes.unCommitColor ;
     _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
     _colorTween = ColorTween(begin: initialColor, end: initialColor).animate(_animationController);
     super.initState();
@@ -86,34 +173,50 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
 
   }
 
-  Map<int,Color> githubThemeColor = {
-    0 : const Color(0xff9be9a8),
-    1 : const Color(0xff40c463),
-    2 : const Color(0xff30a14e),
-    3 : const Color(0xff216e39),
-  };
 
-  Map<int,Color> flutterThemeColor = {
-    0 : const Color(0xff81ddf9),
-    1 : const Color(0xff13b9fd),
-    2 : const Color(0xff027dfd),
-    3 : const Color(0xff0468d7),
-  };
 
-  Color generateRandomColor(String theme){
-    return flutterThemeColor[_utils.generateRandomNum()] ?? const Color(0xffebedf0);
+@override
+  void didUpdateWidget(covariant GithubGridItem oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if(widget.initialColorNum==0 && widget.initialColorNum!=colorNum){
+      print('-------must reset----- index : ${widget.index}-----');
+      colorNum = 0;
+      isSelected = false;
+      initialColor = themes.unCommitColor;
+      _colorTween = ColorTween(begin: initialColor, end: initialColor.withOpacity(0.6)).animate(_animationController);
+      _animationController.reset();
+      _animationController.stop();
+    }
+
+    if(widget.themeName!=oldWidget.themeName){
+      print('---------must update--------');
+      if(widget.initialColorNum == 0){
+        return;
+      }
+
+      colorNum = widget.initialColorNum;
+      isSelected = widget.initialColorNum != 0;
+      initialColor = themes.themeMap[widget.themeName]?[colorNum] ?? themes.unCommitColor;
+      _colorTween = ColorTween(begin: initialColor, end: initialColor.withOpacity(0.6)).animate(_animationController);
+      Future.delayed(Duration(milliseconds: 200),(){//todo : replay bug after change theme!!!
+        _animationController.forward();
+      });
+    }
   }
+
 
 
   @override
   Widget build(BuildContext context) {
+    print('-----grider-----');
     return ClipRRect(
       borderRadius: BorderRadius.circular(6),
       child: AnimatedBuilder(
         animation: _colorTween,
         builder: (ctx,child){
           return Material(
-            color: _colorTween.value,//isSelected ? Colors.green : const Color(0xffededf0),
+            color: _colorTween.value,
             borderRadius: BorderRadius.circular(6),
             child: InkWell(
               onTap: (){
@@ -123,14 +226,18 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
                     initialColor = generateRandomColor('github');
                     _colorTween = ColorTween(begin: initialColor, end: initialColor.withOpacity(0.6)).animate(_animationController);
                     _animationController.forward();
+                    widget.onClick(colorNum);
                   }
                   else{
-                    initialColor = const Color(0xffebedf0);
+                    initialColor = themes.unCommitColor;
                     _colorTween = ColorTween(begin: initialColor, end: initialColor.withOpacity(0.6)).animate(_animationController);
                     _animationController.reset();
                     _animationController.stop();
+                    colorNum = 0;
+                    widget.onClick(0);
                   }
                 });
+
               },
               child: Container(
                 width: 14,
@@ -143,4 +250,19 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
       ),
     );
   }
+
+
+
+  Color generateRandomColor(String theme){
+    colorNum = _utils.generateRandomNumFromRange(1, 4);
+    return themes.themeMap[widget.themeName]?[colorNum] ?? themes.unCommitColor;
+  }
+
+
+
+
+
+
+
+
 }
