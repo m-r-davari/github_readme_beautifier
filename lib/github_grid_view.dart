@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
 import 'package:github_readme_beautifier/utils/utils.dart';
@@ -37,11 +35,11 @@ class _GithubGridViewState extends State<GithubGridView> {
           padding: const EdgeInsets.all(16),
           decoration: showBorder ? BoxDecoration(border: Border.all(color: Colors.grey.withOpacity(0.8),width: 0.5,),borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))) : const BoxDecoration(),
           child: Row(
-            //crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               showDate ? Container(
-                color: Colors.red,
-                padding: const EdgeInsets.only(top: 5,bottom: 6),
+                //color: Colors.red,
+                height: 95,
+                padding: const EdgeInsets.only(top: 0,bottom: 8),
                 child: const Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.max,
@@ -62,7 +60,7 @@ class _GithubGridViewState extends State<GithubGridView> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     showDate ? const Padding(
-                      padding: EdgeInsets.only(bottom: 2,left: 10,right: 88),
+                      padding: EdgeInsets.only(bottom: 2,left: 10,right: 5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         mainAxisSize: MainAxisSize.max,
@@ -79,6 +77,7 @@ class _GithubGridViewState extends State<GithubGridView> {
                           Text('Sep',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
                           Text('Oct',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
                           Text('Nov',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                          Text('',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
                         ],
                       ),
                     ) : Container()
@@ -117,7 +116,8 @@ class _GithubGridViewState extends State<GithubGridView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Flexible(child: Text('Github Readme Beautifier ${showAuthor ? '\'Author : M.R.Davari\'' : ''}',style: const TextStyle(color: Colors.black54),)),
+                          const Flexible(child: Text('Github Readme Beautifier',style: TextStyle(color: Colors.black54),)),
+                          showAuthor && showProgressHint ? const Text('By \'m-r-davari\'',style: TextStyle(color: Colors.black54),) : const SizedBox(width: 0,),
                           showProgressHint ? Row(
                             children: [
                               const Text('Less',style: TextStyle(color: Colors.black54)),
@@ -134,7 +134,7 @@ class _GithubGridViewState extends State<GithubGridView> {
                               const SizedBox(width: 6,),
                               const Text('More',style: TextStyle(color: Colors.black54),)
                             ],
-                          ) : const SizedBox(width: 0,),
+                          ) : showAuthor ? const Text('By \'m-r-davari\'',style: TextStyle(color: Colors.black54),) : const SizedBox(width: 0,),
                         ],
                       ),
                     )
