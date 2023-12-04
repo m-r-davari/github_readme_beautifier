@@ -23,7 +23,6 @@ class _GithubGridViewState extends State<GithubGridView> {
 
   @override
   Widget build(BuildContext context) {
-    //print('---------p---------');
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -321,7 +320,6 @@ class _GithubGridItemState extends State<GithubGridItem> with TickerProviderStat
     super.didUpdateWidget(oldWidget);
 
     if(widget.initialColorNum==0 && widget.initialColorNum!=colorNum){
-      //print('-------must reset----- index : ${widget.index}-----');
       colorNum = 0;
       isSelected = false;
       initialColor = themes.unCommitColor;
@@ -331,7 +329,6 @@ class _GithubGridItemState extends State<GithubGridItem> with TickerProviderStat
     }
 
     if(widget.themeName!=oldWidget.themeName){
-      //print('---------must update--------');
       if(widget.initialColorNum == 0){
         return;
       }
@@ -350,7 +347,6 @@ class _GithubGridItemState extends State<GithubGridItem> with TickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    //print('-----grider-----');
     return ClipRRect(
       borderRadius: BorderRadius.circular(6),
       child: AnimatedBuilder(
@@ -364,7 +360,7 @@ class _GithubGridItemState extends State<GithubGridItem> with TickerProviderStat
                 setState(() {
                   isSelected = !isSelected;
                   if(isSelected){
-                    initialColor = generateRandomColor('github');
+                    initialColor = generateRandomColor();
                     _colorTween = ColorTween(begin: initialColor, end: initialColor.withOpacity(0.6)).animate(_animationController);
                     _animationController.forward();
                     widget.onClick(colorNum);
@@ -398,7 +394,7 @@ class _GithubGridItemState extends State<GithubGridItem> with TickerProviderStat
     super.dispose();
   }
 
-  Color generateRandomColor(String theme){
+  Color generateRandomColor(){
     colorNum = _utils.generateRandomNumFromRange(1, 4);
     return themes.themeMap[widget.themeName]?[colorNum] ?? themes.unCommitColor;
   }
