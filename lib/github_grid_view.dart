@@ -41,6 +41,7 @@ class _GithubGridViewState extends State<GithubGridView> {
             children: [
               showDate ? Container(
                 color: Colors.red,
+                padding: const EdgeInsets.only(top: 5,bottom: 6),
                 child: const Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.max,
