@@ -16,6 +16,7 @@ dependencies:
   responsive_builder: ^0.7.0
   get: ^4.6.6
   cupertino_icons: ^1.0.2
+  flutter_3d_controller: ^1.2.0
 
 dev_dependencies:
   flutter_test:

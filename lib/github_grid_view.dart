@@ -18,75 +18,196 @@ class _GithubGridViewState extends State<GithubGridView> {
   List<int> grids = List.filled(368, 0);
   String themeName = 'Default';
   GithubGridThemes themes = GithubGridThemes();
+  bool showBorder = true;
+  bool showAuthor = true;
+  bool showProgressHint = true;
+  bool showDate = true;
 
   @override
   Widget build(BuildContext context) {
-    print('---------p---------');
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        children: [
-          FittedBox(
-            child: SizedBox(
-              height: 350,
-              child: GridView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.all(24),
-                  itemCount: grids.length,//371
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 7,
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 5,
-                  ),
-                  itemBuilder: (ctx, index) {
-                    return GithubGridItem(
-                      index: index,
-                      themeName: themeName,
-                      initialColorNum: grids[index],
-                      onClick: (int colorNum){
-                        print('----index : $index ---- colorNum : $colorNum');
-                        grids[index] = colorNum;
-                        print(grids);
-                      },
-                    );
-                  }),
-            ),
-          ),
-          const SizedBox(height: 16,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+    //print('---------p---------');
+    return Column(
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width,
+          margin:  const EdgeInsets.all(16),
+          padding:  const EdgeInsets.all(16),
+          decoration: showBorder ? BoxDecoration(border: Border.all(color: Colors.grey.withOpacity(0.8),width: 0.5,),borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))) : const BoxDecoration(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(width: 24,)
-              ,
-              ElevatedButton(
-                  onPressed: (){
-                    grids.fillRange(0, grids.length,0);
-                    print('-------aftch---${grids[0]}---');
-                    setState(() {
-                      //List.filled(368, 0);
-                    });
-                  },
-                  child: const Text('Reset')
-              )
-              ,
-              const SizedBox(width: 24,)
-              ,
-              ElevatedButton(
-                  onPressed: ()async{
-                    var result = await showThemePickerDialog(themes.themeMap.keys.toList(),themeName);
-                    if(result!=null){
-                      themeName = result;
-                      print('--------tht-- $themeName -- $result -- ');
-                      setState((){});
-                    }
-                  },
-                  child: const Text('Choose Theme')
+              showDate ? const Padding(
+                padding: EdgeInsets.only(bottom: 2,left: 10,right: 88),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text('Dec',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500)),
+                    Text('Jan',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                    Text('Feb',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                    Text('Mar',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                    Text('Apr',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                    Text('May',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                    Text('Jun',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                    Text('Jul',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                    Text('Aug',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                    Text('Sep',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                    Text('Oct',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                    Text('Nov',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                  ],
+                ),
+              ) : Container(),
+              Row(
+                children: [
+                  FittedBox(
+                    child: showDate ? const SizedBox(
+                      width: 30,
+                      child: Column(
+                        children: [
+                          Text('Mon',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                          Text('Wed',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                          Text('Fri',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                        ],
+                      ),
+                    ) : const SizedBox(width: 0,),
+                  ),
+                  Flexible(
+                    child: FittedBox(
+                      child: SizedBox(
+                        height: 350,
+                        child: GridView.builder(
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.only(left: 24,right: 24,top: 0,bottom: 24),
+                            itemCount: grids.length,//371
+                            shrinkWrap: true,
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 7,
+                              crossAxisSpacing: 5,
+                              mainAxisSpacing: 5,
+                            ),
+                            itemBuilder: (ctx, index) {
+                              return GithubGridItem(
+                                index: index,
+                                themeName: themeName,
+                                initialColorNum: grids[index],
+                                onClick: (int colorNum){
+                                  //print('----index : $index ---- colorNum : $colorNum');
+                                  grids[index] = colorNum;
+                                  //print(grids);
+                                },
+                              );
+                            }),
+                      ),
+                    ),
+                  ),
+                ],
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Github Readme Beautifier ${showAuthor ? '\'Author : M.R.Davari\'' : ''}',style: const TextStyle(color: Colors.black54),),
+                    showProgressHint ? Row(
+                      children: [
+                        const Text('Less',style: TextStyle(color: Colors.black54)),
+                        const SizedBox(width: 6,),
+                        Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[themeName]?[0],borderRadius: BorderRadius.circular(2)),),
+                        const SizedBox(width: 5,),
+                        Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[themeName]?[1],borderRadius: BorderRadius.circular(2)),),
+                        const SizedBox(width: 5,),
+                        Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[themeName]?[2],borderRadius: BorderRadius.circular(2)),),
+                        const SizedBox(width: 5,),
+                        Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[themeName]?[3],borderRadius: BorderRadius.circular(2)),),
+                        const SizedBox(width: 5,),
+                        Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[themeName]?[4],borderRadius: BorderRadius.circular(2)),),
+                        const SizedBox(width: 6,),
+                        const Text('More',style: TextStyle(color: Colors.black54),)
+                      ],
+                    ) : Container(),
+                  ],
+                ),
+              )
             ],
-          )
-        ],
-      ),
+          ),
+        ),
+        const SizedBox(height: 16,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(width: 24,)
+            ,
+            ElevatedButton(
+                onPressed: (){
+                  grids.fillRange(0, grids.length,0);
+                  //print('-------aftch---${grids[0]}---');
+                  setState(() {
+                    //List.filled(368, 0);
+                  });
+                },
+                child: const Text('Reset')
+            )
+            ,
+            const SizedBox(width: 24,)
+            ,
+            ElevatedButton(
+                onPressed: ()async{
+                  var result = await showThemePickerDialog(themes.themeMap.keys.toList(),themeName);
+                  if(result!=null){
+                    themeName = result;
+                    //print('--------tht-- $themeName -- $result -- ');
+                    setState((){});
+                  }
+                },
+                child: const Text('Choose Theme')
+            )
+            ,
+            const SizedBox(width: 24,)
+            ,
+            ElevatedButton(
+                onPressed: (){
+                  setState(() {
+                    showBorder=!showBorder;
+                  });
+                },
+                child: Text(showBorder ? 'Hide Border' : 'Show Border')
+            )
+            ,
+            const SizedBox(width: 24,)
+            ,
+            ElevatedButton(
+                onPressed: (){
+                  setState(() {
+                    showAuthor=!showAuthor;
+                  });
+                },
+                child: Text(showAuthor ? 'Hide Author' : 'Show Author')
+            )
+            ,
+            const SizedBox(width: 24,)
+            ,
+            ElevatedButton(
+                onPressed: (){
+                  setState(() {
+                    showProgressHint=!showProgressHint;
+                  });
+                },
+                child: Text(showProgressHint ? 'Hide Progress Hint' : 'Show Progress Hint')
+            )
+            ,
+            const SizedBox(width: 24,)
+            ,
+            ElevatedButton(
+                onPressed: (){
+                  setState(() {
+                    showDate=!showDate;
+                  });
+                },
+                child: Text(showDate ? 'Hide Date' : 'Show Date')
+            )
+          ],
+        )
+      ],
     );
   }
 
@@ -140,7 +261,7 @@ class GithubGridItem extends StatefulWidget {
   State<GithubGridItem> createState() => _GithubGridItemState();
 }
 
-class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProviderStateMixin {
+class _GithubGridItemState extends State<GithubGridItem> with TickerProviderStateMixin {
 
 
   bool isSelected = false;
@@ -180,7 +301,7 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
     super.didUpdateWidget(oldWidget);
 
     if(widget.initialColorNum==0 && widget.initialColorNum!=colorNum){
-      print('-------must reset----- index : ${widget.index}-----');
+      //print('-------must reset----- index : ${widget.index}-----');
       colorNum = 0;
       isSelected = false;
       initialColor = themes.unCommitColor;
@@ -190,7 +311,7 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
     }
 
     if(widget.themeName!=oldWidget.themeName){
-      print('---------must update--------');
+      //print('---------must update--------');
       if(widget.initialColorNum == 0){
         return;
       }
@@ -199,7 +320,7 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
       isSelected = widget.initialColorNum != 0;
       initialColor = themes.themeMap[widget.themeName]?[colorNum] ?? themes.unCommitColor;
       _colorTween = ColorTween(begin: initialColor, end: initialColor.withOpacity(0.6)).animate(_animationController);
-      Future.delayed(Duration(milliseconds: 200),(){//todo : replay bug after change theme!!!
+      Future.delayed(Duration(milliseconds: _utils.generateRandomNumFromRange(100, 500)),(){
         _animationController.forward();
       });
     }
@@ -209,7 +330,7 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
-    print('-----grider-----');
+    //print('-----grider-----');
     return ClipRRect(
       borderRadius: BorderRadius.circular(6),
       child: AnimatedBuilder(
@@ -251,7 +372,11 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
     );
   }
 
-
+  @override
+  dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   Color generateRandomColor(String theme){
     colorNum = _utils.generateRandomNumFromRange(1, 4);

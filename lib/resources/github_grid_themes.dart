@@ -32,6 +32,38 @@ class GithubGridThemes {
       4 : Color(0xff04001b),
     }
     ,
+    'Barbie' : {
+      0: Color(0xffebedf0),
+      1 : Color(0xfffaafe1),
+      2 : Color(0xfffb6dcc),
+      3 : Color(0xfffa3fbc),
+      4 : Color(0xffff00ab),
+    }
+    ,
+    'Moon' : {
+      0: Color(0xffebedf0),
+      1 : Color(0xff6bcdff),
+      2 : Color(0xff00a1f3),
+      3 : Color(0xff48009a),
+      4 : Color(0xff4f2266),
+    }
+    ,
+    'Summer' : {
+      0: Color(0xffebedf0),
+      1 : Color(0xffeae374),
+      2 : Color(0xfff9d62e),
+      3 : Color(0xfffc913a),
+      4 : Color(0xffff4e50),
+    }
+    ,
+    'Sunset' : {
+      0: Color(0xffebedf0),
+      1 : Color(0xfffed800),
+      2 : Color(0xffff6f01),
+      3 : Color(0xfffd2f24),
+      4 : Color(0xff811d5e),
+    }
+    ,
     'Amber' : {
       0: Color(0xffebedf0),
       1 : Color(0xffffecb3),
@@ -193,38 +225,6 @@ class GithubGridThemes {
       4 : Color(0xfff283d1),
     }
     ,
-    'Summer' : {
-      0: Color(0xffebedf0),
-      1 : Color(0xffeae374),
-      2 : Color(0xfff9d62e),
-      3 : Color(0xfffc913a),
-      4 : Color(0xffff4e50),
-    }
-    ,
-    'Sunset' : {
-      0: Color(0xffebedf0),
-      1 : Color(0xfffed800),
-      2 : Color(0xffff6f01),
-      3 : Color(0xfffd2f24),
-      4 : Color(0xff811d5e),
-    }
-    ,
-    'Moon' : {
-      0: Color(0xffebedf0),
-      1 : Color(0xff6bcdff),
-      2 : Color(0xff00a1f3),
-      3 : Color(0xff48009a),
-      4 : Color(0xff4f2266),
-    }
-    ,
-    'Barbie' : {
-      0: Color(0xffebedf0),
-      1 : Color(0xfffaafe1),
-      2 : Color(0xfffb6dcc),
-      3 : Color(0xfffa3fbc),
-      4 : Color(0xffff00ab),
-    }
-    ,
     'Yellow' : {
       0: Color(0xffebedf0),
       1 : Color(0xffd7d7a2),
@@ -233,11 +233,6 @@ class GithubGridThemes {
       4 : Color(0xffffff00),
     }
     ,
-
-
-
-
-
   };
 
 
