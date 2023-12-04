@@ -33,34 +33,34 @@ class _GithubGridViewState extends State<GithubGridView> {
           margin:  const EdgeInsets.all(16),
           padding:  const EdgeInsets.all(16),
           decoration: showBorder ? BoxDecoration(border: Border.all(color: Colors.grey.withOpacity(0.8),width: 0.5,),borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))) : const BoxDecoration(),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              showDate ? const Padding(
-                padding: EdgeInsets.only(bottom: 2,left: 10,right: 88),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
+          child: FittedBox(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                showDate ? const Padding(
+                  padding: EdgeInsets.only(bottom: 2,left: 10,right: 88),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text('Dec',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500)),
+                      Text('Jan',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                      Text('Feb',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                      Text('Mar',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                      Text('Apr',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                      Text('May',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                      Text('Jun',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                      Text('Jul',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                      Text('Aug',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                      Text('Sep',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                      Text('Oct',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                      Text('Nov',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                    ],
+                  ),
+                ) : Container(),
+                Row(
                   children: [
-                    Text('Dec',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500)),
-                    Text('Jan',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                    Text('Feb',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                    Text('Mar',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                    Text('Apr',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                    Text('May',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                    Text('Jun',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                    Text('Jul',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                    Text('Aug',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                    Text('Sep',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                    Text('Oct',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                    Text('Nov',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                  ],
-                ),
-              ) : Container(),
-              Row(
-                children: [
-                  FittedBox(
-                    child: showDate ? const SizedBox(
+                    showDate ? const SizedBox(
                       width: 30,
                       child: Column(
                         children: [
@@ -70,42 +70,36 @@ class _GithubGridViewState extends State<GithubGridView> {
                         ],
                       ),
                     ) : const SizedBox(width: 0,),
-                  ),
-                  Flexible(
-                    child: FittedBox(
-                      child: SizedBox(
-                        height: 350,
-                        child: GridView.builder(
-                            scrollDirection: Axis.horizontal,
-                            padding: const EdgeInsets.only(left: 24,right: 24,top: 0,bottom: 24),
-                            itemCount: grids.length,//371
-                            shrinkWrap: true,
-                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 7,
-                              crossAxisSpacing: 5,
-                              mainAxisSpacing: 5,
-                            ),
-                            itemBuilder: (ctx, index) {
-                              return GithubGridItem(
-                                index: index,
-                                themeName: themeName,
-                                initialColorNum: grids[index],
-                                onClick: (int colorNum){
-                                  //print('----index : $index ---- colorNum : $colorNum');
-                                  grids[index] = colorNum;
-                                  //print(grids);
-                                },
-                              );
-                            }),
-                      ),
+                    SizedBox(
+                      height: 350,
+                      child: GridView.builder(
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.only(left: 24,right: 24,top: 0,bottom: 24),
+                          itemCount: grids.length,//371
+                          shrinkWrap: true,
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 7,
+                            crossAxisSpacing: 5,
+                            mainAxisSpacing: 5,
+                          ),
+                          itemBuilder: (ctx, index) {
+                            return GithubGridItem(
+                              index: index,
+                              themeName: themeName,
+                              initialColorNum: grids[index],
+                              onClick: (int colorNum){
+                                //print('----index : $index ---- colorNum : $colorNum');
+                                grids[index] = colorNum;
+                                //print(grids);
+                              },
+                            );
+                          }),
                     ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
+                  ],
+                ),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
                   children: [
                     Text('Github Readme Beautifier ${showAuthor ? '\'Author : M.R.Davari\'' : ''}',style: const TextStyle(color: Colors.black54),),
                     showProgressHint ? Row(
@@ -126,9 +120,9 @@ class _GithubGridViewState extends State<GithubGridView> {
                       ],
                     ) : Container(),
                   ],
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
         const SizedBox(height: 16,),
