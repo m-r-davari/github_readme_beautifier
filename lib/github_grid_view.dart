@@ -27,20 +27,30 @@ class _GithubGridViewState extends State<GithubGridView> {
   Widget build(BuildContext context) {
     //print('---------p---------');
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Container(
           width: MediaQuery.of(context).size.width,
-          margin:  const EdgeInsets.all(16),
-          padding:  const EdgeInsets.all(16),
+          margin: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           decoration: showBorder ? BoxDecoration(border: Border.all(color: Colors.grey.withOpacity(0.8),width: 0.5,),borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))) : const BoxDecoration(),
           child: Row(
+            //crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              showDate ? const Column(
-                children: [
-                  Text('Mon',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                  Text('Wed',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                  Text('Fri',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                ],
+              showDate ? Container(
+                color: Colors.red,
+                child: const Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Mon',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                    Text('Wed',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                    Text('Fri',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                  ],
+                ),
               ) : const SizedBox(width: 0,)
               ,
               const SizedBox(width: 1,)
@@ -77,7 +87,7 @@ class _GithubGridViewState extends State<GithubGridView> {
                         height: 350,
                         child: GridView.builder(
                             scrollDirection: Axis.horizontal,
-                            padding: const EdgeInsets.only(left: 24,right: 24,top: 0,bottom: 24),
+                            padding: const EdgeInsets.only(left: 16,right: 4,top: 0,bottom: 24),
                             itemCount: grids.length,//371
                             shrinkWrap: true,
                             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -100,33 +110,37 @@ class _GithubGridViewState extends State<GithubGridView> {
                       ),
                     )
                     ,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Flexible(child: Text('Github Readme Beautifier ${showAuthor ? '\'Author : M.R.Davari\'' : ''}',style: const TextStyle(color: Colors.black54),)),
-                        showProgressHint ? Row(
-                          children: [
-                            const Text('Less',style: TextStyle(color: Colors.black54)),
-                            const SizedBox(width: 6,),
-                            Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[themeName]?[0],borderRadius: BorderRadius.circular(2)),),
-                            const SizedBox(width: 5,),
-                            Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[themeName]?[1],borderRadius: BorderRadius.circular(2)),),
-                            const SizedBox(width: 5,),
-                            Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[themeName]?[2],borderRadius: BorderRadius.circular(2)),),
-                            const SizedBox(width: 5,),
-                            Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[themeName]?[3],borderRadius: BorderRadius.circular(2)),),
-                            const SizedBox(width: 5,),
-                            Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[themeName]?[4],borderRadius: BorderRadius.circular(2)),),
-                            const SizedBox(width: 6,),
-                            const Text('More',style: TextStyle(color: Colors.black54),)
-                          ],
-                        ) : Container(),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.only(left: 5,right: 42),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Flexible(child: Text('Github Readme Beautifier ${showAuthor ? '\'Author : M.R.Davari\'' : ''}',style: const TextStyle(color: Colors.black54),)),
+                          showProgressHint ? Row(
+                            children: [
+                              const Text('Less',style: TextStyle(color: Colors.black54)),
+                              const SizedBox(width: 6,),
+                              Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[themeName]?[0],borderRadius: BorderRadius.circular(2)),),
+                              const SizedBox(width: 5,),
+                              Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[themeName]?[1],borderRadius: BorderRadius.circular(2)),),
+                              const SizedBox(width: 5,),
+                              Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[themeName]?[2],borderRadius: BorderRadius.circular(2)),),
+                              const SizedBox(width: 5,),
+                              Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[themeName]?[3],borderRadius: BorderRadius.circular(2)),),
+                              const SizedBox(width: 5,),
+                              Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[themeName]?[4],borderRadius: BorderRadius.circular(2)),),
+                              const SizedBox(width: 6,),
+                              const Text('More',style: TextStyle(color: Colors.black54),)
+                            ],
+                          ) : const SizedBox(width: 0,),
+                        ],
+                      ),
                     )
                   ],
                 ),
               )
+
             ],
           ),
         )
@@ -207,6 +221,8 @@ class _GithubGridViewState extends State<GithubGridView> {
                   },
                   child: Text(showDate ? 'Hide Date' : 'Show Date')
               )
+              ,
+              const SizedBox(width: 24,)
             ],
           ),
         )
