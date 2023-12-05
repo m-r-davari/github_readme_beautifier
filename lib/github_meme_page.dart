@@ -33,21 +33,32 @@ class _GithubMemePageState extends State<GithubMemePage> {
   final controller = Get.find<GithubMemeController>();
 
   bool play = true;
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
+        onPressed: ()async{
           if(play){
             for(final controller in controller.gridsAnimControllers.where((element) => element!=null)){
-              print('-----starting');
+              print('-----stopping at --> ${controller?.value} --- ${controller?.lastElapsedDuration} ');
+              //var val = controller?.value;
+              //controller?.reset();
               controller?.stop();
+
+              //controller?.value = val!;
             }
           }
           else{
             for(final controller in controller.gridsAnimControllers.where((element) => element!=null)){
-              print('-----starting');
-              controller?.forward();
+              print('-----starting  --> ${controller?.value} --- ${controller?.lastElapsedDuration} ');
+
+              TickerFuture? d = controller?.forward();
+              await d;
+              //await Future.delayed(const Duration(milliseconds: 10));
+
             }
           }
           play = !play;

@@ -20,8 +20,10 @@ class GithubMemeController extends GetxController{
 
     late final PausableTimer timer;
     timer =  PausableTimer.periodic(const Duration(milliseconds: 41), ()async{
-      print('---ticking---- n : ${timer.tick} ---- milSec: ${timer.tick*41} ----');
-      print('-----------------vv-------------${gridsAnimControllers.where((element) => element!=null).length}');
+      //print('---ticking---- n : ${timer.tick} ---- milSec: ${timer.tick*41} ----');
+      //print('-----------------vv-------------${gridsAnimControllers.where((element) => element!=null).length}');
+
+      print('---sl----- ${gridsAnimControllers.where((element) => element!=null)}');
       for(final controller in gridsAnimControllers.where((element) => element!=null)){
         print('-----stoping');
         controller?.stop();
@@ -31,7 +33,8 @@ class GithubMemeController extends GetxController{
       scList.add(result);
       for(final controller in gridsAnimControllers.where((element) => element!=null)){
         print('-----starting');
-        controller?.forward();
+        controller?.forward(from: 0.5);
+
       }
       if(timer.tick*41<=animDuration){
         timer.start();
@@ -39,6 +42,7 @@ class GithubMemeController extends GetxController{
       else{
         timer.cancel();
       }
+
     },
     )..start();
 

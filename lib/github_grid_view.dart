@@ -182,7 +182,7 @@ class GithubGridItem extends StatefulWidget {
   State<GithubGridItem> createState() => _GithubGridItemState();
 }
 
-class _GithubGridItemState extends State<GithubGridItem> with TickerProviderStateMixin {
+class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProviderStateMixin {
 
   bool isSelected = false;
   int colorNum = 0;
@@ -228,6 +228,7 @@ class _GithubGridItemState extends State<GithubGridItem> with TickerProviderStat
       initialColor = themes.unCommitColor;
       _colorTween = ColorTween(begin: initialColor, end: initialColor.withOpacity(0.6)).animate(_animationController);
       _animationController.reset();
+      _animationController.stop();
       controller.gridsAnimControllers[widget.index] = null;
     }
 
