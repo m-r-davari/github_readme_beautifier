@@ -5,8 +5,11 @@ import 'dart:ui' as ui;
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:get/get.dart';
 import 'package:github_readme_beautifier/github_grid_view.dart';
 import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
+
+import 'github_meme/github_meme_controller.dart';
 
 
 class GithubMemePage extends StatefulWidget {
@@ -15,8 +18,6 @@ class GithubMemePage extends StatefulWidget {
   @override
   State<GithubMemePage> createState() => _GithubMemePageState();
 }
-
-GlobalKey boundryGlobalKey = GlobalKey();
 
 class _GithubMemePageState extends State<GithubMemePage> {
 
@@ -29,7 +30,7 @@ class _GithubMemePageState extends State<GithubMemePage> {
   bool showDate = true;
   bool isRecording = false;
 
-
+  final controller = Get.find<GithubMemeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -127,27 +128,16 @@ class _GithubMemePageState extends State<GithubMemePage> {
               ElevatedButton(
                   onPressed: ()async{
 
-                    List<Uint8List> scList = [];
-
-                    //generates frames png
-                    const animDuration = 100; //x * 5
-                    Timer.periodic(const Duration(milliseconds: 42), (Timer timer)async{
-                      if(timer.tick*42 <= animDuration){
-                        print('---ticking---- ${timer.tick} ---- ${timer.tick*42} ----');
-                        final result = await captureScreen();
-                        scList.add(result);
-                      }
-                      else{
-                        print('---last tick---- ${timer.tick} --');
-                        timer.cancel();
-                      }
-
-                    });
+                    controller.generateFrames();
 
 
-                    Future.delayed(const Duration(seconds: 3),(){
-                      print('-----list of sc---- ${scList.length} ----');
-                    });
+
+
+                    // Future.delayed(const Duration(seconds: 3),(){
+                    //   for(var controller in controller.gridsAnimControllers){
+                    //     controller?.forward();
+                    //   }
+                    // });
 
 
 /*                    final image8List = await captureScreen();
@@ -181,21 +171,7 @@ class _GithubMemePageState extends State<GithubMemePage> {
     super.dispose();
   }
 
-  Future<Uint8List> captureScreen()async{
-    // Perform the screen capture and handle the image as needed
-    // Example: Save the image to storage or display it in a dialog
-    // Here, we just print the image size for demonstration purposes
-    RenderRepaintBoundary boundary = boundryGlobalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
-    final image = await  boundary.toImage();
-    final byteData = await image.toByteData(format: ImageByteFormat.png);
-    if (byteData != null) {
-      print('Captured image size: ${byteData.lengthInBytes} bytes');
-      return Uint8List.fromList(byteData.buffer.asUint8List());
-    }
-    else{
-      throw Exception();
-    }
-  }
+
 
   Future<String?> showThemePickerDialog(List<String> themes,[String? chosenTheme])async{
     return await showModalBottomSheet<String>(context: context, builder: (ctx){

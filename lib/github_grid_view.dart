@@ -1,8 +1,11 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:github_readme_beautifier/github_meme_page.dart';
 import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
 import 'package:github_readme_beautifier/utils/utils.dart';
+
+import 'github_meme/github_meme_controller.dart';
 
 class GithubGridView extends StatefulWidget {
 
@@ -13,7 +16,6 @@ class GithubGridView extends StatefulWidget {
   final bool showProgressHint;
   final bool showDate;
   final bool isRecording;
-
   const GithubGridView({Key? key,required this.grids,required this.themeName, required this.showDate, required this.showAuthor, required this.showProgressHint, required this.showBorder, required this.isRecording}) : super(key: key);
 
   @override
@@ -34,7 +36,7 @@ class GithubGridViewState extends State<GithubGridView> {
   @override
   Widget build(BuildContext context) {
     return RepaintBoundary(
-      key: boundryGlobalKey,
+      key: githubMemeBoundryGlobalKey,
       child: Material(
         color: Colors.transparent,
         child: Column(
@@ -182,7 +184,6 @@ class GithubGridItem extends StatefulWidget {
 
 class _GithubGridItemState extends State<GithubGridItem> with TickerProviderStateMixin {
 
-
   bool isSelected = false;
   int colorNum = 0;
   late AnimationController _animationController;
@@ -190,6 +191,8 @@ class _GithubGridItemState extends State<GithubGridItem> with TickerProviderStat
   late Utils _utils;
   late Color initialColor;
   late GithubGridThemes themes;
+
+  final controller = Get.find<GithubMemeController>();
 
   @override
   void initState() {
@@ -199,6 +202,7 @@ class _GithubGridItemState extends State<GithubGridItem> with TickerProviderStat
     isSelected = widget.initialColorNum != 0;
     initialColor = themes.themeMap[widget.themeName]?[colorNum] ?? themes.unCommitColor ;
     _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
+    controller.gridsAnimControllers[widget.index] = _animationController;
     _colorTween = ColorTween(begin: initialColor, end: initialColor).animate(_animationController);
     super.initState();
 
