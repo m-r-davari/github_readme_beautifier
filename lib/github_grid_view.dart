@@ -1,269 +1,169 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:github_readme_beautifier/github_meme_page.dart';
 import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
 import 'package:github_readme_beautifier/utils/utils.dart';
 
 class GithubGridView extends StatefulWidget {
-  const GithubGridView({Key? key}) : super(key: key);
+
+  final List<int> grids;
+  final String themeName;
+  final bool showBorder;
+  final bool showAuthor;
+  final bool showProgressHint;
+  final bool showDate;
+  final bool isRecording;
+
+  const GithubGridView({Key? key,required this.grids,required this.themeName, required this.showDate, required this.showAuthor, required this.showProgressHint, required this.showBorder, required this.isRecording}) : super(key: key);
 
   @override
-  State<GithubGridView> createState() => _GithubGridViewState();
+  State<GithubGridView> createState() => GithubGridViewState();
 }
 
 
 
-class _GithubGridViewState extends State<GithubGridView> {
+class GithubGridViewState extends State<GithubGridView> {
 
-  List<int> grids = List.filled(368, 0);
-  String themeName = 'Default';
   GithubGridThemes themes = GithubGridThemes();
-  bool showBorder = true;
-  bool showAuthor = true;
-  bool showProgressHint = true;
-  bool showDate = true;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: const EdgeInsets.all(16),
-          padding: const EdgeInsets.all(16),
-          decoration: showBorder ? BoxDecoration(border: Border.all(color: Colors.grey.withOpacity(0.8),width: 0.5,),borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))) : const BoxDecoration(),
-          child: Row(
-            children: [
-              showDate ? Container(
-                //color: Colors.red,
-                height: 95,
-                padding: const EdgeInsets.only(top: 0,bottom: 8),
-                child: const Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Mon',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                    Text('Wed',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                    Text('Fri',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                  ],
-                ),
-              ) : const SizedBox(width: 0,)
-              ,
-              const SizedBox(width: 1,)
-              ,
-              Flexible(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    showDate ? const Padding(
-                      padding: EdgeInsets.only(bottom: 2,left: 10,right: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Text('Dec',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                          Text('Jan',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                          Text('Feb',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                          Text('Mar',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                          Text('Apr',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                          Text('May',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                          Text('Jun',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                          Text('Jul',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                          Text('Aug',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                          Text('Sep',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                          Text('Oct',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                          Text('Nov',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                          Text('',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                        ],
-                      ),
-                    ) : Container()
-                    ,
-                    FittedBox(
-                      child: SizedBox(
-                        height: 350,
-                        child: GridView.builder(
-                            scrollDirection: Axis.horizontal,
-                            padding: const EdgeInsets.only(left: 16,right: 4,top: 0,bottom: 24),
-                            itemCount: grids.length,//371
-                            shrinkWrap: true,
-                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 7,
-                              crossAxisSpacing: 5,
-                              mainAxisSpacing: 5,
-                            ),
-                            itemBuilder: (ctx, index) {
-                              return GithubGridItem(
-                                index: index,
-                                themeName: themeName,
-                                initialColorNum: grids[index],
-                                onClick: (int colorNum){
-                                  //print('----index : $index ---- colorNum : $colorNum');
-                                  grids[index] = colorNum;
-                                  //print(grids);
-                                },
-                              );
-                            }),
-                      ),
-                    )
-                    ,
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5,right: 42),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          const Flexible(child: Text('Github Readme Beautifier',style: TextStyle(color: Colors.black54),)),
-                          showAuthor && showProgressHint ? const Text('By \'m-r-davari\'',style: TextStyle(color: Colors.black54),) : const SizedBox(width: 0,),
-                          showProgressHint ? Row(
+    return RepaintBoundary(
+      key: boundryGlobalKey,
+      child: Material(
+        color: Colors.transparent,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              margin: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
+              decoration: widget.showBorder ? BoxDecoration(border: Border.all(color: Colors.grey.withOpacity(0.8),width: 0.5,),borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))) : const BoxDecoration(),
+              child: Row(
+                children: [
+                  widget.showDate ? Container(
+                    //color: Colors.red,
+                    height: 95,
+                    padding: const EdgeInsets.only(top: 0,bottom: 8),
+                    child: const Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Mon',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                        Text('Wed',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                        Text('Fri',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                      ],
+                    ),
+                  ) : const SizedBox(width: 0,)
+                  ,
+                  const SizedBox(width: 1,)
+                  ,
+                  Flexible(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        widget.showDate ? const Padding(
+                          padding: EdgeInsets.only(bottom: 2,left: 10,right: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
                             children: [
-                              const Text('Less',style: TextStyle(color: Colors.black54)),
-                              const SizedBox(width: 6,),
-                              Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[themeName]?[0],borderRadius: BorderRadius.circular(2)),),
-                              const SizedBox(width: 5,),
-                              Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[themeName]?[1],borderRadius: BorderRadius.circular(2)),),
-                              const SizedBox(width: 5,),
-                              Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[themeName]?[2],borderRadius: BorderRadius.circular(2)),),
-                              const SizedBox(width: 5,),
-                              Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[themeName]?[3],borderRadius: BorderRadius.circular(2)),),
-                              const SizedBox(width: 5,),
-                              Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[themeName]?[4],borderRadius: BorderRadius.circular(2)),),
-                              const SizedBox(width: 6,),
-                              const Text('More',style: TextStyle(color: Colors.black54),)
+                              Text('Dec',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                              Text('Jan',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                              Text('Feb',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                              Text('Mar',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                              Text('Apr',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                              Text('May',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                              Text('Jun',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                              Text('Jul',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                              Text('Aug',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                              Text('Sep',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                              Text('Oct',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                              Text('Nov',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                              Text('',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
                             ],
-                          ) : showAuthor ? const Text('By \'m-r-davari\'',style: TextStyle(color: Colors.black54),) : const SizedBox(width: 0,),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              )
+                          ),
+                        ) : Container()
+                        ,
+                        FittedBox(
+                          child: SizedBox(
+                            height: 350,
+                            child: GridView.builder(
+                                scrollDirection: Axis.horizontal,
+                                padding: const EdgeInsets.only(left: 16,right: 4,top: 0,bottom: 24),
+                                itemCount: widget.grids.length,//371
+                                shrinkWrap: true,
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 7,
+                                  crossAxisSpacing: 5,
+                                  mainAxisSpacing: 5,
+                                ),
+                                itemBuilder: (ctx, index) {
+                                  return GithubGridItem(
+                                    index: index,
+                                    themeName: widget.themeName,
+                                    initialColorNum: widget.grids[index],
+                                    onClick: (int colorNum){
+                                      //print('----index : $index ---- colorNum : $colorNum');
+                                      widget.grids[index] = colorNum;
+                                      //print(grids);
+                                    },
+                                  );
+                                }),
+                          ),
+                        )
+                        ,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5,right: 42),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              const Flexible(child: Text('Github Readme Beautifier',style: TextStyle(color: Colors.black54),)),
+                              widget.showAuthor && widget.showProgressHint ? const Text('By \'m-r-davari\'',style: TextStyle(color: Colors.black54),) : const SizedBox(width: 0,),
+                              widget.showProgressHint ? Row(
+                                children: [
+                                  const Text('Less',style: TextStyle(color: Colors.black54)),
+                                  const SizedBox(width: 6,),
+                                  Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[widget.themeName]?[0],borderRadius: BorderRadius.circular(2)),),
+                                  const SizedBox(width: 5,),
+                                  Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[widget.themeName]?[1],borderRadius: BorderRadius.circular(2)),),
+                                  const SizedBox(width: 5,),
+                                  Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[widget.themeName]?[2],borderRadius: BorderRadius.circular(2)),),
+                                  const SizedBox(width: 5,),
+                                  Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[widget.themeName]?[3],borderRadius: BorderRadius.circular(2)),),
+                                  const SizedBox(width: 5,),
+                                  Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[widget.themeName]?[4],borderRadius: BorderRadius.circular(2)),),
+                                  const SizedBox(width: 6,),
+                                  const Text('More',style: TextStyle(color: Colors.black54),)
+                                ],
+                              ) : widget.showAuthor ? const Text('By \'m-r-davari\'',style: TextStyle(color: Colors.black54),) : const SizedBox(width: 0,),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  )
 
-            ],
-          ),
-        )
-        ,
-        const SizedBox(height: 16,)
-        ,
-        FittedBox(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(width: 24,)
-              ,
-              ElevatedButton(
-                  onPressed: (){
-                    grids.fillRange(0, grids.length,0);
-                    //print('-------aftch---${grids[0]}---');
-                    setState(() {
-                      //List.filled(368, 0);
-                    });
-                  },
-                  child: const Text('Reset')
-              )
-              ,
-              const SizedBox(width: 24,)
-              ,
-              ElevatedButton(
-                  onPressed: ()async{
-                    var result = await showThemePickerDialog(themes.themeMap.keys.toList(),themeName);
-                    if(result!=null){
-                      themeName = result;
-                      //print('--------tht-- $themeName -- $result -- ');
-                      setState((){});
-                    }
-                  },
-                  child: const Text('Choose Theme')
-              )
-              ,
-              const SizedBox(width: 24,)
-              ,
-              ElevatedButton(
-                  onPressed: (){
-                    setState(() {
-                      showBorder=!showBorder;
-                    });
-                  },
-                  child: Text(showBorder ? 'Hide Border' : 'Show Border')
-              )
-              ,
-              const SizedBox(width: 24,)
-              ,
-              ElevatedButton(
-                  onPressed: (){
-                    setState(() {
-                      showAuthor=!showAuthor;
-                    });
-                  },
-                  child: Text(showAuthor ? 'Hide Author' : 'Show Author')
-              )
-              ,
-              const SizedBox(width: 24,)
-              ,
-              ElevatedButton(
-                  onPressed: (){
-                    setState(() {
-                      showProgressHint=!showProgressHint;
-                    });
-                  },
-                  child: Text(showProgressHint ? 'Hide Progress Hint' : 'Show Progress Hint')
-              )
-              ,
-              const SizedBox(width: 24,)
-              ,
-              ElevatedButton(
-                  onPressed: (){
-                    setState(() {
-                      showDate=!showDate;
-                    });
-                  },
-                  child: Text(showDate ? 'Hide Date' : 'Show Date')
-              )
-              ,
-              const SizedBox(width: 24,)
-            ],
-          ),
-        )
-      ],
+                ],
+              ),
+            )
+            ,
+          ],
+        ),
+      ),
     );
   }
-
-  Future<String?> showThemePickerDialog(List<String> themes,[String? chosenTheme])async{
-    return await showModalBottomSheet<String>(context: context, builder: (ctx){
-      return SizedBox(
-        height: 250,
-        child: ListView.separated(
-          itemCount: themes.length,
-          padding: const EdgeInsets.only(top: 16),
-          itemBuilder: (ctx,index){
-            return InkWell(
-              onTap: (){
-                Navigator.pop(context,themes[index]);
-              },
-              child: Container(
-                height: 50,
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('${index+1}'),
-                    Text(themes[index]),
-                    Icon(chosenTheme == themes[index] ? Icons.check_box : Icons.check_box_outline_blank)
-                  ],
-                ),
-              ),
-            );
-          },
-          separatorBuilder: (ctx,index){
-            return const Divider(color: Colors.grey,thickness: 0.6,indent: 10,endIndent: 10,);
-          },
-        ),
-      );
-    });
-  }
-
 
 }
 
@@ -364,6 +264,8 @@ class _GithubGridItemState extends State<GithubGridItem> with TickerProviderStat
                     _colorTween = ColorTween(begin: initialColor, end: initialColor.withOpacity(0.6)).animate(_animationController);
                     _animationController.forward();
                     widget.onClick(colorNum);
+
+
                   }
                   else{
                     initialColor = themes.unCommitColor;
