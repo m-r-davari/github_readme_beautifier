@@ -33,7 +33,9 @@ class GithubMemeController extends GetxController{
       scList.add(result);
       for(final controller in gridsAnimControllers.where((element) => element!=null)){
         print('-----starting');
-        controller?.forward(from: 0.5);
+        Future.delayed(const Duration(milliseconds: 41),(){
+          controller?.forward();
+        });
 
       }
       if(timer.tick*41<=animDuration){
