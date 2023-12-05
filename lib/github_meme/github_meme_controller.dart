@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:github_readme_beautifier/utils/pausable_timer.dart';
 
 GlobalKey githubMemeBoundryGlobalKey = GlobalKey();
 
@@ -11,12 +12,41 @@ class GithubMemeController extends GetxController{
 
   List<AnimationController?> gridsAnimControllers = List.filled(368, null);
 
-  void generateFrames (){
+  void generateFrames ()async{
+
     List<Uint8List> scList = [];
     //generates frames png
     const animDuration = 1000;
 
-    Timer.periodic(const Duration(milliseconds: 42), (Timer timer)async{
+    late final PausableTimer timer;
+    timer =  PausableTimer.periodic(const Duration(milliseconds: 41), ()async{
+      print('---ticking---- n : ${timer.tick} ---- milSec: ${timer.tick*41} ----');
+      print('-----------------vv-------------${gridsAnimControllers.where((element) => element!=null).length}');
+      for(final controller in gridsAnimControllers.where((element) => element!=null)){
+        print('-----stoping');
+        controller?.stop();
+      }
+      timer.pause();
+      final result = await captureScreen();
+      scList.add(result);
+      for(final controller in gridsAnimControllers.where((element) => element!=null)){
+        print('-----starting');
+        controller?.forward();
+      }
+      if(timer.tick*41<=animDuration){
+        timer.start();
+      }
+      else{
+        timer.cancel();
+      }
+    },
+    )..start();
+
+
+
+
+
+/*    Timer.periodic(const Duration(milliseconds: 42), (Timer timer)async{
       if(timer.tick*42 <= animDuration){
         print('---ticking---- ${timer.tick} ---- ${timer.tick*42} ----');
         for(var controller in gridsAnimControllers){
@@ -37,7 +67,8 @@ class GithubMemeController extends GetxController{
     });
     Future.delayed(const Duration(seconds: 10),(){
       print('-----list of sc---- ${scList.length} ----');
-    });
+    });*/
+
   }
 
   Future<Uint8List> captureScreen()async{

@@ -202,7 +202,6 @@ class _GithubGridItemState extends State<GithubGridItem> with TickerProviderStat
     isSelected = widget.initialColorNum != 0;
     initialColor = themes.themeMap[widget.themeName]?[colorNum] ?? themes.unCommitColor ;
     _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
-    controller.gridsAnimControllers[widget.index] = _animationController;
     _colorTween = ColorTween(begin: initialColor, end: initialColor).animate(_animationController);
     super.initState();
 
@@ -229,14 +228,13 @@ class _GithubGridItemState extends State<GithubGridItem> with TickerProviderStat
       initialColor = themes.unCommitColor;
       _colorTween = ColorTween(begin: initialColor, end: initialColor.withOpacity(0.6)).animate(_animationController);
       _animationController.reset();
-      _animationController.stop();
+      controller.gridsAnimControllers[widget.index] = null;
     }
 
     if(widget.themeName!=oldWidget.themeName){
       if(widget.initialColorNum == 0){
         return;
       }
-
       colorNum = widget.initialColorNum;
       isSelected = widget.initialColorNum != 0;
       initialColor = themes.themeMap[widget.themeName]?[colorNum] ?? themes.unCommitColor;
@@ -268,8 +266,7 @@ class _GithubGridItemState extends State<GithubGridItem> with TickerProviderStat
                     _colorTween = ColorTween(begin: initialColor, end: initialColor.withOpacity(0.6)).animate(_animationController);
                     _animationController.forward();
                     widget.onClick(colorNum);
-
-
+                    controller.gridsAnimControllers[widget.index] = _animationController;
                   }
                   else{
                     initialColor = themes.unCommitColor;
@@ -278,6 +275,7 @@ class _GithubGridItemState extends State<GithubGridItem> with TickerProviderStat
                     _animationController.stop();
                     colorNum = 0;
                     widget.onClick(0);
+                    controller.gridsAnimControllers[widget.index] = null;
                   }
                 });
 

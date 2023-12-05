@@ -32,136 +32,156 @@ class _GithubMemePageState extends State<GithubMemePage> {
 
   final controller = Get.find<GithubMemeController>();
 
+  bool play = true;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        GithubGridView(
-          grids: grids,
-          themeName: themeName,
-          showBorder: showBorder,
-          showAuthor: showAuthor,
-          showDate: showDate,
-          showProgressHint: showProgressHint,
-          isRecording: isRecording,
-        )
-        ,
-        const SizedBox(height: 16,)
-        ,
-        FittedBox(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(width: 24,)
-              ,
-              ElevatedButton(
-                  onPressed: (){
-                    grids.fillRange(0, grids.length,0);
-                    setState(() {
-                    });
-                  },
-                  child: const Text('Reset')
-              )
-              ,
-              const SizedBox(width: 24,)
-              ,
-              ElevatedButton(
-                  onPressed: ()async{
-                    var result = await showThemePickerDialog(themes.themeMap.keys.toList(),themeName);
-                    if(result!=null){
-                      themeName = result;
-                      setState((){});
-                    }
-                  },
-                  child: const Text('Choose Theme')
-              )
-              ,
-              const SizedBox(width: 24,)
-              ,
-              ElevatedButton(
-                  onPressed: (){
-                    setState(() {
-                      showBorder=!showBorder;
-                    });
-                  },
-                  child: Text(showBorder ? 'Hide Border' : 'Show Border')
-              )
-              ,
-              const SizedBox(width: 24,)
-              ,
-              ElevatedButton(
-                  onPressed: (){
-                    setState(() {
-                      showAuthor=!showAuthor;
-                    });
-                  },
-                  child: Text(showAuthor ? 'Hide Author' : 'Show Author')
-              )
-              ,
-              const SizedBox(width: 24,)
-              ,
-              ElevatedButton(
-                  onPressed: (){
-                    setState(() {
-                      showProgressHint=!showProgressHint;
-                    });
-                  },
-                  child: Text(showProgressHint ? 'Hide Progress Hint' : 'Show Progress Hint')
-              )
-              ,
-              const SizedBox(width: 24,)
-              ,
-              ElevatedButton(
-                  onPressed: (){
-                    setState(() {
-                      showDate=!showDate;
-                    });
-                  },
-                  child: Text(showDate ? 'Hide Date' : 'Show Date')
-              )
-              ,
-              const SizedBox(width: 24,)
-              ,
-              ElevatedButton(
-                  onPressed: ()async{
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          if(play){
+            for(final controller in controller.gridsAnimControllers.where((element) => element!=null)){
+              print('-----starting');
+              controller?.stop();
+            }
+          }
+          else{
+            for(final controller in controller.gridsAnimControllers.where((element) => element!=null)){
+              print('-----starting');
+              controller?.forward();
+            }
+          }
+          play = !play;
+        },
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          GithubGridView(
+            grids: grids,
+            themeName: themeName,
+            showBorder: showBorder,
+            showAuthor: showAuthor,
+            showDate: showDate,
+            showProgressHint: showProgressHint,
+            isRecording: isRecording,
+          )
+          ,
+          const SizedBox(height: 16,)
+          ,
+          FittedBox(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(width: 24,)
+                ,
+                ElevatedButton(
+                    onPressed: (){
+                      grids.fillRange(0, grids.length,0);
+                      setState(() {
+                      });
+                    },
+                    child: const Text('Reset')
+                )
+                ,
+                const SizedBox(width: 24,)
+                ,
+                ElevatedButton(
+                    onPressed: ()async{
+                      var result = await showThemePickerDialog(themes.themeMap.keys.toList(),themeName);
+                      if(result!=null){
+                        themeName = result;
+                        setState((){});
+                      }
+                    },
+                    child: const Text('Choose Theme')
+                )
+                ,
+                const SizedBox(width: 24,)
+                ,
+                ElevatedButton(
+                    onPressed: (){
+                      setState(() {
+                        showBorder=!showBorder;
+                      });
+                    },
+                    child: Text(showBorder ? 'Hide Border' : 'Show Border')
+                )
+                ,
+                const SizedBox(width: 24,)
+                ,
+                ElevatedButton(
+                    onPressed: (){
+                      setState(() {
+                        showAuthor=!showAuthor;
+                      });
+                    },
+                    child: Text(showAuthor ? 'Hide Author' : 'Show Author')
+                )
+                ,
+                const SizedBox(width: 24,)
+                ,
+                ElevatedButton(
+                    onPressed: (){
+                      setState(() {
+                        showProgressHint=!showProgressHint;
+                      });
+                    },
+                    child: Text(showProgressHint ? 'Hide Progress Hint' : 'Show Progress Hint')
+                )
+                ,
+                const SizedBox(width: 24,)
+                ,
+                ElevatedButton(
+                    onPressed: (){
+                      setState(() {
+                        showDate=!showDate;
+                      });
+                    },
+                    child: Text(showDate ? 'Hide Date' : 'Show Date')
+                )
+                ,
+                const SizedBox(width: 24,)
+                ,
+                ElevatedButton(
+                    onPressed: ()async{
 
-                    controller.generateFrames();
+                      controller.generateFrames();
 
 
 
 
-                    // Future.delayed(const Duration(seconds: 3),(){
-                    //   for(var controller in controller.gridsAnimControllers){
-                    //     controller?.forward();
-                    //   }
-                    // });
+                      // Future.delayed(const Duration(seconds: 3),(){
+                      //   for(var controller in controller.gridsAnimControllers){
+                      //     controller?.forward();
+                      //   }
+                      // });
 
 
 /*                    final image8List = await captureScreen();
-                    // ignore: use_build_context_synchronously
-                    showDialog(
-                      context: context,
-                      builder: (ctx) {
-                        return AlertDialog(
-                          backgroundColor: Colors.white,
-                          content: Image.memory(image8List),
-                        );
-                      },
-                    );*/
+                      // ignore: use_build_context_synchronously
+                      showDialog(
+                        context: context,
+                        builder: (ctx) {
+                          return AlertDialog(
+                            backgroundColor: Colors.white,
+                            content: Image.memory(image8List),
+                          );
+                        },
+                      );*/
 
 
-                  },
-                  child: Text(isRecording ? 'Stop Recording' : 'Start Recording')
-              )
-              ,
-              const SizedBox(width: 24,)
-            ],
-          ),
-        )
-      ],
+                    },
+                    child: Text(isRecording ? 'Stop Recording' : 'Start Recording')
+                )
+                ,
+                const SizedBox(width: 24,)
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 
