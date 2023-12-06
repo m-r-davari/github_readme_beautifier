@@ -1,8 +1,5 @@
 
 import 'dart:async';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
@@ -34,35 +31,52 @@ class _GithubMemePageState extends State<GithubMemePage> {
 
   bool play = true;
 
-
+  var animVal = 0.01;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: ()async{
-          if(play){
-            for(final controller in controller.gridsAnimControllers.where((element) => element!=null)){
-              print('-----stopping at --> ${controller?.value} --- ${controller?.lastElapsedDuration} ');
-              //var val = controller?.value;
-              //controller?.reset();
-              controller?.stop();
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: ()async{
+              for(final controller in controller.gridsAnimControllers.where((element) => element!=null)){
+                print('-----stopping at --> ${controller?.value} --- ${controller?.lastElapsedDuration} ');
+                controller?.reset();
+                controller?.stop();
+                animVal = animVal+0.1;
+                controller?.value = animVal;
+              }
+            },
+          ),
+          FloatingActionButton(
+            child: Icon(Icons.stop),
+            onPressed: ()async{
+              for(final controller in controller.gridsAnimControllers.where((element) => element!=null)){
+                print('-----stopping at --> ${controller?.value} --- ${controller?.lastElapsedDuration} ');
+                controller?.reset();
+                controller?.stop();
+                controller?.value = animVal;
+              }
+/*          if(play){
+                for(final controller in controller.gridsAnimControllers.where((element) => element!=null)){
+                  print('-----stopping at --> ${controller?.value} --- ${controller?.lastElapsedDuration} ');
+                  controller?.reset();
+                  controller?.stop();
+                }
+              }
+              else{
+                for(final controller in controller.gridsAnimControllers.where((element) => element!=null)){
+                  print('-----starting  --> ${controller?.value} --- ${controller?.lastElapsedDuration} ');
+                }
+              }
+              play = !play;*/
 
-              //controller?.value = val!;
-            }
-          }
-          else{
-            for(final controller in controller.gridsAnimControllers.where((element) => element!=null)){
-              print('-----starting  --> ${controller?.value} --- ${controller?.lastElapsedDuration} ');
-
-              TickerFuture? d = controller?.forward();
-              await d;
-              //await Future.delayed(const Duration(milliseconds: 10));
-
-            }
-          }
-          play = !play;
-        },
+            },
+          ),
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

@@ -43,14 +43,14 @@ class _LauncherPage extends State<SplashPage> with TickerProviderStateMixin {
       if (status == AnimationStatus.completed) {
         if (count < 1) {
           count++;
-          print("count ${count}");
+          //print("count ${count}");
           flipController.reset();
           flipController.forward();
         }
         else {
           flipController.stop();
           count = 0;
-          print("count ${count}");
+          //print("count ${count}");
 
 
           Future.delayed(const Duration(milliseconds: 300), () {
@@ -71,10 +71,22 @@ class _LauncherPage extends State<SplashPage> with TickerProviderStateMixin {
     fadeIn = Tween(begin: -1.0, end: 1.0).animate(fadeInController);
   }
 
+  bool isPlay = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          if(isPlay){
+            flipController.stop();
+          }
+          else{
+            flipController.forward();
+          }
+          isPlay = !isPlay;
+        },
+      ),
         body: Container(
           width: double.infinity,
           height: double.infinity,

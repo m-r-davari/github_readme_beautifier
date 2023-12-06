@@ -10,9 +10,11 @@ GlobalKey githubMemeBoundryGlobalKey = GlobalKey();
 
 class GithubMemeController extends GetxController{
 
-  List<AnimationController?> gridsAnimControllers = List.filled(368, null);
+  List<AnimationController?> gridsAnimControllers = [];
+  //Set<AnimationController?> gridsAnimControllers = Set.of(List.filled(368, null));
 
-  void generateFrames ()async{
+
+  void generateFrames()async{
 
     List<Uint8List> scList = [];
     //generates frames png
@@ -23,20 +25,22 @@ class GithubMemeController extends GetxController{
       //print('---ticking---- n : ${timer.tick} ---- milSec: ${timer.tick*41} ----');
       //print('-----------------vv-------------${gridsAnimControllers.where((element) => element!=null).length}');
 
-      print('---sl----- ${gridsAnimControllers.where((element) => element!=null)}');
-      for(final controller in gridsAnimControllers.where((element) => element!=null)){
-        print('-----stoping');
+      //print('---sl----- ${gridsAnimControllers.where((element) => element!=null)}');
+      for(var controller in gridsAnimControllers.where((element) => element!=null)){
+        controller?.reset();
         controller?.stop();
       }
       timer.pause();
       final result = await captureScreen();
       scList.add(result);
-      for(final controller in gridsAnimControllers.where((element) => element!=null)){
-        print('-----starting');
-        Future.delayed(const Duration(milliseconds: 41),(){
-          controller?.forward();
-        });
-
+      for(var controller in gridsAnimControllers.where((element) => element!=null)){
+        controller!.value = 0.2;
+      }
+      if(gridsAnimControllers[0]!.value==gridsAnimControllers[1]!.value){
+        print('-----equals----');
+      }
+      else{
+        print('-----not equals----');
       }
       if(timer.tick*41<=animDuration){
         timer.start();
@@ -85,7 +89,7 @@ class GithubMemeController extends GetxController{
     final image = await  boundary.toImage();
     final byteData = await image.toByteData(format: ImageByteFormat.png);
     if (byteData != null) {
-      print('Captured image size: ${byteData.lengthInBytes} bytes');
+      //print('Captured image size: ${byteData.lengthInBytes} bytes');
       return Uint8List.fromList(byteData.buffer.asUint8List());
     }
     else{
