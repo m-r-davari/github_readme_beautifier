@@ -57,6 +57,7 @@ class GithubMemeController extends GetxController{
       await Future.delayed(Duration.zero);
       final frame = await captureScreen();
       frames.add(frame);
+      //todo : re active animate after generating frames and gif
     }
 
 
