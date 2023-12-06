@@ -27,11 +27,13 @@ class _GithubMemePageState extends State<GithubMemePage> {
   bool showDate = true;
   bool isRecording = false;
 
-  final controller = Get.find<GithubMemeController>();
+  final memeController = Get.find<GithubMemeController>();
 
   bool play = true;
 
-  var animVal = 0.01;
+  var animVal = 0.0;
+
+  double? stopAt;
 
   @override
   Widget build(BuildContext context) {
@@ -42,23 +44,25 @@ class _GithubMemePageState extends State<GithubMemePage> {
           FloatingActionButton(
             child: Icon(Icons.add),
             onPressed: ()async{
-              for(final controller in controller.gridsAnimControllers.where((element) => element!=null)){
+              for(final controller in memeController.gridsAnimControllers.where((element) => element!=null)){
                 print('-----stopping at --> ${controller?.value} --- ${controller?.lastElapsedDuration} ');
-                controller?.reset();
-                controller?.stop();
+                //controller?.reset();
+                //controller?.stop();
                 animVal = animVal+0.1;
                 controller?.value = animVal;
+                print('---- ooofff------- ${controller?.status} ');
               }
             },
           ),
           FloatingActionButton(
             child: Icon(Icons.stop),
             onPressed: ()async{
-              for(final controller in controller.gridsAnimControllers.where((element) => element!=null)){
+              for(final controller in memeController.gridsAnimControllers.where((element) => element!=null)){
                 print('-----stopping at --> ${controller?.value} --- ${controller?.lastElapsedDuration} ');
-                controller?.reset();
+                //controller?.reset();
                 controller?.stop();
-                controller?.value = animVal;
+                memeController.hasAnimListener = false;
+                //controller?.value = animVal;
               }
 /*          if(play){
                 for(final controller in controller.gridsAnimControllers.where((element) => element!=null)){
@@ -172,7 +176,7 @@ class _GithubMemePageState extends State<GithubMemePage> {
                 ElevatedButton(
                     onPressed: ()async{
 
-                      controller.generateFrames();
+                      memeController.generateFrames();
 
 
 

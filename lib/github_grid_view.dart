@@ -208,6 +208,9 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
     super.initState();
 
     _animationController.addStatusListener((status) {
+      if(!controller.hasAnimListener){
+        return;
+      }
       if(status == AnimationStatus.completed){
         _animationController.reverse();
       }
@@ -231,7 +234,7 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
       _colorTween = ColorTween(begin: initialColor, end: initialColor.withOpacity(0.6)).animate(_animationController);
       _animationController.reset();
       _animationController.stop();
-      controller.gridsAnimControllers[widget.index] = null;
+      controller.gridsAnimControllers.clear();
     }
 
     if(widget.themeName!=oldWidget.themeName){
@@ -280,7 +283,7 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
                     colorNum = 0;
                     widget.onClick(0);
                     //controller.gridsAnimControllers[widget.index] = null;
-                    controller.gridsAnimControllers.add(null);
+                    controller.gridsAnimControllers.remove(_animationController);
                   }
                 });
 

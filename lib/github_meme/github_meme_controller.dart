@@ -11,19 +11,90 @@ GlobalKey githubMemeBoundryGlobalKey = GlobalKey();
 class GithubMemeController extends GetxController{
 
   List<AnimationController?> gridsAnimControllers = [];
-  //Set<AnimationController?> gridsAnimControllers = Set.of(List.filled(368, null));
 
+  bool hasAnimListener = true;
+
+  var animVal = 0.0;
 
   void generateFrames()async{
+    hasAnimListener = false ;
+    List<Uint8List> frames = [];//frames list
+    const int exportDuration = 1000; //milSec
+    //exportDuration / 41 = 24 fps
+    for(var controller in gridsAnimControllers){
+      controller?.stop();
+    }
+    await Future.delayed(Duration.zero);
+    for(int i = 0 ; i<= exportDuration/41 ; i++){
+      print('---- frame : $i -----');
+      for(var controller in gridsAnimControllers){
+        //increase anim value manually for next frame
+        print('---- controller : $controller -----');
+        if (controller!.status == AnimationStatus.forward){
+          print('---- to increase : ${controller.value} ---${controller.status}---');
+          controller.value += 0.1;
+          print('---- increasing : ${controller.value} -----');
+        }
+        else if (controller.status == AnimationStatus.completed){
+          print('---- complete : ${controller.value} ---${controller.status}---');
+          controller.reverse();
+          print('---- complete : ${controller.value} -----');
+        }
+        else if (controller.status == AnimationStatus.reverse){
+          print('---- to decrease ---- ${controller.status} -- ${controller.value} --');
+          controller.value -= 0.1;
+          print('---- decreasing ---- ${controller.status} -- ${controller.value} --');
+        }
+        else if (controller.status == AnimationStatus.dismissed){
+          print('---- to dismissed ---- ${controller.status} -- ${controller.value} --');
+          controller.forward() ;
+          print('---- dismissed ---- ${controller.status} -- ${controller.value} --');
+        }
+        else{
+          print('---- elsing ---${controller.status}---');
+        }
+      }
+      await Future.delayed(Duration.zero);
+      final frame = await captureScreen();
+      frames.add(frame);
+    }
 
+
+    showDialog(
+      context: Get.context!,
+      builder: (context) {
+        return AlertDialog(
+          content: SizedBox(
+            height: 800,
+            width: 1500,
+            child: ListView.builder(
+              padding: EdgeInsets.all(8.0),
+              itemCount: frames.length,
+              itemBuilder: (BuildContext context, int index) {
+                final image = frames[index];
+                return Container(
+                  height: 350,
+                  child: Image.memory(
+                    image
+                    //image.buffer.asUint8List(),
+                  ),
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
+
+  }
+
+  void generateFramesZ()async{
+    hasAnimListener = false ;
     List<Uint8List> scList = [];
-    //generates frames png
     const animDuration = 1000;
-
     late final PausableTimer timer;
     timer =  PausableTimer.periodic(const Duration(milliseconds: 41), ()async{
       //print('---ticking---- n : ${timer.tick} ---- milSec: ${timer.tick*41} ----');
-      //print('-----------------vv-------------${gridsAnimControllers.where((element) => element!=null).length}');
 
       //print('---sl----- ${gridsAnimControllers.where((element) => element!=null)}');
       for(var controller in gridsAnimControllers.where((element) => element!=null)){
@@ -33,14 +104,8 @@ class GithubMemeController extends GetxController{
       timer.pause();
       final result = await captureScreen();
       scList.add(result);
-      for(var controller in gridsAnimControllers.where((element) => element!=null)){
+      for(var controller in gridsAnimControllers){
         controller!.value = 0.2;
-      }
-      if(gridsAnimControllers[0]!.value==gridsAnimControllers[1]!.value){
-        print('-----equals----');
-      }
-      else{
-        print('-----not equals----');
       }
       if(timer.tick*41<=animDuration){
         timer.start();
