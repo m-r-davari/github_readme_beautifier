@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'dart:typed_data';
 import 'dart:js' as js;
 import 'dart:html' as htmlz;
+import 'package:image/image.dart' as image;
 
 GlobalKey githubMemeBoundryGlobalKey = GlobalKey();
 
@@ -65,33 +66,9 @@ class GithubMemeController extends GetxController{
 
 
     // Create animated GIF using JavaScript
-    createAnimatedGif(frames);
+    //createAnimatedGif(frames);
 
     print('Animated GIF created successfully!');
-
-
-    //createGifJSInterop(frames);
-
-    //var gif = await createTransparentGifUI(frames);
-    // showDialog(
-    //   context: Get.context!,
-    //   builder: (context) {
-    //     return AlertDialog(
-    //       content: SizedBox(
-    //         height: 800,
-    //         width: 1500,
-    //         child: Container(
-    //           color: Colors.transparent,
-    //           height: 350,
-    //           child: Image.memory(
-    //               gif
-    //             //image.buffer.asUint8List(),
-    //           ),
-    //         ),
-    //       ),
-    //     );
-    //   },
-    // );
 
 
 
@@ -127,7 +104,23 @@ class GithubMemeController extends GetxController{
 
 
 
+  static Future<List<int>?> _exportGif(List<Uint8List> frames) async {
+    final animation = image.Animation();
+    animation.backgroundColor = Colors.transparent.value;
+    for (final frame in frames) {
+      final iAsBytes = frame.image.buffer.asUint8List();
+      final decodedImage = image.decodePng(iAsBytes);
 
+      if (decodedImage == null) {
+        print('Skipped frame while enconding');
+        continue;
+      }
+      decodedImage.duration = 41;
+      animation.addFrame(decodedImage);
+    }
+    return image.encodeGifAnimation(animation);
+  }
+}
 
 
 
