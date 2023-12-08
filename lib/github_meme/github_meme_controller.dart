@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:github_readme_beautifier/utils/pausable_timer.dart';
+import 'dart:typed_data';
+import 'dart:js' as js;
+import 'dart:html' as htmlz;
 
 GlobalKey githubMemeBoundryGlobalKey = GlobalKey();
 
@@ -61,7 +64,40 @@ class GithubMemeController extends GetxController{
     }
 
 
-    showDialog(
+    // Create animated GIF using JavaScript
+    createAnimatedGif(frames);
+
+    print('Animated GIF created successfully!');
+
+
+    //createGifJSInterop(frames);
+
+    //var gif = await createTransparentGifUI(frames);
+    // showDialog(
+    //   context: Get.context!,
+    //   builder: (context) {
+    //     return AlertDialog(
+    //       content: SizedBox(
+    //         height: 800,
+    //         width: 1500,
+    //         child: Container(
+    //           color: Colors.transparent,
+    //           height: 350,
+    //           child: Image.memory(
+    //               gif
+    //             //image.buffer.asUint8List(),
+    //           ),
+    //         ),
+    //       ),
+    //     );
+    //   },
+    // );
+
+
+
+
+
+/*    showDialog(
       context: Get.context!,
       builder: (context) {
         return AlertDialog(
@@ -85,67 +121,82 @@ class GithubMemeController extends GetxController{
           ),
         );
       },
+    );*/
+
+  }
+
+
+
+
+
+
+
+  void createGifJSInterop(List<Uint8List> frames){
+    // Convert Uint8List frames to base64 strings
+    final List<String> base64Frames = frames.map((frame) => base64Encode(frame)).toList();
+    js.context.callMethod('createAnimatedGif', [base64Frames]);
+
+  }
+
+  void createAnimatedGif(List<Uint8List> pngFrames) {
+    final js.JsObject gifEncoder = js.context.callMethod('createGifEncoder',[pngFrames[0]]);
+
+    print('----gif.js instance--- $gifEncoder');
+
+    for (Uint8List frame in pngFrames) {
+      js.context.callMethod('addFrame', [gifEncoder, frame]);
+    }
+
+    final Uint8List gifBytes = js.context.callMethod('finishGif', [gifEncoder]);
+
+    //print('-----jsRdata----$gifBytes');
+    //saveAsGif(gifBytes);
+  }
+
+  void saveAsGif(Uint8List gifBytes) {
+    final blob = htmlz.Blob([gifBytes]);
+    final url = htmlz.Url.createObjectUrlFromBlob(blob);
+    //final html.AnchorElement(href: url)..target = 'blank'..download = 'output.gif'..click();
+    htmlz.Url.revokeObjectUrl(url);
+  }
+
+  Future<List<Uint8List>> loadPngFrames() async {
+    // Replace this with your actual logic to load PNG frames
+    List<Uint8List> frames = [];
+    for (int i = 1; i <= 5; i++) {
+      final htmlz.HttpRequest request = await htmlz.HttpRequest.request('assets/frame_$i.png', responseType: 'arraybuffer');
+      frames.add(Uint8List.fromList(request.response as List<int>));
+    }
+    return frames;
+  }
+
+
+
+
+  void createAnimatedGifCallback(String base64String) {
+    final gifBytes = Uint8List.fromList(base64.decode(base64String));
+    showDialog(
+      context: Get.context!,
+      builder: (context) {
+        return AlertDialog(
+          content: SizedBox(
+            height: 800,
+            width: 1500,
+            child: Container(
+              color: Colors.transparent,
+              height: 350,
+              child: Image.memory(
+                  gifBytes
+                //image.buffer.asUint8List(),
+              ),
+            ),
+          ),
+        );
+      },
     );
-
   }
 
-  void generateFramesZ()async{
-    hasAnimListener = false ;
-    List<Uint8List> scList = [];
-    const animDuration = 1000;
-    late final PausableTimer timer;
-    timer =  PausableTimer.periodic(const Duration(milliseconds: 41), ()async{
-      //print('---ticking---- n : ${timer.tick} ---- milSec: ${timer.tick*41} ----');
-
-      //print('---sl----- ${gridsAnimControllers.where((element) => element!=null)}');
-      for(var controller in gridsAnimControllers.where((element) => element!=null)){
-        controller?.reset();
-        controller?.stop();
-      }
-      timer.pause();
-      final result = await captureScreen();
-      scList.add(result);
-      for(var controller in gridsAnimControllers){
-        controller!.value = 0.2;
-      }
-      if(timer.tick*41<=animDuration){
-        timer.start();
-      }
-      else{
-        timer.cancel();
-      }
-
-    },
-    )..start();
-
-
-
-
-
-/*    Timer.periodic(const Duration(milliseconds: 42), (Timer timer)async{
-      if(timer.tick*42 <= animDuration){
-        print('---ticking---- ${timer.tick} ---- ${timer.tick*42} ----');
-        for(var controller in gridsAnimControllers){
-          controller?.stop();
-
-        }
-        final result = await captureScreen();
-        scList.add(result);
-        for(var controller in gridsAnimControllers){
-          controller?.forward();
-        }
-      }
-      else{
-        print('---last tick---- ${timer.tick} --');
-        timer.cancel();
-      }
-
-    });
-    Future.delayed(const Duration(seconds: 10),(){
-      print('-----list of sc---- ${scList.length} ----');
-    });*/
-
-  }
+//----------------------------
 
   Future<Uint8List> captureScreen()async{
     // Perform the screen capture and handle the image as needed

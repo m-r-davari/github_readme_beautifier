@@ -38,6 +38,9 @@
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
+  <script src="gif.js" type="application/javascript"></script>
+<!--  <script src="gif.worker.js" type="application/javascript"></script>-->
+
 </head>
 <body>
   <script>
@@ -54,6 +57,78 @@
         }
       });
     });
+  </script>
+  <script>
+    function createGifEncoder(firstFrame) {
+      const blob = new Blob([firstFrame], { type: 'image/png' });
+      const objectURL = URL.createObjectURL(blob);
+      const imgElement = document.createElement('img');
+      imgElement.src = objectURL;
+      console.log('first frame load zzzzzzzz! ---',imgElement.naturalWidth);
+      var gifEncoder = new GIF({
+        workers: 2,
+        quality: 10,
+        width : imgElement.naturalWidth,
+        height : 300,
+        //background : "#fff"
+      });
+      return gifEncoder;
+    }
+
+    function addFrame(gifEncoder, frame) {
+      // Convert Uint8Array to Blob
+      const blob = new Blob([frame], { type: 'image/png' }); // Adjust the type as per your image format
+
+      // Create an object URL for the Blob
+      const objectURL = URL.createObjectURL(blob);
+
+      // Create an image element
+      const imgElement = document.createElement('img');
+
+      // Set the source attribute
+      imgElement.src = objectURL;
+
+      // Handle the image onload event
+      //imgElement.onload = function() {
+        //console.log('Image loaded successfully!');
+
+      //};
+
+      gifEncoder.addFrame(imgElement,41);
+      console.log("add framer", imgElement);
+
+    }
+
+    function finishGif(gifEncoder) {
+
+      gifEncoder.on('finished', function(blob) {
+        console.log("eeeeeeeeeeeeehhhhh", URL.createObjectURL(blob));
+        window.open(URL.createObjectURL(blob));
+      });
+
+      gifEncoder.render();
+
+      //var binaryGif = gifEncoder.stream().getData();
+      //return new Uint8Array(binaryGif);
+    }
+  </script>
+  <script>
+    function createAnimatedGif(frames) {
+      console.log('----js start-------');
+      console.log("Received frames:", frames);
+
+      var gifEncoder = new GIF({
+        workers: 2,
+        quality: 10
+      });
+
+      gifEncoder.addFrame(new Uint8Array(frame));
+
+      gifEncoder.render();
+      var binaryGif = gifEncoder.stream().getData();
+      return new Uint8Array(binaryGif);
+
+    }
   </script>
 </body>
 </html>
