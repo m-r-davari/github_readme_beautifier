@@ -123,11 +123,11 @@ class GithubMemeController extends GetxController{
 
     await ffmpeg.run([
       '-framerate',
-      '4',
+      '24',
       '-i',
       'github_meme_%03d.png',
       '-vf',
-      'palettegen=max_colors=256',//'palettegen=stats_mode=single:max_colors=256'
+      'palettegen=max_colors=128', //palettegen //palettegen=max_colors=256 //'palettegen=stats_mode=single:max_colors=256'
       'palette.png',
     ]);
 
@@ -139,7 +139,11 @@ class GithubMemeController extends GetxController{
       '-i',
       'palette.png',
       '-lavfi', 'paletteuse=dither=bayer:bayer_scale=5',
+      //'-filter_complex',
+      //'[0:v][1:v]paletteuse',//'[0:v][1:v]paletteuse=dither=bayer:bayer_scale=5' // [0:v][1:v]paletteuse=dither=floyd_steinberg //[0:v][1:v]paletteuse //paletteuse
       '-r', '24',
+      '-f',
+      'gif',
       'output.gif',
     ]);
     print('----end run----');

@@ -188,7 +188,7 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
   late Utils _utils;
   late Color initialColor;
   late GithubGridThemes themes;
-
+  double colorLerpPercent = 0.4;
   final controller = Get.find<GithubMemeController>();
 
   @override
@@ -226,7 +226,7 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
       colorNum = 0;
       isSelected = false;
       initialColor = themes.unCommitColor;
-      _colorTween = ColorTween(begin: initialColor, end: initialColor.withOpacity(0.6)).animate(_animationController);
+      _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.unCommitColor, colorLerpPercent)).animate(_animationController);
       _animationController.reset();
       _animationController.stop();
       controller.gridsAnimControllers.clear();
@@ -239,7 +239,7 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
       colorNum = widget.initialColorNum;
       isSelected = widget.initialColorNum != 0;
       initialColor = themes.themeMap[widget.themeName]?[colorNum] ?? themes.unCommitColor;
-      _colorTween = ColorTween(begin: initialColor, end: initialColor.withOpacity(0.6)).animate(_animationController);
+      _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.unCommitColor, colorLerpPercent)).animate(_animationController);
       Future.delayed(Duration(milliseconds: _utils.generateRandomNumFromRange(100, 500)),(){
         _animationController.forward();
       });
@@ -264,14 +264,14 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
                   isSelected = !isSelected;
                   if(isSelected){
                     initialColor = generateRandomColor();
-                    _colorTween = ColorTween(begin: initialColor, end: initialColor.withOpacity(0.6)).animate(_animationController);
+                    _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.unCommitColor, colorLerpPercent)).animate(_animationController);
                     _animationController.forward();
                     widget.onClick(colorNum);
                     controller.gridsAnimControllers.add(_animationController);
                   }
                   else{
                     initialColor = themes.unCommitColor;
-                    _colorTween = ColorTween(begin: initialColor, end: initialColor.withOpacity(0.6)).animate(_animationController);
+                    _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.unCommitColor, colorLerpPercent)).animate(_animationController);
                     _animationController.reset();
                     _animationController.stop();
                     colorNum = 0;
