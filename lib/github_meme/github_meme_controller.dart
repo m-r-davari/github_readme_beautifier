@@ -5,10 +5,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'dart:typed_data';
-import 'dart:js' as js;
-import 'dart:html' as htmlz;
-import 'package:image/image.dart' as image;
 
 GlobalKey githubMemeBoundryGlobalKey = GlobalKey();
 
@@ -65,15 +61,6 @@ class GithubMemeController extends GetxController{
     }
 
 
-    // Create animated GIF using JavaScript
-    //createAnimatedGif(frames);
-
-    print('Animated GIF created successfully!');
-
-
-
-
-
 /*    showDialog(
       context: Get.context!,
       builder: (context) {
@@ -101,70 +88,6 @@ class GithubMemeController extends GetxController{
     );*/
 
   }
-
-
-
-  static Future<List<int>?> _exportGif(List<Uint8List> frames) async {
-    final animation = image.Animation();
-    animation.backgroundColor = Colors.transparent.value;
-    for (final frame in frames) {
-      final iAsBytes = frame.image.buffer.asUint8List();
-      final decodedImage = image.decodePng(iAsBytes);
-
-      if (decodedImage == null) {
-        print('Skipped frame while enconding');
-        continue;
-      }
-      decodedImage.duration = 41;
-      animation.addFrame(decodedImage);
-    }
-    return image.encodeGifAnimation(animation);
-  }
-}
-
-
-
-  void createGifJSInterop(List<Uint8List> frames){
-    // Convert Uint8List frames to base64 strings
-    final List<String> base64Frames = frames.map((frame) => base64Encode(frame)).toList();
-    js.context.callMethod('createAnimatedGif', [base64Frames]);
-
-  }
-
-  void createAnimatedGif(List<Uint8List> pngFrames) {
-    final js.JsObject gifEncoder = js.context.callMethod('createGifEncoder',[pngFrames[0]]);
-
-    print('----gif.js instance--- $gifEncoder');
-
-    for (Uint8List frame in pngFrames) {
-      js.context.callMethod('addFrame', [gifEncoder, frame]);
-    }
-
-    final Uint8List gifBytes = js.context.callMethod('finishGif', [gifEncoder]);
-
-    //print('-----jsRdata----$gifBytes');
-    //saveAsGif(gifBytes);
-  }
-
-  void saveAsGif(Uint8List gifBytes) {
-    final blob = htmlz.Blob([gifBytes]);
-    final url = htmlz.Url.createObjectUrlFromBlob(blob);
-    //final html.AnchorElement(href: url)..target = 'blank'..download = 'output.gif'..click();
-    htmlz.Url.revokeObjectUrl(url);
-  }
-
-  Future<List<Uint8List>> loadPngFrames() async {
-    // Replace this with your actual logic to load PNG frames
-    List<Uint8List> frames = [];
-    for (int i = 1; i <= 5; i++) {
-      final htmlz.HttpRequest request = await htmlz.HttpRequest.request('assets/frame_$i.png', responseType: 'arraybuffer');
-      frames.add(Uint8List.fromList(request.response as List<int>));
-    }
-    return frames;
-  }
-
-
-
 
   void createAnimatedGifCallback(String base64String) {
     final gifBytes = Uint8List.fromList(base64.decode(base64String));
