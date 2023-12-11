@@ -1,10 +1,7 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:github_readme_beautifier/github_meme_page.dart';
 import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
 import 'package:github_readme_beautifier/utils/utils.dart';
-
 import 'github_meme/github_meme_controller.dart';
 
 class GithubGridView extends StatefulWidget {
@@ -112,13 +109,11 @@ class GithubGridViewState extends State<GithubGridView> {
                                 ),
                                 itemBuilder: (ctx, index) {
                                   return GithubGridItem(
-
                                     key: Key('k$index'),
                                     index: index,
                                     themeName: widget.themeName,
                                     initialColorNum: widget.grids[index],
                                     onClick: (int colorNum){
-                                      //print('----index : $index ---- colorNum : $colorNum');
                                       widget.grids[index] = colorNum;
                                       //print(grids);
                                     },
@@ -272,7 +267,6 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
                     _colorTween = ColorTween(begin: initialColor, end: initialColor.withOpacity(0.6)).animate(_animationController);
                     _animationController.forward();
                     widget.onClick(colorNum);
-                    //controller.gridsAnimControllers[widget.index] = _animationController;
                     controller.gridsAnimControllers.add(_animationController);
                   }
                   else{
@@ -282,7 +276,6 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
                     _animationController.stop();
                     colorNum = 0;
                     widget.onClick(0);
-                    //controller.gridsAnimControllers[widget.index] = null;
                     controller.gridsAnimControllers.remove(_animationController);
                   }
                 });

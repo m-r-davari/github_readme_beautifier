@@ -1,10 +1,14 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui';
+import 'dart:ui' as ui;
+import 'package:ffmpeg_wasm/ffmpeg_wasm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'dart:html' as html;
+import 'dart:js' as js;
 
 GlobalKey githubMemeBoundryGlobalKey = GlobalKey();
 
@@ -14,7 +18,7 @@ class GithubMemeController extends GetxController{
 
   bool hasAnimListener = true;
 
-  var animVal = 0.0;
+  final ffmpeg = Get.find<FFmpeg>();
 
   void generateFrames()async{
     hasAnimListener = false ;
@@ -61,6 +65,10 @@ class GithubMemeController extends GetxController{
     }
 
 
+    await createAnimatedGif(frames);
+
+    //return;
+
 /*    showDialog(
       context: Get.context!,
       builder: (context) {
@@ -87,10 +95,65 @@ class GithubMemeController extends GetxController{
       },
     );*/
 
+
+
   }
 
-  void createAnimatedGifCallback(String base64String) {
-    final gifBytes = Uint8List.fromList(base64.decode(base64String));
+
+
+
+
+  Future<void> createAnimatedGif(List<Uint8List> frames)async{
+
+    for (int i = 0; i < frames.length ; i++) {
+      ffmpeg.writeFile(i < 10 ? 'github_meme_00$i.png' : 'github_meme_0$i.png', frames[i]);
+      print('----writing files--png $i--');
+    }
+
+    //return;
+
+    // for (int i = 0; i <= 18; i++) {
+    //   final ByteData data = await rootBundle.load(i < 10 ? 'github_meme_00$i.png' : 'github_meme_0$i.png');
+    //   final file = data.buffer.asUint8List();
+    //   ffmpeg.writeFile(i < 10 ? 'github_meme_00$i.png' : 'github_meme_0$i.png', file);
+    //   print('----writing files--png $i--');
+    // }
+
+
+
+    await ffmpeg.run([
+      '-framerate',
+      '4',
+      '-i',
+      'github_meme_%03d.png',
+      '-vf',
+      'palettegen=max_colors=256',//'palettegen=stats_mode=single:max_colors=256'
+      'palette.png',
+    ]);
+
+    await ffmpeg.run([
+      '-framerate',
+      '24',
+      '-i',
+      'github_meme_%03d.png',
+      '-i',
+      'palette.png',
+      '-lavfi', 'paletteuse=dither=bayer:bayer_scale=5',
+      '-r', '24',
+      'output.gif',
+    ]);
+    print('----end run----');
+    print('----start readFile----');
+    final previewWebpData = ffmpeg.readFile('output.gif');
+    print('----end readFile----');
+    print('----start outing----');
+    js.context.callMethod('webSaveAs', [
+      html.Blob([previewWebpData]),
+      'output.gif'
+    ]);
+
+
+
     showDialog(
       context: Get.context!,
       builder: (context) {
@@ -102,7 +165,7 @@ class GithubMemeController extends GetxController{
               color: Colors.transparent,
               height: 350,
               child: Image.memory(
-                  gifBytes
+                  previewWebpData
                 //image.buffer.asUint8List(),
               ),
             ),
@@ -112,6 +175,9 @@ class GithubMemeController extends GetxController{
     );
   }
 
+
+
+
 //----------------------------
 
   Future<Uint8List> captureScreen()async{
@@ -119,11 +185,11 @@ class GithubMemeController extends GetxController{
     // Example: Save the image to storage or display it in a dialog
     // Here, we just print the image size for demonstration purposes
     RenderRepaintBoundary boundary = githubMemeBoundryGlobalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
-    final image = await  boundary.toImage();
+    final image = await  boundary.toImage(pixelRatio: 2);//pixelRatio: 2
     final byteData = await image.toByteData(format: ImageByteFormat.png);
     if (byteData != null) {
       //print('Captured image size: ${byteData.lengthInBytes} bytes');
-      return Uint8List.fromList(byteData.buffer.asUint8List());
+      return Uint8List.fromList(byteData.buffer.asInt8List());//byteData.buffer.asUint8List()
     }
     else{
       throw Exception();

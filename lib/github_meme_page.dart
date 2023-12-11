@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'package:ffmpeg_wasm/ffmpeg_wasm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
@@ -42,42 +43,10 @@ class _GithubMemePageState extends State<GithubMemePage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            child: Icon(Icons.add),
+            child: const Icon(Icons.info_outline),
             onPressed: ()async{
-              for(final controller in memeController.gridsAnimControllers.where((element) => element!=null)){
-                print('-----stopping at --> ${controller?.value} --- ${controller?.lastElapsedDuration} ');
-                //controller?.reset();
-                //controller?.stop();
-                animVal = animVal+0.1;
-                controller?.value = animVal;
-                print('---- ooofff------- ${controller?.status} ');
-              }
-            },
-          ),
-          FloatingActionButton(
-            child: Icon(Icons.stop),
-            onPressed: ()async{
-              for(final controller in memeController.gridsAnimControllers.where((element) => element!=null)){
-                print('-----stopping at --> ${controller?.value} --- ${controller?.lastElapsedDuration} ');
-                //controller?.reset();
-                controller?.stop();
-                memeController.hasAnimListener = false;
-                //controller?.value = animVal;
-              }
-/*          if(play){
-                for(final controller in controller.gridsAnimControllers.where((element) => element!=null)){
-                  print('-----stopping at --> ${controller?.value} --- ${controller?.lastElapsedDuration} ');
-                  controller?.reset();
-                  controller?.stop();
-                }
-              }
-              else{
-                for(final controller in controller.gridsAnimControllers.where((element) => element!=null)){
-                  print('-----starting  --> ${controller?.value} --- ${controller?.lastElapsedDuration} ');
-                }
-              }
-              play = !play;*/
-
+              final ffmpeg = Get.find<FFmpeg>();
+              print('----- ffmpeg loaded : ${ffmpeg.isLoaded()} -----');
             },
           ),
         ],
@@ -175,31 +144,7 @@ class _GithubMemePageState extends State<GithubMemePage> {
                 ,
                 ElevatedButton(
                     onPressed: ()async{
-
                       memeController.generateFrames();
-
-
-
-
-                      // Future.delayed(const Duration(seconds: 3),(){
-                      //   for(var controller in controller.gridsAnimControllers){
-                      //     controller?.forward();
-                      //   }
-                      // });
-
-
-/*                    final image8List = await captureScreen();
-                      // ignore: use_build_context_synchronously
-                      showDialog(
-                        context: context,
-                        builder: (ctx) {
-                          return AlertDialog(
-                            backgroundColor: Colors.white,
-                            content: Image.memory(image8List),
-                          );
-                        },
-                      );*/
-
 
                     },
                     child: Text(isRecording ? 'Stop Recording' : 'Start Recording')
