@@ -5,7 +5,7 @@ A web app to beautify and enhance your Github README file, that provides picture
 ## ⚠️ Attention ⚠️
 🚫 **Do not copy** 🚫 the **Code** or **Idea** of this project ;\
 ©️ **Copyright/License** ©️ belongs to **MohammadReza Davari** ;\
-📢 You are welcomed to contribute ;
+📢 **You are welcomed** to contribute, so do not hesitate ;
 
 
 ## Notes
