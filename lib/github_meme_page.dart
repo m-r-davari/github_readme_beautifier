@@ -30,11 +30,11 @@ class _GithubMemePageState extends State<GithubMemePage> {
 
   final memeController = Get.find<GithubMemeController>();
 
-  bool play = true;
 
-  var animVal = 0.0;
 
-  double? stopAt;
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -142,10 +142,24 @@ class _GithubMemePageState extends State<GithubMemePage> {
                 ,
                 const SizedBox(width: 24,)
                 ,
+                ElevatedButton(onPressed: (){
+                  memeController.isLight.value = !memeController.isLight.value;
+                  GithubGridThemes.isLight.value = !GithubGridThemes.isLight.value;
+                  if(memeController.isLight.value){
+                    memeController.bgColor.value = themes.lightBg;
+                    memeController.unCommitColor.value = themes.unCommitLightColor;
+                  }
+                  else{
+                    memeController.bgColor.value = themes.darkBg;
+                    memeController.unCommitColor.value = themes.darkBg;
+                  }
+                }, child: const Text('isLight/isDark'))
+                ,
+                const SizedBox(width: 24,)
+                ,
                 ElevatedButton(
                     onPressed: ()async{
                       memeController.generateFrames();
-
                     },
                     child: Text(isRecording ? 'Stop Recording' : 'Start Recording')
                 )

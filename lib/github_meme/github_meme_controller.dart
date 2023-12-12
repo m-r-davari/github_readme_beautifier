@@ -10,6 +10,8 @@ import 'package:get/get.dart';
 import 'dart:html' as html;
 import 'dart:js' as js;
 
+import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
+
 GlobalKey githubMemeBoundryGlobalKey = GlobalKey();
 
 class GithubMemeController extends GetxController{
@@ -19,6 +21,19 @@ class GithubMemeController extends GetxController{
   bool hasAnimListener = true;
 
   final ffmpeg = Get.find<FFmpeg>();
+
+  GithubGridThemes themes = GithubGridThemes();
+  Rx<bool> isLight = true.obs;
+  late Rx<Color> bgColor = themes.lightBg.obs;
+  late Rx<Color> unCommitColor = themes.unCommitLightColor.obs;
+
+  @override
+  void onInit() {
+    // bgColor.value = themes.lightBg.;
+    // unCommitColor.value = themes.unCommitLightColor;
+    super.onInit();
+  }
+
 
   void generateFrames()async{
     hasAnimListener = false ;
@@ -127,7 +142,7 @@ class GithubMemeController extends GetxController{
     await ffmpeg.run([
       '-framerate', '24',
       '-i', 'github_meme_%03d.png',
-      '-vf', 'palettegen=max_colors=128', //palettegen //palettegen=max_colors=256 //'palettegen=stats_mode=single:max_colors=256'
+      '-vf', 'palettegen=max_colors=256', //palettegen //palettegen=max_colors=256 //'palettegen=stats_mode=single:max_colors=256'
       'palette.png',
     ]);
 
@@ -137,7 +152,7 @@ class GithubMemeController extends GetxController{
       '-i', 'palette.png',
       '-lavfi', 'paletteuse=dither=bayer:bayer_scale=5',
       //'-filter_complex', //'[0:v][1:v]paletteuse',//'[0:v][1:v]paletteuse=dither=bayer:bayer_scale=5' // [0:v][1:v]paletteuse=dither=floyd_steinberg //[0:v][1:v]paletteuse //paletteuse
-      '-t', '24',
+      '-t', '1',
       '-loop', '0',
       '-r', '24',
       '-f', 'gif',
@@ -186,7 +201,7 @@ class GithubMemeController extends GetxController{
     // Example: Save the image to storage or display it in a dialog
     // Here, we just print the image size for demonstration purposes
     RenderRepaintBoundary boundary = githubMemeBoundryGlobalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
-    final image = await  boundary.toImage(pixelRatio: 2);//pixelRatio: 2
+    final image = await  boundary.toImage(pixelRatio: 1.0);//min 0.8 - def 1 - max 2
     final byteData = await image.toByteData(format: ImageByteFormat.png);
     if (byteData != null) {
       //print('Captured image size: ${byteData.lengthInBytes} bytes');

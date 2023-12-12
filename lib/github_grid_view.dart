@@ -13,6 +13,7 @@ class GithubGridView extends StatefulWidget {
   final bool showProgressHint;
   final bool showDate;
   final bool isRecording;
+
   const GithubGridView({Key? key,required this.grids,required this.themeName, required this.showDate, required this.showAuthor, required this.showProgressHint, required this.showBorder, required this.isRecording}) : super(key: key);
 
   @override
@@ -24,6 +25,7 @@ class GithubGridView extends StatefulWidget {
 class GithubGridViewState extends State<GithubGridView> {
 
   GithubGridThemes themes = GithubGridThemes();
+  final memeController = Get.find<GithubMemeController>();
 
   @override
   void initState() {
@@ -36,16 +38,12 @@ class GithubGridViewState extends State<GithubGridView> {
       key: githubMemeBoundryGlobalKey,
       child: Material(
         color: Colors.transparent,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
+        child: Obx(
+            ()=>Container(
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.all(16),
               padding: const EdgeInsets.all(16),
-              decoration: widget.showBorder ? BoxDecoration(border: Border.all(color: Colors.grey.withOpacity(0.8),width: 0.5,),borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))) : const BoxDecoration(),
+              decoration: widget.showBorder ? BoxDecoration(color: memeController.isLight.value ? themes.lightBg : themes.darkBg,border: Border.all(color: Colors.grey.withOpacity(0.8),width: 0.5,),borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))) : const BoxDecoration(),
               child: Row(
                 children: [
                   widget.showDate ? Container(
@@ -129,24 +127,26 @@ class GithubGridViewState extends State<GithubGridView> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               const Flexible(child: Text('Github Readme Beautifier',style: TextStyle(color: Colors.black54),)),
-                              widget.showAuthor && widget.showProgressHint ? const Text('By \'m-r-davari\'',style: TextStyle(color: Colors.black54),) : const SizedBox(width: 0,),
-                              widget.showProgressHint ? Row(
-                                children: [
-                                  const Text('Less',style: TextStyle(color: Colors.black54)),
-                                  const SizedBox(width: 6,),
-                                  Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[widget.themeName]?[0],borderRadius: BorderRadius.circular(2)),),
-                                  const SizedBox(width: 5,),
-                                  Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[widget.themeName]?[1],borderRadius: BorderRadius.circular(2)),),
-                                  const SizedBox(width: 5,),
-                                  Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[widget.themeName]?[2],borderRadius: BorderRadius.circular(2)),),
-                                  const SizedBox(width: 5,),
-                                  Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[widget.themeName]?[3],borderRadius: BorderRadius.circular(2)),),
-                                  const SizedBox(width: 5,),
-                                  Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[widget.themeName]?[4],borderRadius: BorderRadius.circular(2)),),
-                                  const SizedBox(width: 6,),
-                                  const Text('More',style: TextStyle(color: Colors.black54),)
-                                ],
-                              ) : widget.showAuthor ? const Text('By \'m-r-davari\'',style: TextStyle(color: Colors.black54),) : const SizedBox(width: 0,),
+                              widget.showAuthor && widget.showProgressHint ? const Text('By \'m-r-davari\'',style: TextStyle(color: Colors.black54)) : const SizedBox(width: 0,),
+                              widget.showProgressHint ? Container(
+                                child: Row(
+                                  children: [
+                                    const Text('Less',style: TextStyle(color: Colors.black54)),
+                                    const SizedBox(width: 6,),
+                                    Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[widget.themeName]?[0],borderRadius: BorderRadius.circular(2)),),
+                                    const SizedBox(width: 5,),
+                                    Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[widget.themeName]?[1],borderRadius: BorderRadius.circular(2)),),
+                                    const SizedBox(width: 5,),
+                                    Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[widget.themeName]?[2],borderRadius: BorderRadius.circular(2)),),
+                                    const SizedBox(width: 5,),
+                                    Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[widget.themeName]?[3],borderRadius: BorderRadius.circular(2)),),
+                                    const SizedBox(width: 5,),
+                                    Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[widget.themeName]?[4],borderRadius: BorderRadius.circular(2)),),
+                                    const SizedBox(width: 6,),
+                                    const Text('More',style: TextStyle(color: Colors.black54),)
+                                  ],
+                                ),
+                              ) : widget.showAuthor ? const Text('By \'m-r-davari\'',style: TextStyle(color: Colors.black54)) : const SizedBox(width: 0,),
                             ],
                           ),
                         )
@@ -157,8 +157,6 @@ class GithubGridViewState extends State<GithubGridView> {
                 ],
               ),
             )
-            ,
-          ],
         ),
       ),
     );
@@ -197,7 +195,7 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
     themes = GithubGridThemes();
     colorNum = widget.initialColorNum;
     isSelected = widget.initialColorNum != 0;
-    initialColor = themes.themeMap[widget.themeName]?[colorNum] ?? themes.unCommitColor ;
+    initialColor = themes.themeMap[widget.themeName]?[colorNum] ?? themes.themeMap[widget.themeName]![0]! ;
     _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
     _colorTween = ColorTween(begin: initialColor, end: initialColor).animate(_animationController);
     super.initState();
@@ -225,8 +223,8 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
     if(widget.initialColorNum==0 && widget.initialColorNum!=colorNum){
       colorNum = 0;
       isSelected = false;
-      initialColor = themes.unCommitColor;
-      _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.unCommitColor, colorLerpPercent)).animate(_animationController);
+      initialColor = controller.unCommitColor.value;
+      _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, controller.unCommitColor.value, colorLerpPercent)).animate(_animationController);
       _animationController.reset();
       _animationController.stop();
       controller.gridsAnimControllers.clear();
@@ -238,8 +236,8 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
       }
       colorNum = widget.initialColorNum;
       isSelected = widget.initialColorNum != 0;
-      initialColor = themes.themeMap[widget.themeName]?[colorNum] ?? themes.unCommitColor;
-      _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.unCommitColor, colorLerpPercent)).animate(_animationController);
+      initialColor = themes.themeMap[widget.themeName]?[colorNum] ?? themes.themeMap[widget.themeName]![0]!;
+      _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.themeMap[widget.themeName]![0]!, colorLerpPercent)).animate(_animationController);
       Future.delayed(Duration(milliseconds: _utils.generateRandomNumFromRange(100, 500)),(){
         _animationController.forward();
       });
@@ -250,47 +248,51 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(6),
-      child: AnimatedBuilder(
-        animation: _colorTween,
-        builder: (ctx,child){
-          return Material(
-            color: _colorTween.value,
-            borderRadius: BorderRadius.circular(6),
-            child: InkWell(
-              onTap: (){
-                setState(() {
-                  isSelected = !isSelected;
-                  if(isSelected){
-                    initialColor = generateRandomColor();
-                    _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.unCommitColor, colorLerpPercent)).animate(_animationController);
-                    _animationController.forward();
-                    widget.onClick(colorNum);
-                    controller.gridsAnimControllers.add(_animationController);
-                  }
-                  else{
-                    initialColor = themes.unCommitColor;
-                    _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.unCommitColor, colorLerpPercent)).animate(_animationController);
-                    _animationController.reset();
-                    _animationController.stop();
-                    colorNum = 0;
-                    widget.onClick(0);
-                    controller.gridsAnimControllers.remove(_animationController);
-                  }
-                });
+    return Obx((){
+      var color = GithubGridThemes.isLight;
+      print('-----coll---- $color ----- ${themes.themeMap[widget.themeName]![0]} ---');
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(6),
+        child: AnimatedBuilder(
+          animation: _colorTween,
+          builder: (ctx,child){
+            return Material(
+              color: _colorTween.value,
+              borderRadius: BorderRadius.circular(6),
+              child: InkWell(
+                onTap: (){
+                  setState(() {
+                    isSelected = !isSelected;
+                    if(isSelected){
+                      initialColor = generateRandomColor();
+                      _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.themeMap[widget.themeName]![0]!, colorLerpPercent)).animate(_animationController);
+                      _animationController.forward();
+                      widget.onClick(colorNum);
+                      controller.gridsAnimControllers.add(_animationController);
+                    }
+                    else{
+                      initialColor = themes.themeMap[widget.themeName]![0]!;
+                      _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.themeMap[widget.themeName]![0]!, colorLerpPercent)).animate(_animationController);
+                      _animationController.reset();
+                      _animationController.stop();
+                      colorNum = 0;
+                      widget.onClick(0);
+                      controller.gridsAnimControllers.remove(_animationController);
+                    }
+                  });
 
-              },
-              child: Container(
-                width: 14,
-                height: 14,
-                decoration: BoxDecoration(border: Border.all(color: const Color(0xffdfe1e3),width: 1),borderRadius: const BorderRadius.all(Radius.circular(6))),
+                },
+                child: Container(
+                  width: 14,
+                  height: 14,
+                  decoration: BoxDecoration(border: Border.all(color: const Color(0xffdfe1e3),width: 1),borderRadius: const BorderRadius.all(Radius.circular(6))),
+                ),
               ),
-            ),
-          );
-        },
-      ),
-    );
+            );
+          },
+        ),
+      );
+    });
   }
 
   @override
@@ -301,7 +303,7 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
 
   Color generateRandomColor(){
     colorNum = _utils.generateRandomNumFromRange(1, 4);
-    return themes.themeMap[widget.themeName]?[colorNum] ?? themes.unCommitColor;
+    return themes.themeMap[widget.themeName]?[colorNum] ?? themes.themeMap[widget.themeName]![0]!;
   }
 
 
