@@ -1,18 +1,12 @@
-# github_readme_beautifier
+# Github Readme Beautifier
 
 A web app to beautify and enhance your Github README file, that provides pictures in PNG and GIF(animated) formats.
 
-## ⚠️ Attention ⚠️ : Do not copy ⛔️ the **code** or **idea** of this project; copyright belongs to MohammadReza Davari.
+## ⚠️ Attention ⚠️ : Do not copy 🚫 the *Code* or *Idea* of this project;
+## ©️ Copyright/License ©️ belongs to MohammadReza Davari;
+## 📢 You are welcomed to contribute;
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Notes
+This project has been developed by **MohammadReza Davari** using Flutter web.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
