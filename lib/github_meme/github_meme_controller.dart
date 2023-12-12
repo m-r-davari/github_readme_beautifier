@@ -24,15 +24,6 @@ class GithubMemeController extends GetxController{
 
   GithubGridThemes themes = GithubGridThemes();
   Rx<bool> isLight = true.obs;
-  late Rx<Color> bgColor = themes.lightBg.obs;
-  late Rx<Color> unCommitColor = themes.unCommitLightColor.obs;
-
-  @override
-  void onInit() {
-    // bgColor.value = themes.lightBg.;
-    // unCommitColor.value = themes.unCommitLightColor;
-    super.onInit();
-  }
 
 
   void generateFrames()async{

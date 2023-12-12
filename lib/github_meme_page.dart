@@ -87,7 +87,7 @@ class _GithubMemePageState extends State<GithubMemePage> {
                 ,
                 ElevatedButton(
                     onPressed: ()async{
-                      var result = await showThemePickerDialog(themes.themeMap.keys.toList(),themeName);
+                      var result = await showThemePickerDialog(themes.themesMap.keys.toList(),themeName);
                       if(result!=null){
                         themeName = result;
                         setState((){});
@@ -133,6 +133,7 @@ class _GithubMemePageState extends State<GithubMemePage> {
                 ,
                 ElevatedButton(
                     onPressed: (){
+                      print('-----screen size ---- width : ${MediaQuery.of(context).size.width} -- height : ${MediaQuery.of(context).size.height}');
                       setState(() {
                         showDate=!showDate;
                       });
@@ -145,14 +146,6 @@ class _GithubMemePageState extends State<GithubMemePage> {
                 ElevatedButton(onPressed: (){
                   memeController.isLight.value = !memeController.isLight.value;
                   GithubGridThemes.isLight.value = !GithubGridThemes.isLight.value;
-                  if(memeController.isLight.value){
-                    memeController.bgColor.value = themes.lightBg;
-                    memeController.unCommitColor.value = themes.unCommitLightColor;
-                  }
-                  else{
-                    memeController.bgColor.value = themes.darkBg;
-                    memeController.unCommitColor.value = themes.darkBg;
-                  }
                 }, child: const Text('isLight/isDark'))
                 ,
                 const SizedBox(width: 24,)

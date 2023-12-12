@@ -43,21 +43,21 @@ class GithubGridViewState extends State<GithubGridView> {
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.all(16),
               padding: const EdgeInsets.all(16),
-              decoration: widget.showBorder ? BoxDecoration(color: memeController.isLight.value ? themes.lightBg : themes.darkBg,border: Border.all(color: Colors.grey.withOpacity(0.8),width: 0.5,),borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))) : const BoxDecoration(),
+              decoration: widget.showBorder ? BoxDecoration(color: memeController.isLight.value ? themes.lightBg : themes.darkBg,border: Border.all(color: memeController.isLight.value ? themes.lightBorderColor : themes.darkBorderColor,width: 0.5,),borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))) : const BoxDecoration(),
               child: Row(
                 children: [
                   widget.showDate ? Container(
                     //color: Colors.red,
                     height: 95,
                     padding: const EdgeInsets.only(top: 0,bottom: 8),
-                    child: const Column(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Mon',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                        Text('Wed',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                        Text('Fri',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                        Text('Mon',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
+                        Text('Wed',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
+                        Text('Fri',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
                       ],
                     ),
                   ) : const SizedBox(width: 0,)
@@ -69,24 +69,24 @@ class GithubGridViewState extends State<GithubGridView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        widget.showDate ? const Padding(
-                          padding: EdgeInsets.only(bottom: 2,left: 10,right: 5),
+                        widget.showDate ? Padding(
+                          padding: const EdgeInsets.only(bottom: 2,left: 10,right: 5),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              Text('Dec',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                              Text('Jan',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                              Text('Feb',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                              Text('Mar',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                              Text('Apr',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                              Text('May',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                              Text('Jun',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                              Text('Jul',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                              Text('Aug',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                              Text('Sep',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                              Text('Oct',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                              Text('Nov',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                              Text('Dec',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
+                              Text('Jan',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
+                              Text('Feb',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
+                              Text('Mar',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
+                              Text('Apr',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
+                              Text('May',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
+                              Text('Jun',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
+                              Text('Jul',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
+                              Text('Aug',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
+                              Text('Sep',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
+                              Text('Oct',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
+                              Text('Nov',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
                               Text('',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
                             ],
                           ),
@@ -126,27 +126,25 @@ class GithubGridViewState extends State<GithubGridView> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              const Flexible(child: Text('Github Readme Beautifier',style: TextStyle(color: Colors.black54),)),
-                              widget.showAuthor && widget.showProgressHint ? const Text('By \'m-r-davari\'',style: TextStyle(color: Colors.black54)) : const SizedBox(width: 0,),
-                              widget.showProgressHint ? Container(
-                                child: Row(
-                                  children: [
-                                    const Text('Less',style: TextStyle(color: Colors.black54)),
-                                    const SizedBox(width: 6,),
-                                    Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[widget.themeName]?[0],borderRadius: BorderRadius.circular(2)),),
-                                    const SizedBox(width: 5,),
-                                    Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[widget.themeName]?[1],borderRadius: BorderRadius.circular(2)),),
-                                    const SizedBox(width: 5,),
-                                    Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[widget.themeName]?[2],borderRadius: BorderRadius.circular(2)),),
-                                    const SizedBox(width: 5,),
-                                    Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[widget.themeName]?[3],borderRadius: BorderRadius.circular(2)),),
-                                    const SizedBox(width: 5,),
-                                    Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.themeMap[widget.themeName]?[4],borderRadius: BorderRadius.circular(2)),),
-                                    const SizedBox(width: 6,),
-                                    const Text('More',style: TextStyle(color: Colors.black54),)
-                                  ],
-                                ),
-                              ) : widget.showAuthor ? const Text('By \'m-r-davari\'',style: TextStyle(color: Colors.black54)) : const SizedBox(width: 0,),
+                              Flexible(child: Text('Github Readme Beautifier',style: TextStyle(color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor),)),
+                              widget.showAuthor && widget.showProgressHint ? Text('By \'m-r-davari\'',style: TextStyle(color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)) : const SizedBox(width: 0,),
+                              widget.showProgressHint ? Row(
+                                children: [
+                                  Text('Less',style: TextStyle(color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
+                                  const SizedBox(width: 6,),
+                                  Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.theme(widget.themeName)[0],borderRadius: BorderRadius.circular(2)),),
+                                  const SizedBox(width: 5,),
+                                  Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.theme(widget.themeName)[1],borderRadius: BorderRadius.circular(2)),),
+                                  const SizedBox(width: 5,),
+                                  Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.theme(widget.themeName)[2],borderRadius: BorderRadius.circular(2)),),
+                                  const SizedBox(width: 5,),
+                                  Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.theme(widget.themeName)[3],borderRadius: BorderRadius.circular(2)),),
+                                  const SizedBox(width: 5,),
+                                  Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.theme(widget.themeName)[4],borderRadius: BorderRadius.circular(2)),),
+                                  const SizedBox(width: 6,),
+                                  Text('More',style: TextStyle(color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor),)
+                                ],
+                              ) : widget.showAuthor ? Text('By \'m-r-davari\'',style: TextStyle(color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)) : const SizedBox(width: 0,),
                             ],
                           ),
                         )
@@ -195,7 +193,7 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
     themes = GithubGridThemes();
     colorNum = widget.initialColorNum;
     isSelected = widget.initialColorNum != 0;
-    initialColor = themes.themeMap[widget.themeName]?[colorNum] ?? themes.themeMap[widget.themeName]![0]! ;
+    initialColor = themes.theme(widget.themeName)[colorNum] ?? themes.theme(widget.themeName)[0]! ;
     _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
     _colorTween = ColorTween(begin: initialColor, end: initialColor).animate(_animationController);
     super.initState();
@@ -223,8 +221,8 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
     if(widget.initialColorNum==0 && widget.initialColorNum!=colorNum){
       colorNum = 0;
       isSelected = false;
-      initialColor = controller.unCommitColor.value;
-      _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, controller.unCommitColor.value, colorLerpPercent)).animate(_animationController);
+      initialColor = themes.theme(widget.themeName)[0]!;
+      _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.theme(widget.themeName)[0]!, colorLerpPercent)).animate(_animationController);
       _animationController.reset();
       _animationController.stop();
       controller.gridsAnimControllers.clear();
@@ -236,63 +234,63 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
       }
       colorNum = widget.initialColorNum;
       isSelected = widget.initialColorNum != 0;
-      initialColor = themes.themeMap[widget.themeName]?[colorNum] ?? themes.themeMap[widget.themeName]![0]!;
-      _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.themeMap[widget.themeName]![0]!, colorLerpPercent)).animate(_animationController);
-      Future.delayed(Duration(milliseconds: _utils.generateRandomNumFromRange(100, 500)),(){
+      initialColor = themes.theme(widget.themeName)[colorNum] ?? themes.theme(widget.themeName)[0]!;
+      _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.theme(widget.themeName)[0]!, colorLerpPercent)).animate(_animationController);
+      Future.delayed(Duration(milliseconds: _utils.generateRandomNumFromRange(50, 500)),(){
         _animationController.forward();
       });
     }
-  }
+    else{
+      _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.theme(widget.themeName)[0]!, colorLerpPercent)).animate(_animationController);
+    }
+
+}
 
 
 
   @override
   Widget build(BuildContext context) {
-    return Obx((){
-      var color = GithubGridThemes.isLight;
-      print('-----coll---- $color ----- ${themes.themeMap[widget.themeName]![0]} ---');
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(6),
-        child: AnimatedBuilder(
-          animation: _colorTween,
-          builder: (ctx,child){
-            return Material(
-              color: _colorTween.value,
-              borderRadius: BorderRadius.circular(6),
-              child: InkWell(
-                onTap: (){
-                  setState(() {
-                    isSelected = !isSelected;
-                    if(isSelected){
-                      initialColor = generateRandomColor();
-                      _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.themeMap[widget.themeName]![0]!, colorLerpPercent)).animate(_animationController);
-                      _animationController.forward();
-                      widget.onClick(colorNum);
-                      controller.gridsAnimControllers.add(_animationController);
-                    }
-                    else{
-                      initialColor = themes.themeMap[widget.themeName]![0]!;
-                      _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.themeMap[widget.themeName]![0]!, colorLerpPercent)).animate(_animationController);
-                      _animationController.reset();
-                      _animationController.stop();
-                      colorNum = 0;
-                      widget.onClick(0);
-                      controller.gridsAnimControllers.remove(_animationController);
-                    }
-                  });
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(6),
+      child: AnimatedBuilder(
+        animation: _colorTween,
+        builder: (ctx,child){
+          return Material(
+            color: colorNum == 0 ? themes.theme(widget.themeName)[0] : _colorTween.value,
+            borderRadius: BorderRadius.circular(6),
+            child: InkWell(
+              onTap: (){
+                setState(() {
+                  isSelected = !isSelected;
+                  if(isSelected){
+                    initialColor = generateRandomColor();
+                    _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.theme(widget.themeName)[0]!, colorLerpPercent)).animate(_animationController);
+                    _animationController.forward();
+                    widget.onClick(colorNum);
+                    controller.gridsAnimControllers.add(_animationController);
+                  }
+                  else{
+                    initialColor = themes.theme(widget.themeName)[0]!;
+                    _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.theme(widget.themeName)[0]!, colorLerpPercent)).animate(_animationController);
+                    _animationController.reset();
+                    _animationController.stop();
+                    colorNum = 0;
+                    widget.onClick(0);
+                    controller.gridsAnimControllers.remove(_animationController);
+                  }
+                });
 
-                },
-                child: Container(
-                  width: 14,
-                  height: 14,
-                  decoration: BoxDecoration(border: Border.all(color: const Color(0xffdfe1e3),width: 1),borderRadius: const BorderRadius.all(Radius.circular(6))),
-                ),
+              },
+              child: Container(
+                width: 14,
+                height: 14,
+                decoration: BoxDecoration(border: Border.all(color: controller.isLight.value ? themes.unCommitLightBorderColor : themes.unCommitDarkBorderColor ,width: 1),borderRadius: const BorderRadius.all(Radius.circular(6))),
               ),
-            );
-          },
-        ),
-      );
-    });
+            ),
+          );
+        },
+      ),
+    );
   }
 
   @override
@@ -303,7 +301,7 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
 
   Color generateRandomColor(){
     colorNum = _utils.generateRandomNumFromRange(1, 4);
-    return themes.themeMap[widget.themeName]?[colorNum] ?? themes.themeMap[widget.themeName]![0]!;
+    return themes.theme(widget.themeName)[colorNum] ?? themes.theme(widget.themeName)[0]!;
   }
 
 
