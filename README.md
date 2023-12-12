@@ -2,6 +2,8 @@
 
 A web app to beautify and enhance your Github README file, that provides pictures in PNG and GIF(animated) formats.
 
+## Attention: Do not copy the code or idea of this project; copyright belongs to MohammadReza Davari.
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
