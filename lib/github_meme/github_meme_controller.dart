@@ -65,6 +65,9 @@ class GithubMemeController extends GetxController{
     }
 
 
+    final List<Uint8List> reverseFrames = [];
+    reverseFrames.addAll(List.of(frames).reversed);
+    frames.addAll(reverseFrames);
     await createAnimatedGif(frames);
 
     //return;
@@ -122,28 +125,22 @@ class GithubMemeController extends GetxController{
 
 
     await ffmpeg.run([
-      '-framerate',
-      '24',
-      '-i',
-      'github_meme_%03d.png',
-      '-vf',
-      'palettegen=max_colors=128', //palettegen //palettegen=max_colors=256 //'palettegen=stats_mode=single:max_colors=256'
+      '-framerate', '24',
+      '-i', 'github_meme_%03d.png',
+      '-vf', 'palettegen=max_colors=128', //palettegen //palettegen=max_colors=256 //'palettegen=stats_mode=single:max_colors=256'
       'palette.png',
     ]);
 
     await ffmpeg.run([
-      '-framerate',
-      '24',
-      '-i',
-      'github_meme_%03d.png',
-      '-i',
-      'palette.png',
+      '-framerate', '24',
+      '-i', 'github_meme_%03d.png',
+      '-i', 'palette.png',
       '-lavfi', 'paletteuse=dither=bayer:bayer_scale=5',
-      //'-filter_complex',
-      //'[0:v][1:v]paletteuse',//'[0:v][1:v]paletteuse=dither=bayer:bayer_scale=5' // [0:v][1:v]paletteuse=dither=floyd_steinberg //[0:v][1:v]paletteuse //paletteuse
+      //'-filter_complex', //'[0:v][1:v]paletteuse',//'[0:v][1:v]paletteuse=dither=bayer:bayer_scale=5' // [0:v][1:v]paletteuse=dither=floyd_steinberg //[0:v][1:v]paletteuse //paletteuse
+      '-t', '24',
+      '-loop', '0',
       '-r', '24',
-      '-f',
-      'gif',
+      '-f', 'gif',
       'output.gif',
     ]);
     print('----end run----');
