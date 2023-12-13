@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui';
-import 'dart:ui' as ui;
 import 'package:ffmpeg_wasm/ffmpeg_wasm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -11,22 +10,25 @@ import 'dart:html' as html;
 import 'dart:js' as js;
 
 import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
+import 'package:github_readme_beautifier/utils/utils.dart';
 
 GlobalKey githubMemeBoundryGlobalKey = GlobalKey();
 
 class GithubMemeController extends GetxController{
 
+  RxList<int> grids = List.filled(368, 0).obs;
   List<AnimationController?> gridsAnimControllers = [];
 
   bool hasAnimListener = true;
-
   final ffmpeg = Get.find<FFmpeg>();
 
   GithubGridThemes themes = GithubGridThemes();
   Rx<bool> isLight = true.obs;
 
+  final Utils _utils = Utils();
 
-  void generateFrames()async{
+
+  Future<void> generateFrames()async{
     hasAnimListener = false ;
     List<Uint8List> frames = [];//frames list
     const int exportDuration = 1000; //milSec
@@ -36,99 +38,48 @@ class GithubMemeController extends GetxController{
     }
     await Future.delayed(Duration.zero);
     for(int i = 0 ; i<= exportDuration/41 ; i++){
-      print('---- frame : $i -----');
       for(var controller in gridsAnimControllers){
-        //increase anim value manually for next frame
-        print('---- controller : $controller -----');
         if (controller!.status == AnimationStatus.forward){
-          print('---- to increase : ${controller.value} ---${controller.status}---');
           controller.value += 0.1;
-          print('---- increasing : ${controller.value} -----');
         }
         else if (controller.status == AnimationStatus.completed){
-          print('---- complete : ${controller.value} ---${controller.status}---');
           controller.reverse();
-          print('---- complete : ${controller.value} -----');
         }
         else if (controller.status == AnimationStatus.reverse){
-          print('---- to decrease ---- ${controller.status} -- ${controller.value} --');
           controller.value -= 0.1;
-          print('---- decreasing ---- ${controller.status} -- ${controller.value} --');
         }
         else if (controller.status == AnimationStatus.dismissed){
-          print('---- to dismissed ---- ${controller.status} -- ${controller.value} --');
           controller.forward() ;
-          print('---- dismissed ---- ${controller.status} -- ${controller.value} --');
-        }
-        else{
-          print('---- elsing ---${controller.status}---');
         }
       }
       await Future.delayed(Duration.zero);
       final frame = await captureScreen();
       frames.add(frame);
-      //todo : re active animate after generating frames and gif.
-    }
 
+    }
 
     final List<Uint8List> reverseFrames = [];
     reverseFrames.addAll(List.of(frames).reversed);
     frames.addAll(reverseFrames);
     await createAnimatedGif(frames);
 
-    //return;
-
-/*    showDialog(
-      context: Get.context!,
-      builder: (context) {
-        return AlertDialog(
-          content: SizedBox(
-            height: 800,
-            width: 1500,
-            child: ListView.builder(
-              padding: EdgeInsets.all(8.0),
-              itemCount: frames.length,
-              itemBuilder: (BuildContext context, int index) {
-                final image = frames[index];
-                return Container(
-                  height: 350,
-                  child: Image.memory(
-                    image
-                    //image.buffer.asUint8List(),
-                  ),
-                );
-              },
-            ),
-          ),
-        );
-      },
-    );*/
-
-
+    for(final gridAnimController in gridsAnimControllers){
+      hasAnimListener = true;
+      // gridAnimController!.value = _utils.generateUniqueRandomDouble(0.01, 1.0);
+      // gridAnimController.forward();
+      Future.delayed(Duration(milliseconds: _utils.generateRandomNumFromRange(50, 500)),(){
+        gridAnimController!.forward();
+      });
+    }
 
   }
-
-
-
 
 
   Future<void> createAnimatedGif(List<Uint8List> frames)async{
 
     for (int i = 0; i < frames.length ; i++) {
       ffmpeg.writeFile(i < 10 ? 'github_meme_00$i.png' : 'github_meme_0$i.png', frames[i]);
-      print('----writing files--png $i--');
     }
-
-    //return;
-
-    // for (int i = 0; i <= 18; i++) {
-    //   final ByteData data = await rootBundle.load(i < 10 ? 'github_meme_00$i.png' : 'github_meme_0$i.png');
-    //   final file = data.buffer.asUint8List();
-    //   ffmpeg.writeFile(i < 10 ? 'github_meme_00$i.png' : 'github_meme_0$i.png', file);
-    //   print('----writing files--png $i--');
-    // }
-
-
 
     await ffmpeg.run([
       '-framerate', '24',
@@ -149,16 +100,11 @@ class GithubMemeController extends GetxController{
       '-f', 'gif',
       'output.gif',
     ]);
-    print('----end run----');
-    print('----start readFile----');
     final previewWebpData = ffmpeg.readFile('output.gif');
-    print('----end readFile----');
-    print('----start outing----');
     js.context.callMethod('webSaveAs', [
       html.Blob([previewWebpData]),
       'output.gif'
     ]);
-
 
 
     showDialog(

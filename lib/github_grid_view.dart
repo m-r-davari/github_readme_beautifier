@@ -12,9 +12,8 @@ class GithubGridView extends StatefulWidget {
   final bool showAuthor;
   final bool showProgressHint;
   final bool showDate;
-  final bool isRecording;
 
-  const GithubGridView({Key? key,required this.grids,required this.themeName, required this.showDate, required this.showAuthor, required this.showProgressHint, required this.showBorder, required this.isRecording}) : super(key: key);
+  const GithubGridView({Key? key,required this.grids,required this.themeName, required this.showDate, required this.showAuthor, required this.showProgressHint, required this.showBorder}) : super(key: key);
 
   @override
   State<GithubGridView> createState() => GithubGridViewState();
@@ -87,7 +86,7 @@ class GithubGridViewState extends State<GithubGridView> {
                               Text('Sep',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
                               Text('Oct',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
                               Text('Nov',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
-                              Text('',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                              const Text('',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
                             ],
                           ),
                         ) : Container()

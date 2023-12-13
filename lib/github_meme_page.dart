@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'package:ffmpeg_wasm/ffmpeg_wasm.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
 
 import 'github_meme/github_meme_controller.dart';
 
-
 class GithubMemePage extends StatefulWidget {
   const GithubMemePage({Key? key}) : super(key: key);
 
@@ -18,23 +16,14 @@ class GithubMemePage extends StatefulWidget {
 }
 
 class _GithubMemePageState extends State<GithubMemePage> {
-
-  List<int> grids = List.filled(368, 0);
   String themeName = 'Default';
   GithubGridThemes themes = GithubGridThemes();
   bool showBorder = true;
   bool showAuthor = true;
   bool showProgressHint = true;
   bool showDate = true;
-  bool isRecording = false;
 
   final memeController = Get.find<GithubMemeController>();
-
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +33,7 @@ class _GithubMemePageState extends State<GithubMemePage> {
         children: [
           FloatingActionButton(
             child: const Icon(Icons.info_outline),
-            onPressed: ()async{
+            onPressed: () async {
               final ffmpeg = Get.find<FFmpeg>();
               print('----- ffmpeg loaded : ${ffmpeg.isLoaded()} -----');
             },
@@ -57,107 +46,101 @@ class _GithubMemePageState extends State<GithubMemePage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           GithubGridView(
-            grids: grids,
+            grids: memeController.grids,
             themeName: themeName,
             showBorder: showBorder,
             showAuthor: showAuthor,
             showDate: showDate,
             showProgressHint: showProgressHint,
-            isRecording: isRecording,
-          )
-          ,
-          const SizedBox(height: 16,)
-          ,
+          ),
+          const SizedBox(
+            height: 16,
+          ),
           FittedBox(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const SizedBox(width: 24,)
-                ,
+                const SizedBox(
+                  width: 24,
+                ),
                 ElevatedButton(
-                    onPressed: (){
-                      grids.fillRange(0, grids.length,0);
-                      setState(() {
-                      });
+                    onPressed: () {
+                      memeController.grids.fillRange(0, memeController.grids.length, 0);
+                      setState(() {});
                     },
-                    child: const Text('Reset')
-                )
-                ,
-                const SizedBox(width: 24,)
-                ,
+                    child: const Text('Reset')),
+                const SizedBox(
+                  width: 24,
+                ),
                 ElevatedButton(
-                    onPressed: ()async{
-                      var result = await showThemePickerDialog(themes.themesMap.keys.toList(),themeName);
-                      if(result!=null){
+                    onPressed: () async {
+                      var result = await showThemePickerDialog(themes.themesMap.keys.toList(), themeName);
+                      if (result != null) {
                         themeName = result;
-                        setState((){});
+                        setState(() {});
                       }
                     },
-                    child: const Text('Choose Theme')
-                )
-                ,
-                const SizedBox(width: 24,)
-                ,
+                    child: const Text('Choose Theme')),
+                const SizedBox(
+                  width: 24,
+                ),
                 ElevatedButton(
-                    onPressed: (){
+                    onPressed: () {
                       setState(() {
-                        showBorder=!showBorder;
+                        showBorder = !showBorder;
                       });
                     },
-                    child: Text(showBorder ? 'Hide Border' : 'Show Border')
-                )
-                ,
-                const SizedBox(width: 24,)
-                ,
+                    child: Text(showBorder ? 'Hide Border' : 'Show Border')),
+                const SizedBox(
+                  width: 24,
+                ),
                 ElevatedButton(
-                    onPressed: (){
+                    onPressed: () {
                       setState(() {
-                        showAuthor=!showAuthor;
+                        showAuthor = !showAuthor;
                       });
                     },
-                    child: Text(showAuthor ? 'Hide Author' : 'Show Author')
-                )
-                ,
-                const SizedBox(width: 24,)
-                ,
+                    child: Text(showAuthor ? 'Hide Author' : 'Show Author')),
+                const SizedBox(
+                  width: 24,
+                ),
                 ElevatedButton(
-                    onPressed: (){
+                    onPressed: () {
                       setState(() {
-                        showProgressHint=!showProgressHint;
+                        showProgressHint = !showProgressHint;
                       });
                     },
-                    child: Text(showProgressHint ? 'Hide Progress Hint' : 'Show Progress Hint')
-                )
-                ,
-                const SizedBox(width: 24,)
-                ,
+                    child: Text(showProgressHint ? 'Hide Progress Hint' : 'Show Progress Hint')),
+                const SizedBox(
+                  width: 24,
+                ),
                 ElevatedButton(
-                    onPressed: (){
-                      print('-----screen size ---- width : ${MediaQuery.of(context).size.width} -- height : ${MediaQuery.of(context).size.height}');
+                    onPressed: () {
                       setState(() {
-                        showDate=!showDate;
+                        showDate = !showDate;
                       });
                     },
-                    child: Text(showDate ? 'Hide Date' : 'Show Date')
-                )
-                ,
-                const SizedBox(width: 24,)
-                ,
-                ElevatedButton(onPressed: (){
-                  memeController.isLight.value = !memeController.isLight.value;
-                  GithubGridThemes.isLight.value = !GithubGridThemes.isLight.value;
-                }, child: const Text('isLight/isDark'))
-                ,
-                const SizedBox(width: 24,)
-                ,
+                    child: Text(showDate ? 'Hide Date' : 'Show Date')),
+                const SizedBox(
+                  width: 24,
+                ),
                 ElevatedButton(
-                    onPressed: ()async{
-                      memeController.generateFrames();
+                    onPressed: () {
+                      memeController.isLight.value = !memeController.isLight.value;
+                      GithubGridThemes.isLight.value = !GithubGridThemes.isLight.value;
                     },
-                    child: Text(isRecording ? 'Stop Recording' : 'Start Recording')
+                    child: const Text('isLight/isDark')),
+                const SizedBox(
+                  width: 24,
+                ),
+                ElevatedButton(
+                    onPressed: () async {
+                      await memeController.generateFrames();
+                    },
+                    child: const Text('Export')),
+                const SizedBox(
+                  width: 24,
                 )
-                ,
-                const SizedBox(width: 24,)
               ],
             ),
           )
@@ -166,48 +149,49 @@ class _GithubMemePageState extends State<GithubMemePage> {
     );
   }
 
-
   @override
   void dispose() {
     super.dispose();
   }
 
-
-
-  Future<String?> showThemePickerDialog(List<String> themes,[String? chosenTheme])async{
-    return await showModalBottomSheet<String>(context: context, builder: (ctx){
-      return SizedBox(
-        height: 250,
-        child: ListView.separated(
-          itemCount: themes.length,
-          padding: const EdgeInsets.only(top: 16),
-          itemBuilder: (ctx,index){
-            return InkWell(
-              onTap: (){
-                Navigator.pop(context,themes[index]);
+  Future<String?> showThemePickerDialog(List<String> themes, [String? chosenTheme]) async {
+    return await showModalBottomSheet<String>(
+        context: context,
+        builder: (ctx) {
+          return SizedBox(
+            height: 250,
+            child: ListView.separated(
+              itemCount: themes.length,
+              padding: const EdgeInsets.only(top: 16),
+              itemBuilder: (ctx, index) {
+                return InkWell(
+                  onTap: () {
+                    Navigator.pop(context, themes[index]);
+                  },
+                  child: Container(
+                    height: 50,
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('${index + 1}'),
+                        Text(themes[index]),
+                        Icon(chosenTheme == themes[index] ? Icons.check_box : Icons.check_box_outline_blank)
+                      ],
+                    ),
+                  ),
+                );
               },
-              child: Container(
-                height: 50,
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('${index+1}'),
-                    Text(themes[index]),
-                    Icon(chosenTheme == themes[index] ? Icons.check_box : Icons.check_box_outline_blank)
-                  ],
-                ),
-              ),
-            );
-          },
-          separatorBuilder: (ctx,index){
-            return const Divider(color: Colors.grey,thickness: 0.6,indent: 10,endIndent: 10,);
-          },
-        ),
-      );
-    });
+              separatorBuilder: (ctx, index) {
+                return const Divider(
+                  color: Colors.grey,
+                  thickness: 0.6,
+                  indent: 10,
+                  endIndent: 10,
+                );
+              },
+            ),
+          );
+        });
   }
-
-
-
 }
