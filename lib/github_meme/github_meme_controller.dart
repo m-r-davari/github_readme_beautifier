@@ -65,7 +65,7 @@ class GithubMemeController extends GetxController{
 
     for(final gridAnimController in gridsAnimControllers){
       hasAnimListener = true;
-      // gridAnimController!.value = _utils.generateUniqueRandomDouble(0.01, 1.0);
+      // gridAnimController!.value = _utils.generateUniqueRandomDouble(0.01, 1.0);.
       // gridAnimController.forward();
       Future.delayed(Duration(milliseconds: _utils.generateRandomNumFromRange(50, 500)),(){
         gridAnimController!.forward();
