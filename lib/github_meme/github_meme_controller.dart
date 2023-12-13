@@ -59,8 +59,11 @@ class GithubMemeController extends GetxController{
     }
 
     final List<Uint8List> reverseFrames = [];
+    print('----org frames --- ${frames.length}');
     reverseFrames.addAll(List.of(frames).reversed);
     frames.addAll(reverseFrames);
+    print('----rev frames --- ${reverseFrames.length}');
+    print('----all frames --- ${frames.length}');
     await createAnimatedGif(frames);
 
     for(final gridAnimController in gridsAnimControllers){
@@ -81,22 +84,39 @@ class GithubMemeController extends GetxController{
       ffmpeg.writeFile(i < 10 ? 'github_meme_00$i.png' : 'github_meme_0$i.png', frames[i]);
     }
 
+    //frame rate changes from 24 to 50
+    //because with reverse frames we have total 50 frames and if we want to use 24 fps export it will deduct frames and cause the
+    //non equal start and end frame of our frame list when we set the frame rate to 50 , in export the start and end frame wil
+    //the same, but it will increase the gif size, we could make lower frame rate on frames for generator to make sure both
+    // forward and reverse frames to gether will be around 50 frames so we need to have around 12 org frames and then
+    // with 12 reverse frames the total frames will be 24 and ir will fix the gif size but may have effect on animation smoothness
+
+    //another idea for make start and end frame equals is to make two gif, first with 24 frames and then
+    //make the created gif reversed, and then concat two gif to each other,
+    // below is the sample code for this idea, it should be test
+
+    /*
+    ffmpeg -framerate 30 -i frame_%03d.png -vf "fps=30" -c:v gif forward.gif
+    ffmpeg -i forward.gif -vf reverse reversed.gif
+    ffmpeg -i "concat:forward.gif|reversed.gif" -c copy final.gif
+    */
+
     await ffmpeg.run([
-      '-framerate', '24',
+      '-framerate', '50',
       '-i', 'github_meme_%03d.png',
-      '-vf', 'palettegen=max_colors=256', //palettegen //palettegen=max_colors=256 //'palettegen=stats_mode=single:max_colors=256'
+      '-vf', 'palettegen=max_colors=128', //palettegen //palettegen=max_colors=256 //'palettegen=stats_mode=single:max_colors=256'
       'palette.png',
     ]);
 
     await ffmpeg.run([
-      '-framerate', '24',
+      '-framerate', '50',
       '-i', 'github_meme_%03d.png',
       '-i', 'palette.png',
       '-lavfi', 'paletteuse=dither=bayer:bayer_scale=5',
       //'-filter_complex', //'[0:v][1:v]paletteuse',//'[0:v][1:v]paletteuse=dither=bayer:bayer_scale=5' // [0:v][1:v]paletteuse=dither=floyd_steinberg //[0:v][1:v]paletteuse //paletteuse
       '-t', '1',
       '-loop', '0',
-      '-r', '24',
+      '-r', '50',
       '-f', 'gif',
       'output.gif',
     ]);
