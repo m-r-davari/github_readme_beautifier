@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 class GithubGridThemes {
 
   static Rx<bool> isLight = true.obs;
-  Color lightBg = const Color(0xffffffff);
-  Color darkBg = const Color(0xff0d1117);
+  Color lightBgColor = const Color(0xffffffff);
+  Color darkBgColor = const Color(0xff0d1117);
   Color lightBorderColor = const Color(0xffd0d7de);
   Color darkBorderColor = const Color(0xff30363d);
   Color lightTextColor = const Color(0xff1f2328);

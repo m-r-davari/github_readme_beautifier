@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:github_readme_beautifier/github_meme/github_meme_text.dart';
 import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
 import 'package:github_readme_beautifier/utils/utils.dart';
 import 'github_meme/github_meme_controller.dart';
@@ -33,13 +34,22 @@ class GithubGridViewState extends State<GithubGridView> {
 
   @override
   Widget build(BuildContext context) {
-    return RepaintBoundary(
+    return Obx(() => RepaintBoundary(
       key: githubMemeBoundryGlobalKey,
-      child: Obx(
-          ()=>Container(
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              margin: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),//some how border will not show in out put need to check if there is need to duplicate the border with stack or not
+              decoration: widget.showBorder ? BoxDecoration(border: Border.all(color: memeController.isLight.value ? themes.lightBorderColor : themes.darkBorderColor,width: 0.5,),borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))) : const BoxDecoration(),
+            ),
+          ),
+          Container(
             width: MediaQuery.of(context).size.width,
             margin: const EdgeInsets.all(16),
-            padding: const EdgeInsets.all(16),//color: memeController.isLight.value ? themes.lightBg : themes.darkBg,
+            padding: const EdgeInsets.all(16),//color: memeController.isLight.value ? themes.lightBgColor : themes.darkBgColor,
             decoration: widget.showBorder ? BoxDecoration(border: Border.all(color: memeController.isLight.value ? themes.lightBorderColor : themes.darkBorderColor,width: 0.5,),borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))) : const BoxDecoration(),
             child: Row(
               children: [
@@ -52,9 +62,9 @@ class GithubGridViewState extends State<GithubGridView> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Mon',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
-                      Text('Wed',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
-                      Text('Fri',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
+                      GithubMemeText(str :'Mon', isLight: memeController.isLight.value,fontSize: 13,),
+                      GithubMemeText(str :'Wed', isLight: memeController.isLight.value,fontSize: 13,),
+                      GithubMemeText(str :'Fri', isLight: memeController.isLight.value,fontSize: 13,),
                     ],
                   ),
                 ) : const SizedBox(width: 0,)
@@ -72,18 +82,18 @@ class GithubGridViewState extends State<GithubGridView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Text('Dec',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
-                            Text('Jan',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
-                            Text('Feb',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
-                            Text('Mar',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
-                            Text('Apr',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
-                            Text('May',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
-                            Text('Jun',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
-                            Text('Jul',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
-                            Text('Aug',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
-                            Text('Sep',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
-                            Text('Oct',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
-                            Text('Nov',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500, color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
+                            GithubMemeText(str :'Dec', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubMemeText(str :'Jan', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubMemeText(str :'Feb', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubMemeText(str :'Mar', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubMemeText(str :'Apr', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubMemeText(str :'May', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubMemeText(str :'Jun', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubMemeText(str :'Jul', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubMemeText(str :'Aug', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubMemeText(str :'Sep', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubMemeText(str :'Oct', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubMemeText(str :'Nov', isLight: memeController.isLight.value,fontSize: 13,),
                             const Text('',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
                           ],
                         ),
@@ -124,41 +134,11 @@ class GithubGridViewState extends State<GithubGridView> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
 
-
-                            //The gif images could not have semi-transparent color(transparent color with percent).
-                            //all of gif images pixel mus be either full transparent or colored pixel with full transparency
-                            //Due to anti aliasing in flutter Text(Widgets) the edge of Alphabets turns to colors with transparency to
-                            //have smoothest display and it cause the Gif not showing Text properly.
-                            //therefor we must have solid background for our text to show good in gifs
-                            //we have three options :
-                            //1 - give solid background color to whole widget, its good but it make problem in different readme bg colors.
-                            //since github user may use different dark/light theme and even every dark/light theme may have different
-                            // bg colors so we could not cover all these different bg colors, we only can determine dark or light theme.
-                            //
-                            //2 - give solid background colors to Texts , its better than solution 1 but it has still problem because the
-                            // space between chars will fill with solid colors and it may shown in different theme
-                            //
-                            //3 - use over lay texts in stack, it is better than previous solutions, the first Text widget in stack play
-                            //role as bg color and it only covers the Alphabets area, the first text color must be equals to theme color.
-                            //the second text will play the main text role and the color must be text color of the desire dark/ligh theme.
-                            //note : may be the first text that plays bg role for us must be bigger that our main text to ensure that all
-                            //the area of our main text covers with first bg text.
-
-                            Flexible(child: Stack(
-                              children: [
-
-                                Text('Github Readme Beautifier',style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w900,),)
-                                ,
-                                Text('Github Readme Beautifier',style: TextStyle(color: Colors.white,fontSize: 14,fontWeight: FontWeight.w900,),)
-                                ,
-                                Text('Github Readme Beautifier',style: TextStyle(color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor,fontSize: 14),)
-                              ],
-                            )),
-                            //Flexible(child: Text('Github Readme Beautifier',style: TextStyle(color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor),)),
-                            widget.showAuthor && widget.showProgressHint ? Text('By \'m-r-davari\'',style: TextStyle(color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)) : const SizedBox(width: 0,),
+                            Flexible(child: GithubMemeText(str: 'Github Readme Beautifier',isLight: memeController.isLight.value,)),
+                            widget.showAuthor && widget.showProgressHint ? GithubMemeText(str: 'By \'m-r-davari\'',isLight: memeController.isLight.value,) : const SizedBox(width: 0,),
                             widget.showProgressHint ? Row(
                               children: [
-                                Text('Less',style: TextStyle(color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)),
+                                GithubMemeText(str :'Less', isLight: memeController.isLight.value,),
                                 const SizedBox(width: 6,),
                                 Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.theme(widget.themeName)[0],borderRadius: BorderRadius.circular(2)),),
                                 const SizedBox(width: 5,),
@@ -170,9 +150,9 @@ class GithubGridViewState extends State<GithubGridView> {
                                 const SizedBox(width: 5,),
                                 Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.theme(widget.themeName)[4],borderRadius: BorderRadius.circular(2)),),
                                 const SizedBox(width: 6,),
-                                Text('More',style: TextStyle(color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor),)
+                                GithubMemeText(str :'More', isLight: memeController.isLight.value,),
                               ],
-                            ) : widget.showAuthor ? Text('By \'m-r-davari\'',style: TextStyle(color: memeController.isLight.value ? themes.lightTextColor : themes.darkTextColor)) : const SizedBox(width: 0,),
+                            ) : widget.showAuthor ? GithubMemeText(str :'By \'m-r-davari\'', isLight: memeController.isLight.value,) : const SizedBox(width: 0,),
                           ],
                         ),
                       )
@@ -183,8 +163,9 @@ class GithubGridViewState extends State<GithubGridView> {
               ],
             ),
           )
+        ],
       ),
-    );
+    ));
   }
 
 }
