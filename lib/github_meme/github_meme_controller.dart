@@ -95,11 +95,6 @@ class GithubMemeController extends GetxController{
     //make the created gif reversed, and then concat two gif to each other,
     // below is the sample code for this idea, it should be test
 
-    /*
-    ffmpeg -framerate 30 -i frame_%03d.png -vf "fps=30" -c:v gif forward.gif
-    ffmpeg -i forward.gif -vf reverse reversed.gif
-    ffmpeg -i "concat:forward.gif|reversed.gif" -c copy final.gif
-    */
 
     await ffmpeg.run([
       '-framerate', '50',
