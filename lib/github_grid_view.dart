@@ -34,138 +34,141 @@ class GithubGridViewState extends State<GithubGridView> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => RepaintBoundary(
-      key: githubMemeBoundryGlobalKey,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: Container(
+    return Obx(() {
+      print('---- build grid view -----');
+      return RepaintBoundary(
+        key: githubMemeBoundryGlobalKey,
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                margin: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),//some how border will not show in out put need to check if there is need to duplicate the border with stack or not
+                decoration: widget.showBorder ? BoxDecoration(border: Border.all(color: memeController.isLight.value ? themes.lightBorderColor : themes.darkBorderColor,width: 0.5,),borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))) : const BoxDecoration(),
+              ),
+            ),
+            Container(
               width: MediaQuery.of(context).size.width,
               margin: const EdgeInsets.all(16),
-              padding: const EdgeInsets.all(16),//some how border will not show in out put need to check if there is need to duplicate the border with stack or not
+              padding: const EdgeInsets.all(16),//color: memeController.isLight.value ? themes.lightBgColor : themes.darkBgColor,
               decoration: widget.showBorder ? BoxDecoration(border: Border.all(color: memeController.isLight.value ? themes.lightBorderColor : themes.darkBorderColor,width: 0.5,),borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))) : const BoxDecoration(),
-            ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.all(16),
-            padding: const EdgeInsets.all(16),//color: memeController.isLight.value ? themes.lightBgColor : themes.darkBgColor,
-            decoration: widget.showBorder ? BoxDecoration(border: Border.all(color: memeController.isLight.value ? themes.lightBorderColor : themes.darkBorderColor,width: 0.5,),borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))) : const BoxDecoration(),
-            child: Row(
-              children: [
-                widget.showDate ? Container(
-                  //color: Colors.red,
-                  height: 95,
-                  padding: const EdgeInsets.only(top: 0,bottom: 8),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      GithubMemeText(str :'Mon', isLight: memeController.isLight.value,fontSize: 13,),
-                      GithubMemeText(str :'Wed', isLight: memeController.isLight.value,fontSize: 13,),
-                      GithubMemeText(str :'Fri', isLight: memeController.isLight.value,fontSize: 13,),
-                    ],
-                  ),
-                ) : const SizedBox(width: 0,)
-                ,
-                const SizedBox(width: 1,)
-                ,
-                Flexible(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      widget.showDate ? Padding(
-                        padding: const EdgeInsets.only(bottom: 2,left: 10,right: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            GithubMemeText(str :'Dec', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'Jan', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'Feb', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'Mar', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'Apr', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'May', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'Jun', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'Jul', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'Aug', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'Sep', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'Oct', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'Nov', isLight: memeController.isLight.value,fontSize: 13,),
-                            const Text('',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
-                          ],
-                        ),
-                      ) : Container()
-                      ,
-                      FittedBox(
-                        child: SizedBox(
-                          height: 350,
-                          child: GridView.builder(
-                              scrollDirection: Axis.horizontal,
-                              padding: const EdgeInsets.only(left: 16,right: 4,top: 0,bottom: 24),
-                              itemCount: widget.grids.length,//371
-                              shrinkWrap: true,
-                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 7,
-                                crossAxisSpacing: 5,
-                                mainAxisSpacing: 5,
-                              ),
-                              itemBuilder: (ctx, index) {
-                                return GithubGridItem(
-                                  key: Key('k$index'),
-                                  index: index,
-                                  themeName: widget.themeName,
-                                  initialColorNum: widget.grids[index],
-                                  onClick: (int colorNum){
-                                    widget.grids[index] = colorNum;
-                                    //print(grids);
-                                  },
-                                );
-                              }),
-                        ),
-                      )
-                      ,
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5,right: 42),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
+              child: Row(
+                children: [
+                  widget.showDate ? Container(
+                    //color: Colors.red,
+                    height: 95,
+                    padding: const EdgeInsets.only(top: 0,bottom: 8),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        GithubMemeText(str :'Mon', isLight: memeController.isLight.value,fontSize: 13,),
+                        GithubMemeText(str :'Wed', isLight: memeController.isLight.value,fontSize: 13,),
+                        GithubMemeText(str :'Fri', isLight: memeController.isLight.value,fontSize: 13,),
+                      ],
+                    ),
+                  ) : const SizedBox(width: 0,)
+                  ,
+                  const SizedBox(width: 1,)
+                  ,
+                  Flexible(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        widget.showDate ? Padding(
+                          padding: const EdgeInsets.only(bottom: 2,left: 10,right: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              GithubMemeText(str :'Dec', isLight: memeController.isLight.value,fontSize: 13,),
+                              GithubMemeText(str :'Jan', isLight: memeController.isLight.value,fontSize: 13,),
+                              GithubMemeText(str :'Feb', isLight: memeController.isLight.value,fontSize: 13,),
+                              GithubMemeText(str :'Mar', isLight: memeController.isLight.value,fontSize: 13,),
+                              GithubMemeText(str :'Apr', isLight: memeController.isLight.value,fontSize: 13,),
+                              GithubMemeText(str :'May', isLight: memeController.isLight.value,fontSize: 13,),
+                              GithubMemeText(str :'Jun', isLight: memeController.isLight.value,fontSize: 13,),
+                              GithubMemeText(str :'Jul', isLight: memeController.isLight.value,fontSize: 13,),
+                              GithubMemeText(str :'Aug', isLight: memeController.isLight.value,fontSize: 13,),
+                              GithubMemeText(str :'Sep', isLight: memeController.isLight.value,fontSize: 13,),
+                              GithubMemeText(str :'Oct', isLight: memeController.isLight.value,fontSize: 13,),
+                              GithubMemeText(str :'Nov', isLight: memeController.isLight.value,fontSize: 13,),
+                              const Text('',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
+                            ],
+                          ),
+                        ) : Container()
+                        ,
+                        FittedBox(
+                          child: SizedBox(
+                            height: 350,
+                            child: GridView.builder(
+                                scrollDirection: Axis.horizontal,
+                                padding: const EdgeInsets.only(left: 16,right: 4,top: 0,bottom: 24),
+                                itemCount: widget.grids.length,//371
+                                shrinkWrap: true,
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 7,
+                                  crossAxisSpacing: 5,
+                                  mainAxisSpacing: 5,
+                                ),
+                                itemBuilder: (ctx, index) {
+                                  return GithubGridItem(
+                                    key: Key('k$index'),
+                                    index: index,
+                                    themeName: widget.themeName,
+                                    initialColorNum: widget.grids[index],
+                                    onClick: (int colorNum){
+                                      widget.grids[index] = colorNum;
+                                      //print(grids);
+                                    },
+                                  );
+                                }),
+                          ),
+                        )
+                        ,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5,right: 42),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
 
-                            Flexible(child: GithubMemeText(str: 'Github Readme Beautifier',isLight: memeController.isLight.value,)),
-                            widget.showAuthor && widget.showProgressHint ? GithubMemeText(str: 'By \'m-r-davari\'',isLight: memeController.isLight.value,) : const SizedBox(width: 0,),
-                            widget.showProgressHint ? Row(
-                              children: [
-                                GithubMemeText(str :'Less', isLight: memeController.isLight.value,),
-                                const SizedBox(width: 6,),
-                                Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.theme(widget.themeName)[0],borderRadius: BorderRadius.circular(2)),),
-                                const SizedBox(width: 5,),
-                                Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.theme(widget.themeName)[1],borderRadius: BorderRadius.circular(2)),),
-                                const SizedBox(width: 5,),
-                                Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.theme(widget.themeName)[2],borderRadius: BorderRadius.circular(2)),),
-                                const SizedBox(width: 5,),
-                                Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.theme(widget.themeName)[3],borderRadius: BorderRadius.circular(2)),),
-                                const SizedBox(width: 5,),
-                                Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.theme(widget.themeName)[4],borderRadius: BorderRadius.circular(2)),),
-                                const SizedBox(width: 6,),
-                                GithubMemeText(str :'More', isLight: memeController.isLight.value,),
-                              ],
-                            ) : widget.showAuthor ? GithubMemeText(str :'By \'m-r-davari\'', isLight: memeController.isLight.value,) : const SizedBox(width: 0,),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                )
+                              Flexible(child: GithubMemeText(str: 'Github Readme Beautifier',isLight: memeController.isLight.value,)),
+                              widget.showAuthor && widget.showProgressHint ? GithubMemeText(str: 'By \'m-r-davari\'',isLight: memeController.isLight.value,) : const SizedBox(width: 0,),
+                              widget.showProgressHint ? Row(
+                                children: [
+                                  GithubMemeText(str :'Less', isLight: memeController.isLight.value,),
+                                  const SizedBox(width: 6,),
+                                  Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.theme(widget.themeName)[0],borderRadius: BorderRadius.circular(2)),),
+                                  const SizedBox(width: 5,),
+                                  Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.theme(widget.themeName)[1],borderRadius: BorderRadius.circular(2)),),
+                                  const SizedBox(width: 5,),
+                                  Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.theme(widget.themeName)[2],borderRadius: BorderRadius.circular(2)),),
+                                  const SizedBox(width: 5,),
+                                  Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.theme(widget.themeName)[3],borderRadius: BorderRadius.circular(2)),),
+                                  const SizedBox(width: 5,),
+                                  Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.theme(widget.themeName)[4],borderRadius: BorderRadius.circular(2)),),
+                                  const SizedBox(width: 6,),
+                                  GithubMemeText(str :'More', isLight: memeController.isLight.value,),
+                                ],
+                              ) : widget.showAuthor ? GithubMemeText(str :'By \'m-r-davari\'', isLight: memeController.isLight.value,) : const SizedBox(width: 0,),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  )
 
-              ],
-            ),
-          )
-        ],
-      ),
-    ));
+                ],
+              ),
+            )
+          ],
+        ),
+      );
+    });
   }
 
 }
@@ -258,6 +261,7 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
+    print('---- build grid item -----');
     return ClipRRect(
       borderRadius: BorderRadius.circular(6),
       child: AnimatedBuilder(

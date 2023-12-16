@@ -22,7 +22,6 @@ class _GithubMemePageState extends State<GithubMemePage> {
   bool showAuthor = true;
   bool showProgressHint = true;
   bool showDate = true;
-
   final memeController = Get.find<GithubMemeController>();
 
   @override

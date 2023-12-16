@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'dart:html' as html;
 import 'dart:js' as js;
-
 import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
 import 'package:github_readme_beautifier/utils/utils.dart';
 
@@ -16,7 +15,7 @@ GlobalKey githubMemeBoundryGlobalKey = GlobalKey();
 
 class GithubMemeController extends GetxController{
 
-  RxList<int> grids = List.filled(368, 0).obs;
+  List<int> grids = List.filled(368, 0);
   List<AnimationController?> gridsAnimControllers = [];
 
   bool hasAnimListener = true;
