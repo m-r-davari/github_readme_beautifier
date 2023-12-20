@@ -35,7 +35,7 @@ class GithubGridViewState extends State<GithubGridView> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      print('---- build grid view -----');
+      //print('---- build grid view -----');
       return RepaintBoundary(
         key: githubMemeBoundryGlobalKey,
         child: Stack(
@@ -261,7 +261,7 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
-    print('---- build grid item -----');
+    //print('---- build grid item -----');
     return ClipRRect(
       borderRadius: BorderRadius.circular(6),
       child: AnimatedBuilder(

@@ -7,6 +7,7 @@ import 'package:github_readme_beautifier/github_grid_view.dart';
 import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
 
 import 'github_meme/github_meme_controller.dart';
+import 'github_meme/github_meme_export_page.dart';
 
 class GithubMemePage extends StatefulWidget {
   const GithubMemePage({Key? key}) : super(key: key);
@@ -27,18 +28,6 @@ class _GithubMemePageState extends State<GithubMemePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            child: const Icon(Icons.info_outline),
-            onPressed: () async {
-              final ffmpeg = Get.find<FFmpeg>();
-              print('----- ffmpeg loaded : ${ffmpeg.isLoaded()} -----');
-            },
-          ),
-        ],
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -134,7 +123,15 @@ class _GithubMemePageState extends State<GithubMemePage> {
                 ),
                 ElevatedButton(
                     onPressed: () async {
-                      await memeController.generateFrames();
+                      showDialog(
+                        context: Get.context!,
+
+                        builder: (context) {
+                          return const AlertDialog(
+                            content: GithubMemeExportPage(),
+                          );
+                        },
+                      );
                     },
                     child: const Text('Export')),
                 const SizedBox(

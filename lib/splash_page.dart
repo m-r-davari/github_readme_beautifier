@@ -76,17 +76,6 @@ class _LauncherPage extends State<SplashPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          if(isPlay){
-            flipController.stop();
-          }
-          else{
-            flipController.forward();
-          }
-          isPlay = !isPlay;
-        },
-      ),
         body: Container(
           width: double.infinity,
           height: double.infinity,

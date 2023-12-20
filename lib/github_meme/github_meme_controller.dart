@@ -17,67 +17,16 @@ class GithubMemeController extends GetxController{
 
   List<int> grids = List.filled(368, 0);
   List<AnimationController?> gridsAnimControllers = [];
-
   bool hasAnimListener = true;
   final ffmpeg = Get.find<FFmpeg>();
-
   GithubGridThemes themes = GithubGridThemes();
   Rx<bool> isLight = true.obs;
-
   final Utils _utils = Utils();
+  RxDouble exportProgressValue = 0.0.obs;
 
+  Future<Uint8List> _createAnimatedGif()async{
 
-  Future<void> generateFrames()async{
-    hasAnimListener = false ;
-    List<Uint8List> frames = [];//frames list
-    const int exportDuration = 1000; //milSec
-    //exportDuration / 41 = 24 fps
-    for(var controller in gridsAnimControllers){
-      controller?.stop();
-    }
-    await Future.delayed(Duration.zero);
-    for(int i = 0 ; i<= exportDuration/41 ; i++){
-      for(var controller in gridsAnimControllers){
-        if (controller!.status == AnimationStatus.forward){
-          controller.value += 0.1;
-        }
-        else if (controller.status == AnimationStatus.completed){
-          controller.reverse();
-        }
-        else if (controller.status == AnimationStatus.reverse){
-          controller.value -= 0.1;
-        }
-        else if (controller.status == AnimationStatus.dismissed){
-          controller.forward() ;
-        }
-      }
-      await Future.delayed(Duration.zero);
-      final frame = await captureScreen();
-      frames.add(frame);
-
-    }
-
-    final List<Uint8List> reverseFrames = [];
-    print('----org frames --- ${frames.length}');
-    reverseFrames.addAll(List.of(frames).reversed);
-    frames.addAll(reverseFrames);
-    print('----rev frames --- ${reverseFrames.length}');
-    print('----all frames --- ${frames.length}');
-    await createAnimatedGif(frames);
-
-    for(final gridAnimController in gridsAnimControllers){
-      hasAnimListener = true;
-      // gridAnimController!.value = _utils.generateUniqueRandomDouble(0.01, 1.0);.
-      // gridAnimController.forward();
-      Future.delayed(Duration(milliseconds: _utils.generateRandomNumFromRange(50, 500)),(){
-        gridAnimController!.forward();
-      });
-    }
-
-  }
-
-
-  Future<void> createAnimatedGif(List<Uint8List> frames)async{
+    final frames = await _generateFrames();
 
     for (int i = 0; i < frames.length ; i++) {
       ffmpeg.writeFile(i < 10 ? 'github_meme_00$i.png' : 'github_meme_0$i.png', frames[i]);
@@ -96,58 +45,67 @@ class GithubMemeController extends GetxController{
 
 
     await ffmpeg.run([
-      '-framerate', '50',
+      '-framerate', '30',
       '-i', 'github_meme_%03d.png',
       '-vf', 'palettegen=max_colors=128', //palettegen //palettegen=max_colors=256 //'palettegen=stats_mode=single:max_colors=256'
       'palette.png',
     ]);
 
     await ffmpeg.run([
-      '-framerate', '50',
+      '-framerate', '30',
       '-i', 'github_meme_%03d.png',
       '-i', 'palette.png',
       '-lavfi', 'paletteuse=dither=bayer:bayer_scale=5',
       //'-filter_complex', //'[0:v][1:v]paletteuse',//'[0:v][1:v]paletteuse=dither=bayer:bayer_scale=5' // [0:v][1:v]paletteuse=dither=floyd_steinberg //[0:v][1:v]paletteuse //paletteuse
       '-t', '1',
       '-loop', '0',
-      '-r', '50',
+      '-r', '30',
       '-f', 'gif',
       'output.gif',
     ]);
-    final previewWebpData = ffmpeg.readFile('output.gif');
-    js.context.callMethod('webSaveAs', [
-      html.Blob([previewWebpData]),
-      'output.gif'
-    ]);
+    final gifData = ffmpeg.readFile('output.gif');
+    ffmpeg.unlink('output.gif');
+    return gifData;
 
-
-    showDialog(
-      context: Get.context!,
-      builder: (context) {
-        return AlertDialog(
-          content: SizedBox(
-            height: 800,
-            width: 1500,
-            child: Container(
-              color: Colors.transparent,
-              height: 350,
-              child: Image.memory(
-                  previewWebpData
-                //image.buffer.asUint8List(),
-              ),
-            ),
-          ),
-        );
-      },
-    );
   }
 
+  Future<List<Uint8List>> _generateFrames()async{
+    List<Uint8List> frames = [];//frames list
+    const int exportDuration = 1000; //milSec
+    //exportDuration / 41 = 24 fps
+    for(var controller in gridsAnimControllers){
+      controller?.stop();
+    }
+    await Future.delayed(Duration.zero);
+    for(int i = 0 ; i<= exportDuration/66 ; i++){
+      for(var controller in gridsAnimControllers){
+        if (controller!.status == AnimationStatus.forward){
+          controller.value += 0.1;
+        }
+        else if (controller.status == AnimationStatus.completed){
+          controller.reverse();
+        }
+        else if (controller.status == AnimationStatus.reverse){
+          controller.value -= 0.1;
+        }
+        else if (controller.status == AnimationStatus.dismissed){
+          controller.forward() ;
+        }
+      }
+      await Future.delayed(Duration.zero);
+      final frame = await _captureScreen();
+      frames.add(frame);
+      exportProgressValue.value += (3/100).toDouble();
+    }
 
+    final List<Uint8List> reverseFrames = [];
+    reverseFrames.addAll(List.of(frames).reversed);
+    frames.addAll(reverseFrames);
+    return frames;
 
+  }
 
-//----------------------------
-
-  Future<Uint8List> captureScreen()async{
+  Future<Uint8List> _captureScreen()async{
     // Perform the screen capture and handle the image as needed
     // Example: Save the image to storage or display it in a dialog
     // Here, we just print the image size for demonstration purposes
@@ -161,6 +119,41 @@ class GithubMemeController extends GetxController{
     else{
       throw Exception();
     }
+  }
+
+  Future<List<Uint8List>> exportGifs()async{
+    hasAnimListener = false ;
+    final lightGifExport = await _createAnimatedGif();
+    exportProgressValue.value = (50/100).toDouble();
+    isLight.value = !isLight.value;
+    GithubGridThemes.isLight.value = !GithubGridThemes.isLight.value;
+    await Future.delayed(Duration.zero);
+    final darkGifExport = await _createAnimatedGif();
+    exportProgressValue.value = (100/100).toDouble();
+    isLight.value = !isLight.value;
+    GithubGridThemes.isLight.value = !GithubGridThemes.isLight.value;
+    hasAnimListener = true;
+    for(final gridAnimController in gridsAnimControllers){
+      Future.delayed(Duration(milliseconds: _utils.generateRandomNumFromRange(50, 500)),(){
+        gridAnimController!.forward();
+      });
+    }
+    return List.of([lightGifExport,darkGifExport]);
+  }
+
+
+  void downloadGifs(Uint8List gif1,Uint8List gif2)async{
+
+    js.context.callMethod('webSaveAs', [
+      html.Blob([gif1]),
+      'github_meme_light.gif'
+    ]);
+    await Future.delayed(const Duration(milliseconds: 500));
+    js.context.callMethod('webSaveAs', [
+      html.Blob([gif2]),
+      'github_meme_dark.gif'
+    ]);
+
   }
 
 }
