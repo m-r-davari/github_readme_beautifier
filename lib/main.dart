@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:github_readme_beautifier/app_bindings.dart';
 import 'package:github_readme_beautifier/github_meme/github_meme_controller.dart';
-import 'package:github_readme_beautifier/github_meme_page.dart';
+import 'package:github_readme_beautifier/github_meme/github_meme_page.dart';
 import 'package:github_readme_beautifier/home_page.dart';
 import 'package:github_readme_beautifier/splash_page.dart';
 

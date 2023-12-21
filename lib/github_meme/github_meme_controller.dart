@@ -45,21 +45,21 @@ class GithubMemeController extends GetxController{
 
 
     await ffmpeg.run([
-      '-framerate', '30',
+      '-framerate', '50',
       '-i', 'github_meme_%03d.png',
       '-vf', 'palettegen=max_colors=128', //palettegen //palettegen=max_colors=256 //'palettegen=stats_mode=single:max_colors=256'
       'palette.png',
     ]);
 
     await ffmpeg.run([
-      '-framerate', '30',
+      '-framerate', '50',
       '-i', 'github_meme_%03d.png',
       '-i', 'palette.png',
       '-lavfi', 'paletteuse=dither=bayer:bayer_scale=5',
       //'-filter_complex', //'[0:v][1:v]paletteuse',//'[0:v][1:v]paletteuse=dither=bayer:bayer_scale=5' // [0:v][1:v]paletteuse=dither=floyd_steinberg //[0:v][1:v]paletteuse //paletteuse
       '-t', '1',
       '-loop', '0',
-      '-r', '30',
+      '-r', '50',
       '-f', 'gif',
       'output.gif',
     ]);
@@ -77,16 +77,16 @@ class GithubMemeController extends GetxController{
       controller?.stop();
     }
     await Future.delayed(Duration.zero);
-    for(int i = 0 ; i<= exportDuration/66 ; i++){
+    for(int i = 0 ; i<= exportDuration/41 ; i++){
       for(var controller in gridsAnimControllers){
         if (controller!.status == AnimationStatus.forward){
-          controller.value += 0.1;
+          controller.value += 0.041;
         }
         else if (controller.status == AnimationStatus.completed){
           controller.reverse();
         }
         else if (controller.status == AnimationStatus.reverse){
-          controller.value -= 0.1;
+          controller.value -= 0.041;
         }
         else if (controller.status == AnimationStatus.dismissed){
           controller.forward() ;

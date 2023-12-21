@@ -3,11 +3,11 @@ import 'package:ffmpeg_wasm/ffmpeg_wasm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:github_readme_beautifier/github_grid_view.dart';
+import 'package:github_readme_beautifier/github_meme/github_grid_view.dart';
 import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
 
-import 'github_meme/github_meme_controller.dart';
-import 'github_meme/github_meme_export_page.dart';
+import 'github_meme_controller.dart';
+import 'github_meme_export_page.dart';
 
 class GithubMemePage extends StatefulWidget {
   const GithubMemePage({Key? key}) : super(key: key);
@@ -28,6 +28,11 @@ class _GithubMemePageState extends State<GithubMemePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: (){
+      //     print('--desire size -- width : ${MediaQuery.of(context).size.width} , height : ${MediaQuery.of(context).size.height}');
+      //   },
+      // ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -125,7 +130,7 @@ class _GithubMemePageState extends State<GithubMemePage> {
                     onPressed: () async {
                       showDialog(
                         context: Get.context!,
-
+                        barrierDismissible: false,
                         builder: (context) {
                           return const AlertDialog(
                             content: GithubMemeExportPage(),
