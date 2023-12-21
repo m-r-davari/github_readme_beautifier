@@ -4,6 +4,7 @@ import 'package:ffmpeg_wasm/ffmpeg_wasm.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:github_readme_beautifier/github_meme/github_meme_controller.dart';
+import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
 import 'package:github_readme_beautifier/utils/const_keeper.dart';
 
 class GithubMemeExportPage extends StatefulWidget {
@@ -45,7 +46,7 @@ class _GithubMemeExportPageState extends State<GithubMemeExportPage> with Ticker
         return AnimatedContainer(
             //margin: const EdgeInsets.all(100),
             width: !ConstKeeper.isFFmpegLoaded.value ? 120 : controller.exportProgressValue.value < 1.0 ? 500 : MediaQuery.of(context).size.width/1.2,
-            height: !ConstKeeper.isFFmpegLoaded.value ? 120 : controller.exportProgressValue.value < 1.0 ? 120 : 700,
+            height: !ConstKeeper.isFFmpegLoaded.value ? 120 : controller.exportProgressValue.value < 1.0 ? 120 : 580,
             duration: const Duration(milliseconds: 600),
             child: !ConstKeeper.isFFmpegLoaded.value ? const Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -84,27 +85,43 @@ class _GithubMemeExportPageState extends State<GithubMemeExportPage> with Ticker
             )
                 :
             Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Align(alignment: Alignment.centerLeft,child: Text('Gifs Preview :',style: TextStyle(fontWeight: FontWeight.bold))),
                 const SizedBox(height: 8,),
                 const Align(alignment: Alignment.centerLeft,child: Text('You can download exported Gifs file for both Light and Dark theme.')),
                 const SizedBox(height: 16,),
-                const Align(alignment: Alignment.centerLeft,child: Text('- Gif 1')),
-                Image.memory(
-                    Uint8List.fromList(gifs[0])
+                Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          const Align(alignment: Alignment.centerLeft,child: Text('- Light Gif')),
+                          Container(
+                            padding: const EdgeInsets.only(top: 0,right: 0.3,left: 0.3,bottom: 0),
+                            decoration: BoxDecoration(color: GithubGridThemes().lightBgColor,borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))),
+                            child: Image.memory(
+                                fit: BoxFit.contain,
+                                Uint8List.fromList(gifs[0])
+                            ),
+                          ),
+                          const SizedBox(height: 16,),
+                          const Align(alignment: Alignment.centerLeft,child: Text('- Dark Gif')),
+                          Container(
+                            padding: const EdgeInsets.only(top: 0,right: 0.3,left: 0.3,bottom: 0),
+                            decoration: BoxDecoration(color: GithubGridThemes().darkBgColor,borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))),
+                            child: Image.memory(
+                                Uint8List.fromList(gifs[1])
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                 ),
-                const SizedBox(height: 16,)
-                ,
-                const Align(alignment: Alignment.centerLeft,child: Text('- Gif 2')),
-                Image.memory(
-                    Uint8List.fromList(gifs[1])
-                ),
-                const SizedBox(height: 16,)
-                ,
+                const SizedBox(height: 16,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ElevatedButton(
                         onPressed: (){
