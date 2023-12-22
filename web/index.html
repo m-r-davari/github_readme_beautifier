@@ -39,13 +39,34 @@
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
   <script src='https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js' crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/gifsicle-wasm-browser/dist/gifsical.min.js" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js" crossorigin="anonymous"></script>
+  <script type="module">
+        import gifsicle from 'https://cdn.jsdelivr.net/npm/gifsicle-wasm-browser/dist/gifsicle.min.js'
+        window.gifsicle = gifsicle;
+  </script>
   <script>
         function webSaveAs(blob, name) {
             saveAs(blob, name);
         }
-    </script>
+  </script>
+  <script>
+        function optimizeGifAndReturn(blob, name) {
+            window.gifsicle.run({
+              input: [{
+                  file: blob,
+                  name: name,
+              }],
+              command: [`
+                -O3
+                --lossy=30
+                ${name}
+                -o /out/out.gif`],
+            })
+            .then(outGifFiles => {
+              saveAs(outGifFiles[0], "optimized_"+name);
+            });
+        }
+  </script>
 </head>
 <body>
   <script>

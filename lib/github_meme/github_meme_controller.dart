@@ -145,6 +145,12 @@ class GithubMemeController extends GetxController{
 
   void downloadGif(Uint8List gif,{required String themeName})async{
 
+    js.context.callMethod('optimizeGifAndReturn', [
+      html.Blob([gif]),
+      'github_meme_$themeName.gif'
+    ]);
+
+
     js.context.callMethod('webSaveAs', [
       html.Blob([gif]),
       'github_meme_$themeName.gif'
