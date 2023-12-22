@@ -128,7 +128,7 @@ class GithubMemeController extends GetxController{
     exportProgressValue.value = (50/100).toDouble();
     isLight.value = !isLight.value;
     GithubGridThemes.isLight.value = !GithubGridThemes.isLight.value;
-    await Future.delayed(Duration.zero);
+    await Future.delayed(const Duration(milliseconds: 500));
     final darkGifExport = await _createAnimatedGif();
     exportProgressValue.value = (100/100).toDouble();
     isLight.value = !isLight.value;
@@ -143,16 +143,11 @@ class GithubMemeController extends GetxController{
   }
 
 
-  void downloadGifs(Uint8List gif1,Uint8List gif2)async{
+  void downloadGif(Uint8List gif,{required String themeName})async{
 
     js.context.callMethod('webSaveAs', [
-      html.Blob([gif1]),
-      'github_meme_light.gif'
-    ]);
-    await Future.delayed(const Duration(milliseconds: 500));
-    js.context.callMethod('webSaveAs', [
-      html.Blob([gif2]),
-      'github_meme_dark.gif'
+      html.Blob([gif]),
+      'github_meme_$themeName.gif'
     ]);
 
   }

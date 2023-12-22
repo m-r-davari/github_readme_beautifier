@@ -117,15 +117,15 @@ class _GithubMemePageState extends State<GithubMemePage> {
                 const SizedBox(
                   width: 24,
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      memeController.isLight.value = !memeController.isLight.value;
-                      GithubGridThemes.isLight.value = !GithubGridThemes.isLight.value;
-                    },
-                    child: const Text('isLight/isDark')),
-                const SizedBox(
-                  width: 24,
-                ),
+                // ElevatedButton(
+                //     onPressed: () {
+                //       memeController.isLight.value = !memeController.isLight.value;
+                //       GithubGridThemes.isLight.value = !GithubGridThemes.isLight.value;
+                //     },
+                //     child: const Text('isLight/isDark')),
+                // const SizedBox(
+                //   width: 24,
+                // ),
                 ElevatedButton(
                     onPressed: () async {
                       showDialog(
@@ -133,6 +133,8 @@ class _GithubMemePageState extends State<GithubMemePage> {
                         barrierDismissible: false,
                         builder: (context) {
                           return const AlertDialog(
+                            backgroundColor: Colors.white,
+                            surfaceTintColor: Colors.white,
                             content: GithubMemeExportPage(),
                           );
                         },

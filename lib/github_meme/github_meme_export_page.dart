@@ -44,9 +44,8 @@ class _GithubMemeExportPageState extends State<GithubMemeExportPage> with Ticker
       onWillPop: (()async=>false),
       child: Obx((){
         return AnimatedContainer(
-            //margin: const EdgeInsets.all(100),
             width: !ConstKeeper.isFFmpegLoaded.value ? 120 : controller.exportProgressValue.value < 1.0 ? 500 : MediaQuery.of(context).size.width/1.2,
-            height: !ConstKeeper.isFFmpegLoaded.value ? 120 : controller.exportProgressValue.value < 1.0 ? 120 : 580,
+            height: !ConstKeeper.isFFmpegLoaded.value ? 120 : controller.exportProgressValue.value < 1.0 ? 120 : 600,
             duration: const Duration(milliseconds: 600),
             child: !ConstKeeper.isFFmpegLoaded.value ? const Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -88,68 +87,71 @@ class _GithubMemeExportPageState extends State<GithubMemeExportPage> with Ticker
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Align(alignment: Alignment.centerLeft,child: Text('Gifs Preview :',style: TextStyle(fontWeight: FontWeight.bold))),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Align(alignment: Alignment.centerLeft,child: Text('Gifs Preview :',style: TextStyle(fontWeight: FontWeight.bold))),
+                    IconButton(onPressed: ()=>Get.back(), icon: const Icon(Icons.close))
+                  ],
+                ),
                 const SizedBox(height: 8,),
                 const Align(alignment: Alignment.centerLeft,child: Text('You can download exported Gifs file for both Light and Dark theme.')),
                 const SizedBox(height: 16,),
                 Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          const Align(alignment: Alignment.centerLeft,child: Text('- Light Gif')),
-                          Container(
-                            padding: const EdgeInsets.only(top: 0,right: 0.3,left: 0.3,bottom: 0),
-                            decoration: BoxDecoration(color: GithubGridThemes().lightBgColor,borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))),
-                            child: Image.memory(
-                                fit: BoxFit.contain,
-                                Uint8List.fromList(gifs[0])
-                            ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const Align(alignment: Alignment.centerLeft,child: Text(' Light Gif')),
+                        const SizedBox(height: 2,),
+                        Container(
+                          decoration: BoxDecoration(color: GithubGridThemes().lightBgColor,borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))),
+                          child: Image.memory(
+                              Uint8List.fromList(gifs[0])
                           ),
-                          const SizedBox(height: 16,),
-                          const Align(alignment: Alignment.centerLeft,child: Text('- Dark Gif')),
-                          Container(
-                            padding: const EdgeInsets.only(top: 0,right: 0.3,left: 0.3,bottom: 0),
-                            decoration: BoxDecoration(color: GithubGridThemes().darkBgColor,borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))),
-                            child: Image.memory(
-                                Uint8List.fromList(gifs[1])
-                            ),
+                        ),
+                        const SizedBox(height: 16,),
+                        ElevatedButton(
+                            onPressed: (){
+                              controller.downloadGif(gifs[0],themeName: 'light');
+                            },
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text('Download Light Gif'),
+                                SizedBox(width: 8,),
+                                Icon(Icons.download)
+                              ],
+                            )
+                        ),
+                        const SizedBox(height: 16,),
+                        const Align(alignment: Alignment.centerLeft,child: Text(' Dark Gif')),
+                        const SizedBox(height: 2,),
+                        Container(
+                          decoration: BoxDecoration(color: GithubGridThemes().darkBgColor,borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))),
+                          child: Image.memory(
+                              Uint8List.fromList(gifs[1])
                           ),
-                        ],
-                      ),
-                    )
+                        ),
+                        const SizedBox(height: 16,),
+                        ElevatedButton(
+                            onPressed: (){
+                              controller.downloadGif(gifs[1],themeName: 'dark');
+                            },
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text('Download Dark Gif'),
+                                SizedBox(width: 8,),
+                                Icon(Icons.download)
+                              ],
+                            )
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                const SizedBox(height: 16,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ElevatedButton(
-                        onPressed: (){
-                          controller.downloadGifs(gifs[0], gifs[1]);
-                        },
-                        child: const Row(
-                          children: [
-                            Text('Download'),
-                            SizedBox(width: 8,),
-                            Icon(Icons.download)
-                          ],
-                        )
-                    ),
-                    const SizedBox(width: 16,),
-                    ElevatedButton(
-                        onPressed: (){
-                          Get.back();
-                        },
-                        child: const Row(
-                          children: [
-                            Text('Close'),
-                            SizedBox(width: 8,),
-                            Icon(Icons.close)
-                          ],
-                        )
-                    ),
-                  ],
-                )
               ],
             )
         );
