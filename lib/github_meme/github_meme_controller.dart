@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:html';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:ffmpeg_wasm/ffmpeg_wasm.dart';
@@ -6,12 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:js/js.dart';
 import 'dart:html' as html;
 import 'dart:js' as js;
+import 'package:js/js_util.dart' as jsUtil;
 import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
 import 'package:github_readme_beautifier/utils/utils.dart';
 
 GlobalKey githubMemeBoundryGlobalKey = GlobalKey();
+
+@JS('optimizeGifAndReturn')
+external dynamic optimizeGifAndReturn(blob);
 
 class GithubMemeController extends GetxController{
 
@@ -122,13 +128,22 @@ class GithubMemeController extends GetxController{
     }
   }
 
+
+
   Future<List<Uint8List>> exportGifs()async{
     hasAnimListener = false ;
-    final lightGifExport = await _createAnimatedGif();
+    final originalLightGif = await _createAnimatedGif();
+
+    dynamic jsOptimizedLightGif = await jsUtil.promiseToFuture(optimizeGifAndReturn(html.Blob([originalLightGif])));
+    final html.FileReader reader = html.FileReader();
+    reader.readAsArrayBuffer(jsOptimizedLightGif[0]);
+    await reader.onLoad.first;
+    final Uint8List uint8List = Uint8List.fromList(reader.result as List<int>);
+    print('-----ssss---- ${jsOptimizedLightGif[0].runtimeType} --- ${uint8List.lengthInBytes~/1024}');
     exportProgressValue.value = (50/100).toDouble();
     isLight.value = !isLight.value;
     GithubGridThemes.isLight.value = !GithubGridThemes.isLight.value;
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 700));
     final darkGifExport = await _createAnimatedGif();
     exportProgressValue.value = (100/100).toDouble();
     isLight.value = !isLight.value;
@@ -139,23 +154,28 @@ class GithubMemeController extends GetxController{
         gridAnimController!.forward();
       });
     }
-    return List.of([lightGifExport,darkGifExport]);
+    return List.of([originalLightGif,uint8List]);
   }
 
 
-  void downloadGif(Uint8List gif,{required String themeName})async{
+  void downloadGif(Uint8List gif,{required String themeName,bool optimize=false})async{
 
-    js.context.callMethod('optimizeGifAndReturn', [
-      html.Blob([gif]),
-      'github_meme_$themeName.gif'
-    ]);
-
-
-    js.context.callMethod('webSaveAs', [
-      html.Blob([gif]),
-      'github_meme_$themeName.gif'
-    ]);
+    if(optimize){
+      // js.context.callMethod('optimizeGifAndSave', [
+      //   html.Blob([gif]),
+      //   'github_meme_$themeName.gif'
+      // ]);
+    }
+    else{
+      js.context.callMethod('webSaveAs', [
+        html.Blob([gif]),
+        'github_meme_$themeName.gif'
+      ]);
+    }
 
   }
+
+
+
 
 }

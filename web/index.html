@@ -50,21 +50,19 @@
         }
   </script>
   <script>
-        function optimizeGifAndReturn(blob, name) {
-            window.gifsicle.run({
+        async function optimizeGifAndReturn(blob) {
+            var optimizedGifFileJs = await window.gifsicle.run({
               input: [{
                   file: blob,
-                  name: name,
+                  name: 'input.gif',
               }],
               command: [`
                 -O3
                 --lossy=30
-                ${name}
+                input.gif
                 -o /out/out.gif`],
-            })
-            .then(outGifFiles => {
-              saveAs(outGifFiles[0], "optimized_"+name);
             });
+            return optimizedGifFileJs;
         }
   </script>
 </head>

@@ -112,18 +112,41 @@ class _GithubMemeExportPageState extends State<GithubMemeExportPage> with Ticker
                           ),
                         ),
                         const SizedBox(height: 16,),//
-                        ElevatedButton(
-                            onPressed: (){
-                              controller.downloadGif(gifs[0],themeName: 'light');
-                            },
-                            child: const Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text('Download Light Gif'),
-                                SizedBox(width: 8,),
-                                Icon(Icons.download)
-                              ],
-                            )
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ElevatedButton(
+                                onPressed: (){
+                                  controller.downloadGif(gifs[0],themeName: 'light');
+                                },
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Text('Original Light Gif'),
+                                    const SizedBox(width: 8,),
+                                    const Icon(Icons.cloud_download_outlined,size: 19,),
+                                    const SizedBox(width: 8,),
+                                    Text('${gifs[0].lengthInBytes~/1024} kb',style: const TextStyle(color: Colors.grey,fontSize: 12),),
+                                  ],
+                                )
+                            ),
+                            const SizedBox(width: 16,),
+                            ElevatedButton(
+                                onPressed: (){
+                                  controller.downloadGif(gifs[0],themeName: 'light',optimize: true);
+                                },
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Text('Optimized Light Gif'),
+                                    const SizedBox(width: 8,),
+                                    const Icon(Icons.cloud_download_outlined,size: 19,),
+                                    const SizedBox(width: 8,),
+                                    Text('${gifs[0].lengthInBytes~/1024} kb',style: const TextStyle(color: Colors.green,fontSize: 12),),
+                                  ],
+                                )
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 16,),
                         const Align(alignment: Alignment.centerLeft,child: Text(' Dark Gif')),
@@ -135,19 +158,43 @@ class _GithubMemeExportPageState extends State<GithubMemeExportPage> with Ticker
                           ),
                         ),
                         const SizedBox(height: 16,),
-                        ElevatedButton(
-                            onPressed: (){
-                              controller.downloadGif(gifs[1],themeName: 'dark');
-                            },
-                            child: const Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text('Download Dark Gif'),
-                                SizedBox(width: 8,),
-                                Icon(Icons.download)
-                              ],
-                            )
-                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ElevatedButton(
+                                onPressed: (){
+                                  controller.downloadGif(gifs[1],themeName: 'dark');
+                                },
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Text('Original Dark Gif'),
+                                    const SizedBox(width: 8,),
+                                    const Icon(Icons.cloud_download,size: 19,),
+                                    const SizedBox(width: 8,),
+                                    Text('${gifs[0].lengthInBytes~/1024} kb',style: const TextStyle(color: Colors.grey,fontSize: 12),),
+                                  ],
+                                )
+                            ),
+                            const SizedBox(width: 16,),
+                            ElevatedButton(
+                                onPressed: (){
+                                  controller.downloadGif(gifs[1],themeName: 'dark',optimize: true);
+                                },
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Text('Optimized Dark Gif'),
+                                    const SizedBox(width: 8,),
+                                    const Icon(Icons.cloud_download,size: 19,),
+                                    const SizedBox(width: 8,),
+                                    Text('${gifs[0].lengthInBytes~/1024} kb',style: const TextStyle(color: Colors.green,fontSize: 12),),
+                                  ],
+                                )
+                            ),
+                          ],
+                        )
+
                       ],
                     ),
                   ),
