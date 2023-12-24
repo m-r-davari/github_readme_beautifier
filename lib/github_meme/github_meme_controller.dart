@@ -133,18 +133,21 @@ class GithubMemeController extends GetxController{
   Future<List<Uint8List>> exportGifs()async{
     hasAnimListener = false ;
     final originalLightGif = await _createAnimatedGif();
-
     dynamic jsOptimizedLightGif = await jsUtil.promiseToFuture(optimizeGifAndReturn(html.Blob([originalLightGif])));
     final html.FileReader reader = html.FileReader();
     reader.readAsArrayBuffer(jsOptimizedLightGif[0]);
     await reader.onLoad.first;
-    final Uint8List uint8List = Uint8List.fromList(reader.result as List<int>);
-    print('-----ssss---- ${jsOptimizedLightGif[0].runtimeType} --- ${uint8List.lengthInBytes~/1024}');
+    final Uint8List optimizedLightGif = Uint8List.fromList(reader.result as List<int>);
     exportProgressValue.value = (50/100).toDouble();
     isLight.value = !isLight.value;
     GithubGridThemes.isLight.value = !GithubGridThemes.isLight.value;
     await Future.delayed(const Duration(milliseconds: 700));
-    final darkGifExport = await _createAnimatedGif();
+    final originalDarkGif= await _createAnimatedGif();
+    dynamic jsOptimizedDarkGif = await jsUtil.promiseToFuture(optimizeGifAndReturn(html.Blob([originalDarkGif])));
+    final html.FileReader reader2 = html.FileReader();
+    reader2.readAsArrayBuffer(jsOptimizedDarkGif[0]);
+    await reader2.onLoad.first;
+    final Uint8List optimizedDarkGif = Uint8List.fromList(reader2.result as List<int>);
     exportProgressValue.value = (100/100).toDouble();
     isLight.value = !isLight.value;
     GithubGridThemes.isLight.value = !GithubGridThemes.isLight.value;
@@ -154,24 +157,16 @@ class GithubMemeController extends GetxController{
         gridAnimController!.forward();
       });
     }
-    return List.of([originalLightGif,uint8List]);
+    return List.of([originalLightGif,optimizedLightGif,originalDarkGif,optimizedDarkGif]);
   }
 
 
-  void downloadGif(Uint8List gif,{required String themeName,bool optimize=false})async{
+  void downloadGif(Uint8List gif,{String typeName='',required String themeName})async{
 
-    if(optimize){
-      // js.context.callMethod('optimizeGifAndSave', [
-      //   html.Blob([gif]),
-      //   'github_meme_$themeName.gif'
-      // ]);
-    }
-    else{
-      js.context.callMethod('webSaveAs', [
-        html.Blob([gif]),
-        'github_meme_$themeName.gif'
-      ]);
-    }
+    js.context.callMethod('webSaveAs', [
+      html.Blob([gif]),
+      '${typeName}github_meme_$themeName.gif'
+    ]);
 
   }
 

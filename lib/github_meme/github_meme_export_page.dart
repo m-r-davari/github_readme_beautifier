@@ -133,7 +133,7 @@ class _GithubMemeExportPageState extends State<GithubMemeExportPage> with Ticker
                             const SizedBox(width: 16,),
                             ElevatedButton(
                                 onPressed: (){
-                                  controller.downloadGif(gifs[0],themeName: 'light',optimize: true);
+                                  controller.downloadGif(gifs[1],themeName: 'light',typeName: 'optimized_');
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -142,7 +142,7 @@ class _GithubMemeExportPageState extends State<GithubMemeExportPage> with Ticker
                                     const SizedBox(width: 8,),
                                     const Icon(Icons.cloud_download_outlined,size: 19,),
                                     const SizedBox(width: 8,),
-                                    Text('${gifs[0].lengthInBytes~/1024} kb',style: const TextStyle(color: Colors.green,fontSize: 12),),
+                                    Text('${gifs[1].lengthInBytes~/1024} kb',style: const TextStyle(color: Colors.green,fontSize: 12),),
                                   ],
                                 )
                             ),
@@ -154,7 +154,7 @@ class _GithubMemeExportPageState extends State<GithubMemeExportPage> with Ticker
                         Container(
                           decoration: BoxDecoration(color: GithubGridThemes().darkBgColor,borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))),
                           child: Image.memory(
-                              Uint8List.fromList(gifs[1])
+                              Uint8List.fromList(gifs[2])
                           ),
                         ),
                         const SizedBox(height: 16,),
@@ -163,7 +163,7 @@ class _GithubMemeExportPageState extends State<GithubMemeExportPage> with Ticker
                           children: [
                             ElevatedButton(
                                 onPressed: (){
-                                  controller.downloadGif(gifs[1],themeName: 'dark');
+                                  controller.downloadGif(gifs[2],themeName: 'dark');
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -172,14 +172,14 @@ class _GithubMemeExportPageState extends State<GithubMemeExportPage> with Ticker
                                     const SizedBox(width: 8,),
                                     const Icon(Icons.cloud_download,size: 19,),
                                     const SizedBox(width: 8,),
-                                    Text('${gifs[0].lengthInBytes~/1024} kb',style: const TextStyle(color: Colors.grey,fontSize: 12),),
+                                    Text('${gifs[2].lengthInBytes~/1024} kb',style: const TextStyle(color: Colors.grey,fontSize: 12),),
                                   ],
                                 )
                             ),
                             const SizedBox(width: 16,),
                             ElevatedButton(
                                 onPressed: (){
-                                  controller.downloadGif(gifs[1],themeName: 'dark',optimize: true);
+                                  controller.downloadGif(gifs[3],themeName: 'dark',typeName: 'optimized_');
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -188,7 +188,7 @@ class _GithubMemeExportPageState extends State<GithubMemeExportPage> with Ticker
                                     const SizedBox(width: 8,),
                                     const Icon(Icons.cloud_download,size: 19,),
                                     const SizedBox(width: 8,),
-                                    Text('${gifs[0].lengthInBytes~/1024} kb',style: const TextStyle(color: Colors.green,fontSize: 12),),
+                                    Text('${gifs[3].lengthInBytes~/1024} kb',style: const TextStyle(color: Colors.green,fontSize: 12),),
                                   ],
                                 )
                             ),
