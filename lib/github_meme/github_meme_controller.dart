@@ -63,7 +63,7 @@ class GithubMemeController extends GetxController{
       '-i', 'github_meme_%03d.png',
       '-i', 'palette.png',
       '-lavfi', 'paletteuse=dither=bayer:bayer_scale=5',
-      //'-filter_complex', //'[0:v][1:v]paletteuse',//'[0:v][1:v]paletteuse=dither=bayer:bayer_scale=5' // [0:v][1:v]paletteuse=dither=floyd_steinberg //[0:v][1:v]paletteuse //paletteuse
+      //'-filter_complex', //'[0:v][1:v]paletteuse',//'[0:v][1:v]paletteuse=dither=bayer:bayer_scale=5' // [0:v][1:v]paletteuse=dither=floyd_steinberg //[0:v][1:v]paletteuse ////paletteuse
       '-t', '1',
       '-loop', '0',
       '-r', '20',
