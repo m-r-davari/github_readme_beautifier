@@ -100,7 +100,7 @@ class _LauncherPage extends State<SplashPage> with TickerProviderStateMixin {
                                 ..setEntry(3, 2, 0.001)
                                 ..rotateY(2 * pi * flipAnim.value),
                               alignment: Alignment.center,
-                              child: Container(width: 100,height: 100,color: Colors.blueGrey,)//Image.asset('logo', fit: BoxFit.cover,),
+                              child: Image.asset('assets/logo_github_1.png', fit: BoxFit.fill,width: 150,height: 150,),
                             ),
                           )
                       ),
@@ -129,7 +129,8 @@ class _LauncherPage extends State<SplashPage> with TickerProviderStateMixin {
   @override
   void dispose() {
     super.dispose();
-
+    flipController.dispose();
+    transUpController.dispose();
   }
 
 }
