@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
           scrollDirection: Axis.vertical,
           itemCount: features.length,
           gridDelegate: const ResponsiveGridDelegate(
-              maxCrossAxisExtent: 440, childAspectRatio: 2.5, mainAxisSpacing: 50, crossAxisSpacing: 50),
+              maxCrossAxisExtent: 440, childAspectRatio: 2.5, mainAxisSpacing: 50, crossAxisSpacing: 50),//
           itemBuilder: (ctx, index) {
             return FeatureCardItem(
                 index: index,
