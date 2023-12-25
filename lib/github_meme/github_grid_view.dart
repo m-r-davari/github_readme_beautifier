@@ -42,7 +42,7 @@ class GithubGridViewState extends State<GithubGridView> {
           key: githubMemeBoundryGlobalKey,
           child: Container(
             width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.all(16),//color: memeController.isLight.value ? themes.lightBgColor : themes.darkBgColor,
+            padding: const EdgeInsets.all(16),//color: memeController.isLight.value ? themes.lightBgColor : themes.darkBgColor,//
             decoration: widget.showBorder ? BoxDecoration(border: Border.all(color: memeController.isLight.value ? themes.lightBorderColor : themes.darkBorderColor,width: 1,),borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))) : const BoxDecoration(),
             child: Row(
               children: [
