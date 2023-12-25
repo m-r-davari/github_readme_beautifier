@@ -19,7 +19,7 @@ dependencies:
   flutter_3d_controller: ^1.2.0
   js: ^0.6.7
   ffmpeg_wasm: ^1.0.1
-
+  responsive_framework: ^1.1.1
 
 
 dev_dependencies:
