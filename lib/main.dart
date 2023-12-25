@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
       ],
       initialRoute: "/splash_page",
       initialBinding: appBindings,
-      home: const SplashPage(),
+      //home: const SplashPage(),
 
     );
   }

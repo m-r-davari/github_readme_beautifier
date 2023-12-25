@@ -54,7 +54,7 @@ class GithubMemeController extends GetxController{
     await ffmpeg.run([
       '-framerate', '50',
       '-i', 'github_meme_%03d.png',
-      '-vf', 'palettegen=max_colors=200', //palettegen //palettegen=max_colors=256 //'palettegen=stats_mode=single:max_colors=256'
+      '-vf', 'palettegen=max_colors=200', //palettegen //palettegen=max_colors=256 ////'palettegen=stats_mode=single:max_colors=256'
       'palette.png',
     ]);
 
