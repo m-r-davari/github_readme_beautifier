@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:github_readme_beautifier/widgets/drawer_widget.dart';
 import 'package:github_readme_beautifier/widgets/hover_effect.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-
 import 'models/feature_model.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -27,13 +28,14 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Github Readme Beautifier'),
       ),
+      drawer: DrawerWidget(),
       body: Container(
         padding: const EdgeInsets.all(30),
         child: ResponsiveGridView.builder(
           scrollDirection: Axis.vertical,
           itemCount: features.length,
           gridDelegate: const ResponsiveGridDelegate(
-              maxCrossAxisExtent: 440, childAspectRatio: 2.5, mainAxisSpacing: 50, crossAxisSpacing: 50),//
+              maxCrossAxisExtent: 440, childAspectRatio: 2.5, mainAxisSpacing: 50, crossAxisSpacing: 50),
           itemBuilder: (ctx, index) {
             return FeatureCardItem(
                 index: index,
@@ -63,7 +65,7 @@ class FeatureCardItem extends StatelessWidget {
       //depth: 0,
       shadow: const BoxShadow(
         offset: Offset(0, 35),
-        color: Color.fromARGB(120, 0, 0, 0),
+        color: Colors.black26,//Color.fromARGB(120, 0, 0, 0),
         blurRadius: 22,
         spreadRadius: -20,
       ),
@@ -76,7 +78,7 @@ class FeatureCardItem extends StatelessWidget {
               //clipBehavior: Clip.none,
               children: [
                 Positioned.fill(
-                    bottom: index== 0 ? 20 : 3,
+                    bottom: index == 0 ? 20 : 3,
                     child: Image.asset(
                       thumbnail,
                       fit: index == 0 ? BoxFit.contain : BoxFit.cover,
@@ -102,9 +104,11 @@ class FeatureCardItem extends StatelessWidget {
                         border: Border.all(width: 0.4, color: Colors.grey),
                       ),
                       child: InkWell(
-                        onTap: index == 0 ? () {
-                          Get.toNamed('/meme_page');
-                        } : null ,
+                        onTap: index == 0
+                            ? () {
+                                Get.toNamed('/meme_page');
+                              }
+                            : null,
                         borderRadius: const BorderRadius.all(Radius.circular(16)),
                       ),
                     ),
