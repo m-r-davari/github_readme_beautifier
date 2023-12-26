@@ -67,7 +67,7 @@ class FeatureCardItem extends StatelessWidget {
       //   offset: Offset(0, 35),
       //   color: Colors.black26,//Color.fromARGB(120, 0, 0, 0),
       //   blurRadius: 22,
-      //   spreadRadius: -20,//
+      //   spreadRadius: -20,
       // ),
       builder: (x, c) {
         return ClipRRect(
