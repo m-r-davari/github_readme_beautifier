@@ -63,12 +63,12 @@ class FeatureCardItem extends StatelessWidget {
     return HoverCard(
       depthColor: Colors.transparent,
       //depth: 0,
-      shadow: const BoxShadow(
-        offset: Offset(0, 35),
-        color: Colors.black26,//Color.fromARGB(120, 0, 0, 0),
-        blurRadius: 22,
-        spreadRadius: -20,
-      ),
+      // shadow: const BoxShadow(
+      //   offset: Offset(0, 35),
+      //   color: Colors.black26,//Color.fromARGB(120, 0, 0, 0),
+      //   blurRadius: 22,
+      //   spreadRadius: -20,//
+      // ),
       builder: (x, c) {
         return ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(16)),
