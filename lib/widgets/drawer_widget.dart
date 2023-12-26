@@ -147,9 +147,10 @@ class DrawerWidget extends StatelessWidget {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: InkWell(
-                              onTap: (){
-                                js.context.callMethod('open', ['https://github.com/m-r-davari/flutter_3d_controller']);
+                              onTap: ()async{
                                 js.context.callMethod('open', ['https://pub.dev/packages/flutter_3d_controller']);
+                                await Future.delayed(const Duration(milliseconds: 100));
+                                js.context.callMethod('open', ['https://github.com/m-r-davari/flutter_3d_controller']);
                               },
                               child: const Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -174,9 +175,10 @@ class DrawerWidget extends StatelessWidget {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: InkWell(
-                              onTap: (){
-                                js.context.callMethod('open', ['https://github.com/m-r-davari/dart_common_utilities']);
+                              onTap: ()async{
                                 js.context.callMethod('open', ['https://pub.dev/packages/common_utilities']);
+                                await Future.delayed(const Duration(milliseconds: 100));
+                                js.context.callMethod('open', ['https://github.com/m-r-davari/dart_common_utilities']);
                               },
                               child: const Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
