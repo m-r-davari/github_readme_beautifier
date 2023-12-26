@@ -27,11 +27,11 @@ class DrawerWidget extends StatelessWidget {
                   Stack(
                     children: [
                       Align(alignment: Alignment.centerLeft,child: FlipperView(child: Image.asset('assets/logo_github_1.png',width: 80,height: 80,),)),
-                      Positioned(top: 5,right: 5,child: IconButton(onPressed: ()=>Get.back(), icon: Icon(Icons.close)))
+                      Positioned(top: 5,right: 5,child: IconButton(onPressed: ()=>Get.back(), icon: Icon(Icons.close,size: 16,)))
                     ],
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 10,
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
@@ -45,23 +45,23 @@ class DrawerWidget extends StatelessWidget {
                         children: [
                           Text(
                             'Github Readme Beautifier',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                           ),
                           SizedBox(width: 4,),
-                          Icon(Icons.outbond_outlined,size: 16,color: Colors.blueAccent,)
+                          Icon(Icons.outbond_outlined,size: 15,color: Colors.blueAccent,)
                         ],
                       ),
                     ),
                   ),
                   const SizedBox(
-                    height: 8,
+                    height: 6,
                   ),
-                  const Text('A web app to beautify and enhance your Github README file, that provides interesting widgets in PNG and GIF(animated) formats.'),
+                  const Text('A web app to beautify and enhance your Github README file, that provides interesting widgets in PNG and GIF(animated) formats.',style: TextStyle(fontSize: 13),),
                   const SizedBox(
-                    height: 12,
+                    height: 10,
                   ),
-                  const Text('This project developed by \'MohammadReza Davari\' using Flutter web.'),
-                  const SizedBox(height: 8,),
+                  const Text('This project developed by \'MohammadReza Davari\' using Flutter web.',style: TextStyle(fontSize: 13),),
+                  const SizedBox(height: 10,),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: InkWell(
@@ -82,7 +82,7 @@ class DrawerWidget extends StatelessWidget {
                               child: const Icon(Icons.mail_outline_sharp,color: Colors.white,size: 11,)
                           ),
                           const SizedBox(width: 6,),
-                          const Text('m.r.davari92@gmail.com'),
+                          const Text('m.r.davari92@gmail.com',style: TextStyle(fontSize: 13),),
                         ],
                       ),
                     ),
@@ -107,7 +107,7 @@ class DrawerWidget extends StatelessWidget {
                             borderRadius: BorderRadius.all(Radius.circular(4))
                           ),child: const Text('in',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 11),)),
                           const SizedBox(width: 6,),
-                          const Text('linkedin.com/in/m-r-davari92',),
+                          const Text('linkedin.com/in/m-r-davari92',style: TextStyle(fontSize: 13),),
                         ],
                       ),
                     ),
@@ -133,14 +133,14 @@ class DrawerWidget extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Show some ❤️️ and support me with your stars ✨'),
-                          Text('https://github.com/m-r-davari/github_readme_beautifier',style: TextStyle(color: Colors.blueAccent),),
+                          Text('Show some ❤️️ and support me with your stars ✨',style: TextStyle(fontSize: 13),),
+                          Text('https://github.com/m-r-davari/github_readme_beautifier',style: TextStyle(color: Colors.blueAccent,fontSize: 13),),
                         ],
                       ),
                     ),
                   ),
                   const SizedBox(height: 8,),
-                  const Text('You are welcomed to contribute, instead of copying the Idea or Code.'),
+                  const Text('You are welcomed to contribute, instead of copying the Idea or Code.',style: TextStyle(fontSize: 13)),
                   const SizedBox(height: 8,),//16
                   // const Text('How to use : ',style: TextStyle(fontWeight: FontWeight.bold),),
                   // const Padding(
@@ -165,7 +165,7 @@ class DrawerWidget extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Flexible(child: Text('How to use?')),
+                            Flexible(child: Text('How to use?',style: TextStyle(fontSize: 13))),
                             SizedBox(width: 4,),
                             Icon(Icons.outbond_outlined,size: 16,color: Colors.blueAccent,)
                           ],
@@ -185,7 +185,7 @@ class DrawerWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //const SizedBox(height: 16,),
-                  const Text('My Other Repos : ',style: TextStyle(fontWeight: FontWeight.bold),),
+                  const Text('My Other Repos : ',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),),
                   Padding(
                       padding: const EdgeInsets.all(8),
                       child: Column(
@@ -193,7 +193,7 @@ class DrawerWidget extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Visit my other Repos & support me with your pub.dev likes and github stars.'),
+                          const Text('Visit my other Repos & support me with your pub.dev likes and github stars.',style: TextStyle(fontSize: 13)),
                           const SizedBox(height: 8,),
                           Align(
                             alignment: Alignment.centerLeft,
@@ -212,12 +212,12 @@ class DrawerWidget extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Text('Flutter 3D Controller',style: TextStyle(color: Colors.blueAccent,fontWeight: FontWeight.bold)),
+                                      Text('Flutter 3D Controller',style: TextStyle(color: Colors.blueAccent,fontSize: 13,fontWeight: FontWeight.bold)),
                                       SizedBox(width: 4,),
                                       Icon(Icons.outbond_outlined,size: 16,color: Colors.blueAccent,)
                                     ],
                                   ),
-                                  Text('A Flutter package for rendering interactive 3D models in different formats(glb, gltf, fbx, obj), with ability to control animations, textures and camera.')
+                                  Text('A Flutter package for rendering interactive 3D models in different formats(glb, gltf, fbx, obj), with ability to control animations, textures and camera.',style: TextStyle(fontSize: 13))
                                 ],
                               ),
                             ),
@@ -240,12 +240,12 @@ class DrawerWidget extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Text('Common Utilities',style: TextStyle(color: Colors.blueAccent,fontWeight: FontWeight.bold)),
+                                      Text('Common Utilities',style: TextStyle(color: Colors.blueAccent,fontSize: 13,fontWeight: FontWeight.bold)),
                                       SizedBox(width: 4,),
                                       Icon(Icons.outbond_outlined,size: 16,color: Colors.blueAccent,)
                                     ],
                                   ),
-                                  Text('A Dart language Common Utility package, that makes your code faster,easier and cleaner. contains lots of useful functions for Dart primitive types (support all Flutter platforms)')
+                                  Text('A Dart language Common Utility package, that makes your code faster,easier and cleaner. contains lots of useful functions for Dart primitive types (support all Flutter platforms)',style: TextStyle(fontSize: 13))
                                 ],
                               ),
                             ),
