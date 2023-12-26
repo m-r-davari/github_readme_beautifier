@@ -91,16 +91,16 @@ class DrawerWidget extends StatelessWidget {
                   const SizedBox(height: 8,),
                   const Text('You are welcomed to contribute, instead of copying the Idea or Code.'),
                   const SizedBox(height: 16,),
-                  const Text('How to use : ',style: TextStyle(fontWeight: FontWeight.bold),),
-                  const Padding(
-                    padding: EdgeInsets.all(8),
-                    child: Text(
-                        '1 - Go to your desire widget page.\n'
-                        '2 - Generate your contents.\n'
-                        '3 - Press Export button to download contents.\n'
-                        '4 - Upload the the dark/light content and add it your github readme.'
-                    ),
-                  ),
+                  // const Text('How to use : ',style: TextStyle(fontWeight: FontWeight.bold),),
+                  // const Padding(
+                  //   padding: EdgeInsets.all(8),
+                  //   child: Text(
+                  //       '1 - Go to your desire widget page.\n'
+                  //       '2 - Generate your contents.\n'
+                  //       '3 - Press Export button to download contents.\n'
+                  //       '4 - Upload the the dark/light content and add it your github readme.'
+                  //   ),
+                  // ),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: InkWell(
@@ -108,13 +108,13 @@ class DrawerWidget extends StatelessWidget {
                         js.context.callMethod('open', ['https://github.com/m-r-davari/github_readme_beautifier']);
                       },
                       child: const Padding(
-                        padding: EdgeInsets.all(8),
+                        padding: EdgeInsets.all(0),//8
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Flexible(child: Text('Still don\'t know how to use? read the documents.')),
+                            Flexible(child: Text('Please read the documents to see how to use.')),
                             SizedBox(width: 4,),
                             Icon(Icons.outbond_outlined,size: 16,color: Colors.blueAccent,)
                           ],
@@ -133,7 +133,7 @@ class DrawerWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 16,),
+                  //const SizedBox(height: 16,),
                   const Text('My Other Repos : ',style: TextStyle(fontWeight: FontWeight.bold),),
                   Padding(
                       padding: const EdgeInsets.all(8),

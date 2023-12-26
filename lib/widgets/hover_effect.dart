@@ -8,6 +8,7 @@ class HoverCard extends StatefulWidget {
   final BoxShadow shadow;
   final GestureTapCallback? onTap;
 
+
   const HoverCard({
     Key? key,
     required this.builder,
@@ -102,14 +103,16 @@ class HoverCardState extends State<HoverCard> with SingleTickerProviderStateMixi
             decoration: BoxDecoration(
               color: widget.depthColor,
               borderRadius: BorderRadius.circular(16),
-              //boxShadow: [widget.shadow],
+              boxShadow: [widget.shadow],
             ),
             child: GestureDetector(
               onPanUpdate: (details) {
                 setState(() {
                   defaultPosition = false;
-                  if (details.localPosition.dx > 0 && details.localPosition.dy > 0) {
-                    if (details.localPosition.dx < size.width && details.localPosition.dy < size.height) {
+                  if (details.localPosition.dx > 0 &&
+                      details.localPosition.dy > 0) {
+                    if (details.localPosition.dx < size.width &&
+                        details.localPosition.dy < size.height) {
                       localX = details.localPosition.dx;
                       localY = details.localPosition.dy;
                     }
@@ -156,10 +159,8 @@ class HoverCardState extends State<HoverCard> with SingleTickerProviderStateMixi
                   if (mounted) {
                     setState(() {
                       defaultPosition = false;
-                      if (true) {
-                        //_offset.dx > 0 && _offset.dy > 0
-                        if (true) {
-                          //_offset.dx < size.width * 1.5 && _offset.dy > 0
+                      if (true) {//_offset.dx > 0 && _offset.dy > 0
+                        if (true) {//_offset.dx < size.width * 1.5 && _offset.dy > 0
                           localX = _offset.dx;
                           localY = _offset.dy;
                         }
@@ -176,8 +177,16 @@ class HoverCardState extends State<HoverCard> with SingleTickerProviderStateMixi
                         Positioned.fill(
                           child: Transform(
                             transform: Matrix4.identity()
-                              ..translate(defaultPosition ? 0.0 : (widget.depth * (percentageX / 50) + -widget.depth),
-                                  defaultPosition ? 0.0 : (widget.depth * (percentageY / 50) + -widget.depth), 0.0),
+                              ..translate(
+                                  defaultPosition
+                                      ? 0.0
+                                      : (widget.depth * (percentageX / 50) +
+                                      -widget.depth),
+                                  defaultPosition
+                                      ? 0.0
+                                      : (widget.depth * (percentageY / 50) +
+                                      -widget.depth),
+                                  0.0),
                             alignment: FractionalOffset.center,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
@@ -200,15 +209,13 @@ class HoverCardState extends State<HoverCard> with SingleTickerProviderStateMixi
                                 child: Container(
                                   height: 100,
                                   width: 100,
-                                  // decoration: BoxDecoration(
-                                  //   boxShadow: [
-                                  //     BoxShadow(
-                                  //       color: Colors.white.withOpacity(0.22),
-                                  //       blurRadius: 100,
-                                  //       spreadRadius: 40,
-                                  //     )
-                                  //   ],
-                                  // ),
+                                  decoration: BoxDecoration(boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.white.withOpacity(0.22),
+                                      blurRadius: 100,
+                                      spreadRadius: 40,
+                                    )
+                                  ]),
                                 ),
                               ),
                             ),
