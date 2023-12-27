@@ -1,4 +1,27 @@
 /*! coi-serviceworker v0.1.7 - Guido Zuidhof and contributors, licensed under MIT */
+//You can customize the behavior by defining a variable coi in the global scope (i.e. on the window object):
+/*
+//maybe we must wait to main script load and after that reload the this injector service worker
+window.coi = {
+    // A function that is run to decide whether to register the SW or not.
+    // You could for instance make this return a value based on whether you actually need to be cross origin isolated or not.
+    // Using "!reloadedBySelf" you can avoid infinite loops of reloading.
+    shouldRegister: () => !reloadedBySelf,
+    // If this function returns true, any existing service worker will be deregistered (and nothing else will happen).
+    shouldDeregister: () => false,
+    // A function that is run to decide whether to use "Cross-Origin-Embedder-Policy: credentialless" or not.
+    // See https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Embedder-Policy#browser_compatibility
+    coepCredentialless: () => true,
+    // A function to decide whether to retry with require-corp if credentialless fails.
+    coepDegrade: () => true,
+    // Override this if you want to prompt the user and do reload at your own leisure. Maybe show the user a message saying:
+    // "Click OK to refresh the page to enable <...>"
+    // You can see window.sessionStorage.getItem("coiReloadedBySelf") for the reason to reload.
+    doReload: () => window.location.reload(),
+    // Set to true if you don't want coi to log anything to the console.
+    quiet: false
+}
+*/
 let coepCredentialless = false;
 if (typeof window === 'undefined') {
     self.addEventListener("install", () => self.skipWaiting());
@@ -68,8 +91,8 @@ if (typeof window === 'undefined') {
         const coi = {
             shouldRegister: () => !reloadedBySelf,
             shouldDeregister: () => false,
-            coepCredentialless: () => true,
-            coepDegrade: () => true,
+            coepCredentialless: () => false,//default script value was => true,
+            coepDegrade: () => false,//default script value was => true,
             doReload: () => window.location.reload(),
             quiet: false,
             ...window.coi
