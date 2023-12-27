@@ -88,9 +88,9 @@ if (typeof window === 'undefined') {
 
         // You can customize the behavior of this script through a global `coi` variable.
         const coi = {
-            shouldRegister: () => true,//!reloadedBySelf,
+            shouldRegister: () => !reloadedBySelf,
             shouldDeregister: () => false,
-            coepCredentialless: () => true,
+            coepCredentialless: () => false,//true,
             coepDegrade: () => true,
             doReload: () => window.location.reload(),
             quiet: false,
