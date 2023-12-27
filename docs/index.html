@@ -33,6 +33,7 @@
   <link rel="icon" type="image/png" href="favicon.png"/>
 
   <title>github_readme_beautifier</title>
+  <script src="coi-serviceworker.min.js"></script>
   <link rel="manifest" href="manifest.json">
 
   <script>
@@ -47,7 +48,6 @@
         import gifsicle from 'https://cdn.jsdelivr.net/npm/gifsicle-wasm-browser/dist/gifsicle.min.js'
         window.gifsicle = gifsicle;
   </script>
-  <script src="coi-serviceworker.min.js"></script>
   <script>
         function webSaveAs(blob, name) {
             saveAs(blob, name);
