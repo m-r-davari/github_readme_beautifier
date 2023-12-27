@@ -22,7 +22,6 @@
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="A web app to beautify and enhance your Github README file, that provides pictures in PNG and GIF(animated) formats.">
-  <script src="coi-serviceworker.js"></script>
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -48,6 +47,7 @@
         import gifsicle from 'https://cdn.jsdelivr.net/npm/gifsicle-wasm-browser/dist/gifsicle.min.js'
         window.gifsicle = gifsicle;
   </script>
+  <script src="coi-serviceworker.js"></script>
   <script>
         function webSaveAs(blob, name) {
             saveAs(blob, name);
