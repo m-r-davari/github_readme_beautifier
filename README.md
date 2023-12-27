@@ -4,7 +4,7 @@ A web app to beautify and enhance your Github README file, that provides interes
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/github_meme_dark.gif">
-  <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/github_meme_light.gif" width="95%">
+  <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/github_meme_light.gif" width="100%">
 </picture>
 
 Web App Link : [https://m-r-davari.github.io/github_readme_beautifier](https://m-r-davari.github.io/github_readme_beautifier)
