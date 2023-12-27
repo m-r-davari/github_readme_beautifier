@@ -10,10 +10,10 @@ A web app to beautify and enhance your Github README file, that provides interes
 \
 Web App Link : [https://m-r-davari.github.io/github_readme_beautifier](https://m-r-davari.github.io/github_readme_beautifier)
 
-Show some ❤️️ and support me with Github star ⭐️
+Show some ❤️️ and support me with Github star ⭐️ .
 
 ## Copyright
-© 2023 MohammadReza Davari. All rights reserved.\
+**©** 2023 MohammadReza Davari. All rights reserved.\
 This project developed by **MohammadReza Davari** using **Flutter web**.\
 You are welcomed to contribute, instead of copying the Idea or Code.
 
@@ -62,6 +62,6 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 
 
 ## Notes
-This project has been developed using Flutter web and is still under development.\
-If your Exported Gif has some lag you can generate it again to have smooth Gif loops.
+- This project has been developed using Flutter web and is still under development.\
+- If your Exported Gif has some lag you can generate it again to have smooth Gif loops.
 
