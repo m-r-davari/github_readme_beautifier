@@ -6,7 +6,8 @@ A web app to beautify and enhance your Github README file, that provides interes
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/github_meme_dark.gif">
   <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/github_meme_light.gif" width="100%">
 </picture>
-
+&nbsp;
+&nbsp;
 Web App Link : [https://m-r-davari.github.io/github_readme_beautifier](https://m-r-davari.github.io/github_readme_beautifier)
 
 Show some ❤️️ and support me with Github star ⭐️
@@ -45,13 +46,13 @@ Support 28 themes, like Default Github theme, Halloween Github theme, Flutter th
 5 - Review the content in preview page and Download contents for both dark & light theme.(you can retry if exported file was not appropriate)\
 6 - Upload the contents in your desire github repo for example your profile repo (to see how to create profile repo visit this [link](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/managing-your-profile-readme)).\
 7 - Use the below Readme tags to load the contents in the Readme file for both dark & light theme.\
-```shellscript
+```readme
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/your-user-name/your-repo-name/your-branch-name/your-assets-folder-name/content-name-dark.gif">
   <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/your-user-name/your-repo-name/your-branch-name/your-assets-folder-name/content-name-light.gif" width="100%">
 </picture>
 ```
-```shellscript
+```readme
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./dark.png">
   <img alt="Image changing depending on Dark/Light Github theme mode." src="./light.png" width="100%">
