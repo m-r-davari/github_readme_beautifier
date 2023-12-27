@@ -23,6 +23,8 @@ window.coi = {
 */
 let coepCredentialless = false;
 if (typeof window === 'undefined') {
+
+/*
     self.addEventListener("install", () => self.skipWaiting());
     self.addEventListener("activate", (event) => event.waitUntil(self.clients.claim()));
 
@@ -79,6 +81,7 @@ if (typeof window === 'undefined') {
                 .catch((e) => console.error(e))
         );
     });
+*/
 
 } else {
     (() => {
@@ -91,7 +94,7 @@ if (typeof window === 'undefined') {
             shouldRegister: () => !reloadedBySelf,
             shouldDeregister: () => false,
             coepCredentialless: () => false,//true,
-            coepDegrade: () => true,
+            coepDegrade: () => false,//true,
             doReload: () => window.location.reload(),
             quiet: false,
             ...window.coi
