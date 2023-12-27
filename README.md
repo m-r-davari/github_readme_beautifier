@@ -62,6 +62,6 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 
 
 ## Notes
-- This project has been developed using Flutter web and is still under development.\
+- This project has been developed using Flutter web and is still under development.
 - If your Exported Gif has some lag you can generate it again to have smooth Gif loops.
 
