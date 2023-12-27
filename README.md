@@ -45,13 +45,13 @@ Support 28 themes, like Default Github theme, Halloween Github theme, Flutter th
 5 - Review the content in preview page and Download contents for both dark & light theme.(you can retry if exported file was not appropriate)\
 6 - Upload the contents in your desire github repo for example your profile repo (to see how to create profile repo visit this [link](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/managing-your-profile-readme)).\
 7 - Use the below Readme tags to load the contents in the Readme file for both dark & light theme.\
-```readme
+```shellscript
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/your-user-name/your-repo-name/your-branch-name/your-assets-folder-name/content-name-dark.gif">
   <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/your-user-name/your-repo-name/your-branch-name/your-assets-folder-name/content-name-light.gif" width="100%">
 </picture>
 ```
-```readme
+```shellscript
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./dark.png">
   <img alt="Image changing depending on Dark/Light Github theme mode." src="./light.png" width="100%">
