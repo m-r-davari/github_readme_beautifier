@@ -39,7 +39,7 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 
 
 ## How To Use
-1 - Go to the web app from [**Here**](https://m-r-davari.github.io/github_readme_beautifier).\
+1 - Go to the web app from [**here**](https://m-r-davari.github.io/github_readme_beautifier).\
 2 - Go to your desire feature widget for example 'GithubMemeView'.\
 3 - Create your desire content and customize the setting as you want.\
 4 - Press the export button and wait until process get complete(it will automatically generates contents for both dark & light theme).\
