@@ -18,7 +18,7 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 
 
 ## Features
-1 - **Github Meme View**, it provides github activity gridview to create desire custom meme with various colorful themes.\
+1 - **Github Meme View**, it provides github gridview to create desire custom meme with various colorful themes.\
 Support 28 themes, like Default Github theme, Halloween Github theme, Flutter theme and many other themes.
 
 ## Next Version
