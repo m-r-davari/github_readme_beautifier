@@ -1,6 +1,7 @@
 /*! coi-serviceworker v0.1.7 - Guido Zuidhof and contributors, licensed under MIT */
 //You can customize the behavior by defining a variable coi in the global scope (i.e. on the window object):
 /*
+//we must wait to main script load and after that reload the this injector service worker
 window.coi = {
     // A function that is run to decide whether to register the SW or not.
     // You could for instance make this return a value based on whether you actually need to be cross origin isolated or not.
@@ -24,7 +25,6 @@ window.coi = {
 let coepCredentialless = false;
 if (typeof window === 'undefined') {
 
-/*
     self.addEventListener("install", () => self.skipWaiting());
     self.addEventListener("activate", (event) => event.waitUntil(self.clients.claim()));
 
@@ -81,7 +81,6 @@ if (typeof window === 'undefined') {
                 .catch((e) => console.error(e))
         );
     });
-*/
 
 } else {
     (() => {
