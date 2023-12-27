@@ -42,10 +42,10 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 1 - Go to the web app from [**Here**](https://m-r-davari.github.io/github_readme_beautifier).\
 2 - Go to your desire feature widget for example 'GithubMemeView'.\
 3 - Create your desire content and customize the setting as you want.\
-4 - Press the export button and wait until process get complete(it will automatically generates content for both dark & light theme).\
-5 - Review the content in preview page and Download contents for both dark & light theme.(you can retry if exported file was not appropriate)\
-6 - Upload the contents in your desire github repo for example your profile repo (to see how to create profile repo visit this [link](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/managing-your-profile-readme)).\
-7 - Use the below Readme tags to load the contents in the Readme file for both dark & light theme.\
+4 - Press the export button and wait until process get complete(it will automatically generates contents for both dark & light theme).\
+5 - Review the contents in preview page and Download them for both dark & light theme.(you can retry if exported file was not appropriate)\
+6 - Upload the contents in your desire github repo for example your profile repo (to see how to create profile repo visit this [**link**](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/managing-your-profile-readme)).\
+7 - Use the below Readme tags to load the contents in the Readme file for both dark & light theme.
 ```readme
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/your-user-name/your-repo-name/your-branch-name/your-assets-folder-name/content-name-dark.gif">
@@ -62,5 +62,6 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 
 
 ## Notes
-This project has been developed using Flutter web and is still under development.
+This project has been developed using Flutter web and is still under development.\
+If your Exported Gif has some lag you can generate it again to have smooth Gif loops.
 
