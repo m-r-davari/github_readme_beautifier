@@ -14,7 +14,7 @@ Show some ❤️️ and support me with Github star ⭐️
 
 ## Copyright
 © 2023 MohammadReza Davari. All rights reserved.\
-This project developed by 'MohammadReza Davari' using Flutter web.\
+This project developed by **MohammadReza Davari** using **Flutter web**.\
 You are welcomed to contribute, instead of copying the Idea or Code.
 
 
