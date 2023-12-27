@@ -1,6 +1,12 @@
 # Github Readme Beautifier
 
 A web app to beautify and enhance your Github README file, that provides interesting widget in PNG and GIF(animated) formats for both light & dark github theme.\
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/github_meme_dark.gif">
+  <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/github_meme_light.gif" width="49%">
+</picture>
+
 Web App Link : [https://m-r-davari.github.io/github_readme_beautifier](https://m-r-davari.github.io/github_readme_beautifier)\
 
 Show some ❤️️ and support me with Github star ⭐️
