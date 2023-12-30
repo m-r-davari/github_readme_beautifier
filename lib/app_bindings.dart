@@ -6,7 +6,6 @@ class AppBindings extends Bindings {
 
   @override
   Future<void> dependencies() async {
-
     Get.put<FFmpeg>(createFFmpeg(
       CreateFFmpegParam(
         log: true,
