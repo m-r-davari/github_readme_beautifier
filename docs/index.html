@@ -34,7 +34,7 @@
 
   <title>github_readme_beautifier</title>
   <link rel="manifest" href="manifest.json">
-
+  <script src="coi-serviceworker.js"></script>
   <script>
     // The value below is injected by flutter build, do not touch.
     const serviceWorkerVersion = "1594196667";
@@ -47,7 +47,6 @@
         import gifsicle from 'https://cdn.jsdelivr.net/npm/gifsicle-wasm-browser/dist/gifsicle.min.js'
         window.gifsicle = gifsicle;
   </script>
-  <script src="coi-serviceworker.js"></script>
   <script>
         function webSaveAs(blob, name) {
             saveAs(blob, name);
