@@ -13,12 +13,11 @@ class AppBindings extends Bindings {
 
 
   Future<FFmpeg> getFFmpeg ()async{
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 2000));
     return createFFmpeg(
       CreateFFmpegParam(
         log: true,
         corePath: "https://unpkg.com/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js",
-
       ),
     )..load()..setLogger((logger) {
       if(logger.message=='ffmpeg-core loaded'){
