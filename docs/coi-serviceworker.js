@@ -93,7 +93,10 @@ if (typeof window === 'undefined') {
             shouldDeregister: () => false,
             coepCredentialless: () => false,//default script value was => true,
             coepDegrade: () => false,//default script value was => true,
-            doReload: () => window.location.reload(),
+            doReload: () => setTimeout(function() {
+                                window.location.reload();
+                              }
+                            ,2000),//window.location.reload(),
             quiet: false,
             ...window.coi
         };
