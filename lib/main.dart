@@ -8,7 +8,6 @@ import 'package:github_readme_beautifier/splash_page.dart';
 
 void main()async{
   AppBindings appBindings = AppBindings();
-  await appBindings.dependencies();
   runApp(MyApp(appBindings: appBindings,));
 }
 

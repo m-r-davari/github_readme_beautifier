@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:html';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:ffmpeg_wasm/ffmpeg_wasm.dart';
