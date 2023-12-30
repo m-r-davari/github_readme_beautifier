@@ -6,7 +6,15 @@ class AppBindings extends Bindings {
 
   @override
   Future<void> dependencies() async {
-    Get.put<FFmpeg>(createFFmpeg(
+    Get.putAsync<FFmpeg>(getFFmpeg,permanent: true);
+
+  }
+
+
+
+  Future<FFmpeg> getFFmpeg ()async{
+    await Future.delayed(const Duration(milliseconds: 500));
+    return createFFmpeg(
       CreateFFmpegParam(
         log: true,
         corePath: "https://unpkg.com/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js",
@@ -16,11 +24,8 @@ class AppBindings extends Bindings {
       if(logger.message=='ffmpeg-core loaded'){
         ConstKeeper.isFFmpegLoaded.value = true;
       }
-    }), permanent: true,);
-
+    });
   }
-
-
 
 
 
