@@ -108,7 +108,9 @@ class FeatureCardItem extends StatelessWidget {
                             ? () {
                                 Get.toNamed('/meme_page');
                               }
-                            : null,
+                            : index == 1 ? (){
+                                Get.toNamed('/typewriter_page');
+                            } : null,
                         borderRadius: const BorderRadius.all(Radius.circular(16)),
                       ),
                     ),
