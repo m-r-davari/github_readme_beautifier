@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:get/get.dart';
 
 class TypewriterTextPage extends StatefulWidget {
   const TypewriterTextPage({Key? key}) : super(key: key);
@@ -45,6 +46,8 @@ class _TypewriterTextPageState extends State<TypewriterTextPage> {
                 //showHeaderStyle: false,
                 showClearFormat: false,
                 controller: _controller,
+                toolbarSectionSpacing: 0,
+                sectionDividerSpace: 0
               ),
             ),
           )
@@ -68,7 +71,9 @@ class _TypewriterTextPageState extends State<TypewriterTextPage> {
           ,
           Padding(
             padding: const EdgeInsets.only(left: 16,right: 16,bottom: 16),
-            child: ElevatedButton(onPressed: (){}, child: const Text('Preview')),
+            child: ElevatedButton(onPressed: (){
+
+            }, child: const Text('Preview')),
           )
         ],
       )
