@@ -13,7 +13,7 @@ class AppBindings extends Bindings {
 
 
   Future<FFmpeg> getFFmpeg ()async{
-    //await Future.delayed(const Duration(milliseconds: 2000));
+    //await Future.delayed(const Duration(milliseconds: 2000));//
     return createFFmpeg(
       CreateFFmpegParam(
         log: true,
