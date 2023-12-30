@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
+import 'package:github_readme_beautifier/typewriter_text/typewriter_export_page.dart';
 
 class TypewriterTextPage extends StatefulWidget {
   const TypewriterTextPage({Key? key}) : super(key: key);
@@ -10,7 +13,6 @@ class TypewriterTextPage extends StatefulWidget {
 }
 
 class _TypewriterTextPageState extends State<TypewriterTextPage> {
-  TextEditingController textEditingController = TextEditingController();
   final QuillController _controller = QuillController.basic();
   @override
   Widget build(BuildContext context) {
@@ -72,7 +74,11 @@ class _TypewriterTextPageState extends State<TypewriterTextPage> {
           Padding(
             padding: const EdgeInsets.only(left: 16,right: 16,bottom: 16),
             child: ElevatedButton(onPressed: (){
-
+              final json = jsonEncode(_controller.document.toDelta().toJson());
+              // final json2 = jsonDecode(r'{"insert":"hello\n"}');
+              // final vvvv = _controller.document = Document.fromJson(json2);
+              print('${json}');
+              Get.to(TypewriterExportPage(jsonTxt: json));
             }, child: const Text('Preview')),
           )
         ],

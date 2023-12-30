@@ -5,6 +5,7 @@ import 'package:github_readme_beautifier/github_meme/github_meme_controller.dart
 import 'package:github_readme_beautifier/github_meme/github_meme_page.dart';
 import 'package:github_readme_beautifier/home_page.dart';
 import 'package:github_readme_beautifier/splash_page.dart';
+import 'package:github_readme_beautifier/typewriter_text/typewriter_export_page.dart';
 import 'package:github_readme_beautifier/typewriter_text/typewriter_text_page.dart';
 
 void main()async{
@@ -49,7 +50,8 @@ class MyApp extends StatelessWidget {
           name: "/typewriter_page",
           page: () => const TypewriterTextPage(),
           transition: Transition.fade,
-        ),
+        )
+        ,
       ],
       initialRoute: "/splash_page",
       initialBinding: appBindings,
