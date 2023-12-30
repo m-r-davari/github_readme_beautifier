@@ -12,8 +12,6 @@ class TypewriterExportPage extends StatefulWidget {
 class _TypewriterExportPageState extends State<TypewriterExportPage> {
   @override
   Widget build(BuildContext context) {
-
-
     return AnimatedContainer(
       duration: const Duration(milliseconds: 700),
       child: TypeRichText(
