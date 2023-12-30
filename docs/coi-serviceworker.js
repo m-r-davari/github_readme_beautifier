@@ -97,7 +97,7 @@ if (typeof window === 'undefined') {
 //                                window.location.reload();
 //                              }
 //                            ,2000),
-            window.location.reload(),
+            doReload: () => window.location.reload(),
             quiet: false,
             ...window.coi
         };
