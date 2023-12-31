@@ -87,9 +87,9 @@ class _TypewriterTextPageState extends State<TypewriterTextPage> {
             child: ElevatedButton(onPressed: (){
               final json = jsonEncode(_quillController.document.toDelta().toJson());
               _typeWriterController.documentJson = json;
-              // final json2 = jsonDecode(r'{"insert":"hello\n"}');
-              // final vvvv = _controller.document = Document.fromJson(json2);
-              print('${json}');
+              final plainText = _quillController.document.toPlainText();
+              _typeWriterController.documentPlainText = plainText;
+              print('span json is : $json');
               Get.toNamed('/typewriter_export_page');
             }, child: const Text('Preview')),
           )

@@ -20,11 +20,15 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
 
   @override
   void initState() {
-    super.initState();
-
     final json = jsonDecode(_typeWriterController.documentJson);
     final spansList = SpanModel.fromDynamicListJson(json).spans;
-    for(final spanModel in spansList!){
+    if(spansList!.last.insert =='\n'){
+      spansList.removeLast();
+    }
+    else if (spansList.last.insert!.contains('\n')){
+      spansList.last.insert = spansList.last.insert!.substring(0,spansList.last.insert!.length-2);
+    }
+    for(final spanModel in spansList){
       TextSpan textSpan = TextSpan(
           text: spanModel.insert ?? '',
           style: TextStyle(
@@ -36,12 +40,17 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
       );
       textSpans.add(textSpan);
     }
-
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: false,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text('Typewriter Text Export'),
+      ),
       body: Container(
           margin: const EdgeInsets.all(24),
           padding: const EdgeInsets.all(16),
@@ -49,19 +58,42 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
               color: const Color(0xffEDEDED),
               borderRadius: BorderRadius.circular(16)
           ),
-          child: TypeRichText(
-            text: TextSpan(
-              text: '',
-              style: const TextStyle(
-                color: Colors.black,
-              ),
-              children: textSpans,
-            ),
-            duration: const Duration(milliseconds: 1000),
-            onType: (progress) {
-              debugPrint("Rich text %${(progress * 100).toStringAsFixed(0)} completed.");
-            },
+          child: Stack(
+            children: [
+              Positioned(
+                //top: 0,
+                bottom: 0,
+                child: TypeRichText(
+                  text: TextSpan(
+                    text: '',
+                    style: const TextStyle(
+                      color: Colors.black,
+                    ),
+                    children: textSpans,
+                  ),
+                  duration: Duration(milliseconds: _typeWriterController.documentPlainText.length*30),
+                  onType: (progress) {
+                    debugPrint("Rich text %${(progress * 100).toStringAsFixed(0)} completed.");
+                  },
+                ),
+              )
+              ,
+              Opacity(
+                opacity: 0.3,
+                child: RichText(
+                  text: TextSpan(
+                    text: '',
+                    style: const TextStyle(
+                      color: Colors.black,
+                    ),
+                    children: textSpans,
+                  ),
+
+                ),
+              )
+            ],
           )
+
       ),
     );
   }
