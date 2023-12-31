@@ -62,7 +62,7 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
             children: [
               Positioned(
                 //top: 0,
-                bottom: 0,
+                //bottom: 0,
                 child: TypeRichText(
                   text: TextSpan(
                     text: '',
