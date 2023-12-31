@@ -1,8 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
+import 'package:github_readme_beautifier/typewriter_text/typewriter_controller.dart';
 import 'package:github_readme_beautifier/typewriter_text/typewriter_export_page.dart';
 
 class TypewriterTextPage extends StatefulWidget {
@@ -13,7 +13,15 @@ class TypewriterTextPage extends StatefulWidget {
 }
 
 class _TypewriterTextPageState extends State<TypewriterTextPage> {
-  final QuillController _controller = QuillController.basic();
+  final _typeWriterController = Get.find<TypeWriterController>();
+  final QuillController _quillController = QuillController.basic();//..selectFontSize('20')..setContents(Delta.fromJson([{"insert":"hh\n"}]))
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,11 +53,13 @@ class _TypewriterTextPageState extends State<TypewriterTextPage> {
                 showFontFamily: false,
                 showListNumbers: false,
                 showListBullets: false,
-                //showHeaderStyle: false,
+                showHeaderStyle: false,
+                showBackgroundColorButton: false,
                 showClearFormat: false,
-                controller: _controller,
+                controller: _quillController,
                 toolbarSectionSpacing: 0,
-                sectionDividerSpace: 0
+                sectionDividerSpace: 0,
+                fontSizesValues: const {'16':'16','20': '20', '25': '25', '30': '30','35': '35', '40': '40', '45': '45','50': '50', '55': '55', '60': '60'}
               ),
             ),
           )
@@ -64,7 +74,8 @@ class _TypewriterTextPageState extends State<TypewriterTextPage> {
               padding: const EdgeInsets.all(16),
               child: QuillEditor.basic(
                 configurations: QuillEditorConfigurations(
-                  controller: _controller,
+                  showCursor: true,
+                  controller: _quillController,
                   readOnly: false,
                 ),
               ),
@@ -74,11 +85,12 @@ class _TypewriterTextPageState extends State<TypewriterTextPage> {
           Padding(
             padding: const EdgeInsets.only(left: 16,right: 16,bottom: 16),
             child: ElevatedButton(onPressed: (){
-              final json = jsonEncode(_controller.document.toDelta().toJson());
+              final json = jsonEncode(_quillController.document.toDelta().toJson());
+              _typeWriterController.documentJson = json;
               // final json2 = jsonDecode(r'{"insert":"hello\n"}');
               // final vvvv = _controller.document = Document.fromJson(json2);
               print('${json}');
-              Get.to(TypewriterExportPage(jsonTxt: json));
+              Get.toNamed('/typewriter_export_page');
             }, child: const Text('Preview')),
           )
         ],

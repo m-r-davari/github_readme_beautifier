@@ -1,11 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
 import 'package:github_readme_beautifier/typewriter_text/span_model.dart';
+import 'package:github_readme_beautifier/typewriter_text/typewriter_controller.dart';
+import 'package:github_readme_beautifier/utils/hex_color.dart';
 import 'package:github_readme_beautifier/widgets/type_rich_text.dart';
 
 class TypewriterExportPage extends StatefulWidget {
-  final String jsonTxt;
-  const TypewriterExportPage({Key? key,required this.jsonTxt}) : super(key: key);
+  const TypewriterExportPage({Key? key}) : super(key: key);
 
   @override
   State<TypewriterExportPage> createState() => _TypewriterExportPageState();
@@ -13,39 +16,53 @@ class TypewriterExportPage extends StatefulWidget {
 
 class _TypewriterExportPageState extends State<TypewriterExportPage> {
   List<TextSpan> textSpans = [];
+  final _typeWriterController = Get.find<TypeWriterController>();
 
   @override
   void initState() {
-    final json = jsonDecode(widget.jsonTxt);
+    super.initState();
+
+    final json = jsonDecode(_typeWriterController.documentJson);
     final spansList = SpanModel.fromDynamicListJson(json).spans;
     for(final spanModel in spansList!){
-      print('----object---- ${spanModel.insert}');
       TextSpan textSpan = TextSpan(
           text: spanModel.insert ?? '',
-          style: TextStyle(fontWeight: FontWeight.normal)//spanModel.attributes?.bold == null ? FontWeight.normal : spanModel.attributes.bold ? FontWeight.bold : FontWeight.normal
+          style: TextStyle(
+            fontWeight: spanModel.attributes!.bold! ? FontWeight.bold : FontWeight.normal,
+            fontStyle: spanModel.attributes!.italic! ? FontStyle.italic : FontStyle.normal,
+            color: spanModel.attributes!.color! == 'FF000000' ? GithubGridThemes().lightTextColor : HexColor(spanModel.attributes!.color!),//"#FF000000" - #FFFFFFFF"
+            fontSize: spanModel.attributes!.size!.toDouble() ,
+          )
       );
       textSpans.add(textSpan);
     }
-    super.initState();
+
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 700),
-      child: TypeRichText(
-        text: TextSpan(
-          text: 'Hello ',
-          style: const TextStyle(
-            color: Colors.black,
+    return Scaffold(
+      body: Container(
+          margin: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+              color: const Color(0xffEDEDED),
+              borderRadius: BorderRadius.circular(16)
           ),
-          children: textSpans,
-        ),
-        duration: const Duration(seconds: 1),
-        onType: (progress) {
-          debugPrint("Rich text %${(progress * 100).toStringAsFixed(0)} completed.");
-        },
-      )
+          child: TypeRichText(
+            text: TextSpan(
+              text: '',
+              style: const TextStyle(
+                color: Colors.black,
+              ),
+              children: textSpans,
+            ),
+            duration: const Duration(milliseconds: 1000),
+            onType: (progress) {
+              debugPrint("Rich text %${(progress * 100).toStringAsFixed(0)} completed.");
+            },
+          )
+      ),
     );
   }
 }

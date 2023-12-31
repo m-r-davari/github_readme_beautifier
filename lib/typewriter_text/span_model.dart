@@ -7,7 +7,7 @@ class SpanModel {
     if (json['spans'] != null) {
       spans = <Span>[];
       json['spans'].forEach((v) {
-        spans!.add(new Span.fromJson(v));
+        spans!.add(Span.fromJson(v));
       });
     }
   }
@@ -15,12 +15,12 @@ class SpanModel {
   SpanModel.fromDynamicListJson(List<dynamic> json) {
     spans = <Span>[];
     json.forEach((v) {
-      spans!.add(new Span.fromJson(v));
+      spans!.add(Span.fromJson(v));
     });
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (this.spans != null) {
       data['spans'] = this.spans!.map((v) => v.toJson()).toList();
     }
@@ -35,58 +35,51 @@ class Span {
   Span({this.insert, this.attributes});
 
   Span.fromJson(Map<String, dynamic> json) {
-    insert = json['insert'];
+    insert = json['insert'] ?? '';
     attributes = json['attributes'] != null
-        ? new Attributes.fromJson(json['attributes'])
-        : null;
+        ? Attributes.fromJson(json['attributes'])
+        : Attributes(bold: false,italic: false,size: 16,color: '#FF000000',);
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['insert'] = this.insert;
     if (this.attributes != null) {
       data['attributes'] = this.attributes!.toJson();
     }
     else{
-      data['attributes'] = Attributes(bold: false,italic: false,size: '',color: '',background: '',header: 1);
+      this.attributes = Attributes(bold: false,italic: false,size: 16,color: '#FF000000',);
+      data['attributes'] = this.attributes!.toJson();
     }
     return data;
   }
 }
 
 class Attributes {
-  String? size;
+  int? size;
   bool? bold;
   bool? italic;
   String? color;
-  String? background;
-  int? header;
 
   Attributes(
       {this.size,
         this.bold,
         this.italic,
-        this.color,
-        this.background,
-        this.header});
+        this.color,});
 
   Attributes.fromJson(Map<String, dynamic> json) {
-    size = json['size'] ?? '';
+    size = json['size'] ?? 16;
     bold = json['bold'] ?? false;
     italic = json['italic'] ?? false;
-    color = json['color'] ?? '';
-    background = json['background'] ?? '';
-    header = json['header'] ?? 0;
+    color = json['color'] ?? '#FF000000';
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['size'] = this.size;
-    data['bold'] = this.bold;
-    data['italic'] = this.italic;
-    data['color'] = this.color;
-    data['background'] = this.background;
-    data['header'] = this.header;
+    data['size'] = this.size ?? 16;
+    data['bold'] = this.bold ?? false;
+    data['italic'] = this.italic ?? false;
+    data['color'] = this.color ?? '#FF000000';
     return data;
   }
 }
