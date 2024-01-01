@@ -6,7 +6,6 @@ import 'package:github_readme_beautifier/typewriter_text/span_model.dart';
 import 'package:github_readme_beautifier/typewriter_text/typewriter_controller.dart';
 import 'package:github_readme_beautifier/utils/hex_color.dart';
 import 'package:github_readme_beautifier/widgets/type_rich_text.dart';
-import 'package:collection/collection.dart';
 
 class TypewriterExportPage extends StatefulWidget {
   const TypewriterExportPage({Key? key}) : super(key: key);
@@ -18,6 +17,7 @@ class TypewriterExportPage extends StatefulWidget {
 class _TypewriterExportPageState extends State<TypewriterExportPage> {
 
   List<TextSpan> textSpans = [];
+  List<TextSpan> textSpansBg = [];
   final _typeWriterController = Get.find<TypeWriterController>();
   double structFontSize = 16;
 
@@ -48,7 +48,20 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
             fontSize: spanModel.attributes!.size!.toDouble() ,
           )
       );
+      TextSpan textSpanBg = TextSpan(
+          text: spanModel.insert ?? '',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontStyle: spanModel.attributes!.italic! ? FontStyle.italic : FontStyle.normal,
+            color: spanModel.attributes!.color! == 'FF000000' ? GithubGridThemes().lightBgColor : HexColor(spanModel.attributes!.color!),//"#FF000000" - #FFFFFFFF"
+            fontSize: spanModel.attributes!.size!.toDouble(),
+            shadows: [
+              Shadow(color: GithubGridThemes().lightBgColor,blurRadius: 1,offset: const Offset(0,0))
+            ]
+          )
+      );
       textSpans.add(textSpan);
+      textSpansBg.add(textSpanBg);
     }
     super.initState();
   }
@@ -61,6 +74,13 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Typewriter Text Export'),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          setState(() {
+
+          });
+        },
+      ),
       body: Container(
           margin: const EdgeInsets.all(24),
           padding: const EdgeInsets.all(16),
@@ -70,26 +90,33 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
           ),
           child: Stack(
             children: [
-              Positioned(
-                //top: 0,
-                //bottom: 0,
-                child: TypeRichText(
-                  strutStyle: StrutStyle(fontSize: structFontSize),
-                  text: TextSpan(
-                    text: '',
-                    style: const TextStyle(
-                      color: Colors.black,
-                    ),
-                    children: textSpans,
+              TypeRichText(
+                strutStyle: StrutStyle(fontSize: structFontSize),
+                text: TextSpan(
+                  text: '',
+                  style: const TextStyle(
+                    color: Colors.black,
                   ),
-                  duration: Duration(seconds: 4),//Duration(milliseconds: _typeWriterController.documentPlainText.length*30),
-                  onType: (progress) {
-                    debugPrint("Rich text %${(progress * 100).toStringAsFixed(0)} completed.");
-                  },
+                  children: textSpansBg,
                 ),
+                duration: Duration(milliseconds: _typeWriterController.documentPlainText.length*30),
+              ),
+              TypeRichText(
+                strutStyle: StrutStyle(fontSize: structFontSize),
+                text: TextSpan(
+                  text: '',
+                  style: const TextStyle(
+                    color: Colors.black,
+                  ),
+                  children: textSpans,
+                ),
+                duration: Duration(milliseconds: _typeWriterController.documentPlainText.length*30),
+                onType: (progress) {
+                  debugPrint("Rich text %${(progress * 100).toStringAsFixed(0)} completed.");
+                },
               )
               ,
-              Opacity(
+              Opacity(// this for place holer to have the text container size for recording
                 opacity: 0.0,
                 child: RichText(
                   text: TextSpan(
@@ -99,7 +126,6 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
                     ),
                     children: textSpans,
                   ),
-
                 ),
               )
             ],
