@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-class TypeRichText extends StatefulWidget {
-  const TypeRichText({
+class TypewriterRichText extends StatefulWidget {
+  const TypewriterRichText({
     Key? key,
     required this.text,
+    required this.textBg,
     required this.duration,
     this.onType,
     this.strutStyle,
@@ -22,6 +23,7 @@ class TypeRichText extends StatefulWidget {
   }) : super(key: key);
 
   final TextSpan text;
+  final TextSpan textBg;
 
   /// Every character type callback.
   final Function(double progress)? onType;
@@ -46,15 +48,16 @@ class TypeRichText extends StatefulWidget {
   final TextHeightBehavior? textHeightBehavior;
 
   @override
-  TypeRichTextState createState() => TypeRichTextState();
+  TypewriterRichTextState createState() => TypewriterRichTextState();
 }
 
-class TypeRichTextState extends State<TypeRichText> {
+class TypewriterRichTextState extends State<TypewriterRichText> {
   String typedText = "";
 
   Timer? timer;
 
   final currentSpans = <InlineSpan>[];
+  final currentSpansBg = <InlineSpan>[];
 
   late String targetText;
 
@@ -125,6 +128,10 @@ class TypeRichTextState extends State<TypeRichText> {
             text: "",
             style: widget.text.children![currentSpanIdx].style,
           ));
+          currentSpansBg.add(TextSpan(
+            text: "",
+            style: widget.textBg.children![currentSpanIdx].style,
+          ));
 
           targetText = widget.text.children![currentSpanIdx].toPlainText();
         }
@@ -140,6 +147,10 @@ class TypeRichTextState extends State<TypeRichText> {
               text: typedText,
               style: widget.text.children![currentSpanIdx].style,
             );
+            currentSpansBg[currentSpanIdx] = TextSpan(
+              text: typedText,
+              style: widget.textBg.children![currentSpanIdx].style,
+            );
           }
 
           currentLetterIdx++;
@@ -149,13 +160,14 @@ class TypeRichTextState extends State<TypeRichText> {
   }
 
   @override
-  void didUpdateWidget(TypeRichText oldWidget) {
+  void didUpdateWidget(TypewriterRichText oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.duration != widget.duration ||
         oldWidget.text != widget.text) {
       currentLetterIdx = 0;
       currentSpanIdx = -1;
       currentSpans.clear();
+      currentSpansBg.clear();
       refreshTargetText();
       typedText = "";
       setState(() {});
@@ -171,6 +183,14 @@ class TypeRichTextState extends State<TypeRichText> {
     );
   }
 
+  TextSpan getCurrentSpanBg() {
+    return TextSpan(
+      text: currentSpanIdx == -1 ? typedText : widget.textBg.text,
+      style: widget.textBg.style,
+      children: currentSpansBg,
+    );
+  }
+
   @override
   void dispose() {
     timer?.cancel();
@@ -179,19 +199,38 @@ class TypeRichTextState extends State<TypeRichText> {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      key: ValueKey("rtt_${currentSpans.length}_$typedText"),
-      text: getCurrentSpan(),
-      strutStyle: widget.strutStyle,
-      textAlign: widget.textAlign,
-      textDirection: widget.textDirection,
-      locale: widget.locale,
-      softWrap: widget.softWrap,
-      overflow: widget.overflow,
-      textScaleFactor: widget.textScaleFactor,
-      maxLines: widget.maxLines,
-      textWidthBasis: widget.textWidthBasis,
-      textHeightBehavior: widget.textHeightBehavior,
+    return Stack(
+      children: [
+        RichText(
+          key: ValueKey("rtt_bg_${currentSpansBg.length}_$typedText"),
+          text: getCurrentSpanBg(),
+          strutStyle: widget.strutStyle,
+          textAlign: widget.textAlign,
+          textDirection: widget.textDirection,
+          locale: widget.locale,
+          softWrap: widget.softWrap,
+          overflow: widget.overflow,
+          textScaleFactor: widget.textScaleFactor,
+          maxLines: widget.maxLines,
+          textWidthBasis: widget.textWidthBasis,
+          textHeightBehavior: widget.textHeightBehavior,
+        )
+        ,
+        RichText(
+          key: ValueKey("rtt_${currentSpans.length}_$typedText"),
+          text: getCurrentSpan(),
+          strutStyle: widget.strutStyle,
+          textAlign: widget.textAlign,
+          textDirection: widget.textDirection,
+          locale: widget.locale,
+          softWrap: widget.softWrap,
+          overflow: widget.overflow,
+          textScaleFactor: widget.textScaleFactor,
+          maxLines: widget.maxLines,
+          textWidthBasis: widget.textWidthBasis,
+          textHeightBehavior: widget.textHeightBehavior,
+        )
+      ],
     );
   }
 }

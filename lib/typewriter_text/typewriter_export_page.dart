@@ -5,7 +5,7 @@ import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
 import 'package:github_readme_beautifier/typewriter_text/span_model.dart';
 import 'package:github_readme_beautifier/typewriter_text/typewriter_controller.dart';
 import 'package:github_readme_beautifier/utils/hex_color.dart';
-import 'package:github_readme_beautifier/widgets/type_rich_text.dart';
+import 'package:github_readme_beautifier/typewriter_text/typewriter_rich_text.dart';
 
 class TypewriterExportPage extends StatefulWidget {
   const TypewriterExportPage({Key? key}) : super(key: key);
@@ -53,10 +53,10 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontStyle: spanModel.attributes!.italic! ? FontStyle.italic : FontStyle.normal,
-            color: spanModel.attributes!.color! == 'FF000000' ? GithubGridThemes().lightBgColor : HexColor(spanModel.attributes!.color!),//"#FF000000" - #FFFFFFFF"
+            color: Colors.red,//spanModel.attributes!.color! == 'FF000000' ? GithubGridThemes().lightBgColor : HexColor(spanModel.attributes!.color!),//"#FF000000" - #FFFFFFFF"
             fontSize: spanModel.attributes!.size!.toDouble(),
-            shadows: [
-              Shadow(color: GithubGridThemes().lightBgColor,blurRadius: 1,offset: const Offset(0,0))
+            shadows: [//GithubGridThemes().lightBgColor
+              Shadow(color: Colors.red,blurRadius: 1,offset: const Offset(0,0))
             ]
           )
       );
@@ -90,18 +90,7 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
           ),
           child: Stack(
             children: [
-              TypeRichText(
-                strutStyle: StrutStyle(fontSize: structFontSize),
-                text: TextSpan(
-                  text: '',
-                  style: const TextStyle(
-                    color: Colors.black,
-                  ),
-                  children: textSpansBg,
-                ),
-                duration: Duration(milliseconds: _typeWriterController.documentPlainText.length*30),
-              ),
-              TypeRichText(
+              TypewriterRichText(
                 strutStyle: StrutStyle(fontSize: structFontSize),
                 text: TextSpan(
                   text: '',
@@ -109,6 +98,13 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
                     color: Colors.black,
                   ),
                   children: textSpans,
+                ),
+                textBg: TextSpan(
+                  text: '',
+                  style: const TextStyle(
+                    color: Colors.black,
+                  ),
+                  children: textSpansBg,
                 ),
                 duration: Duration(milliseconds: _typeWriterController.documentPlainText.length*30),
                 onType: (progress) {
