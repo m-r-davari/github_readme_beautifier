@@ -29,7 +29,7 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
       spansList.removeLast();
     }
     else if (spansList.last.insert!.contains('\n')){
-      spansList.last.insert = spansList.last.insert!.substring(0,spansList.last.insert!.length-2);
+      spansList.last.insert = spansList.last.insert!.substring(0,spansList.last.insert!.length-1);
     }
 
     structFontSize = spansList
@@ -78,14 +78,15 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
+            heroTag: 'replay',
             onPressed: (){
               typewriterRichTextKey.currentState!.reset();
             },
-            child: Icon(Icons.delete),
+            child: Icon(Icons.replay),
           ),
           FloatingActionButton(
             onPressed: (){
-              typewriterRichTextKey.currentState!.nextFrame();
+              _typeWriterController.export();
             },
             child: Icon(Icons.skip_next),
           ),
@@ -98,34 +99,13 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
               color: const Color(0xffEDEDED),
               borderRadius: BorderRadius.circular(16)
           ),
-          child: Stack(
-            children: [
-              TypewriterRichText(
-                key: typewriterRichTextKey,
-                strutStyle: StrutStyle(fontSize: structFontSize),
-                text: TextSpan(
-                  text: '',
-                  style: const TextStyle(
-                    color: Colors.black,
-                  ),
-                  children: textSpans,
-                ),
-                textBg: TextSpan(
-                  text: '',
-                  style: const TextStyle(
-                    color: Colors.black,
-                  ),
-                  children: textSpansBg,
-                ),
-                duration: Duration(milliseconds: _typeWriterController.documentPlainText.length*30),
-                onType: (progress) {
-                  debugPrint("Rich text %${(progress * 100).toStringAsFixed(0)} completed.");
-                },
-              )
-              ,
-              Opacity(// this for place holer to have the text container size for recording
-                opacity: 0.0,
-                child: RichText(
+          child: RepaintBoundary(
+            key: typeWriterBoundryGlobalKey,
+            child: Stack(
+              children: [
+                TypewriterRichText(
+                  key: typewriterRichTextKey,
+                  strutStyle: StrutStyle(fontSize: structFontSize),
                   text: TextSpan(
                     text: '',
                     style: const TextStyle(
@@ -133,9 +113,33 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
                     ),
                     children: textSpans,
                   ),
-                ),
-              )
-            ],
+                  textBg: TextSpan(
+                    text: '',
+                    style: const TextStyle(
+                      color: Colors.black,
+                    ),
+                    children: textSpansBg,
+                  ),
+                  duration: Duration(milliseconds: _typeWriterController.documentPlainText.length*30),
+                  // onType: (progress) {
+                  //   debugPrint("Rich text %${(progress * 100).toStringAsFixed(0)} completed.");
+                  // },
+                )
+                ,
+                Opacity(// this for place holer to have the text container size for recording
+                  opacity: 0.0,
+                  child: RichText(
+                    text: TextSpan(
+                      text: '',
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                      children: textSpans,
+                    ),
+                  ),
+                )
+              ],
+            ),
           )
 
       ),

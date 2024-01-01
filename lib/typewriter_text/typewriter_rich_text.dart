@@ -196,23 +196,19 @@ class TypewriterRichTextState extends State<TypewriterRichText> {
   }
 
 
-  void nextFrame(){
+  double nextFrame(){
     final ml = getMaxLen();
     final typeTextLength = typedText.codeUnits.length;
     final targetTextLength = targetText.codeUnits.length;
     final remaining = remainingLen();
     if (remaining == 0) {
-      //timer.cancel();
-      widget.onType?.call(1.0);
-      return;
+      return 1.0;
     } else if (typeTextLength == targetTextLength ||
         currentLetterIdx >= targetTextLength) {
       currentSpanIdx++;
 
       if (currentSpanIdx >= (widget.text.children ?? []).length) {
-        //timer.cancel();
-        widget.onType?.call(1.0);
-        return;
+        return 1.0;
       }
       currentLetterIdx = 0;
       typedText = "";
@@ -229,12 +225,8 @@ class TypewriterRichTextState extends State<TypewriterRichText> {
       targetText = widget.text.children![currentSpanIdx].toPlainText();
     }
 
-    widget.onType?.call((ml - remaining) / ml);
-
     setState(() {
-      typedText +=
-          String.fromCharCode(targetText.codeUnitAt(currentLetterIdx));
-
+      typedText += String.fromCharCode(targetText.codeUnitAt(currentLetterIdx));
       if (currentSpanIdx != -1) {
         currentSpans[currentSpanIdx] = TextSpan(
           text: typedText,
@@ -245,9 +237,10 @@ class TypewriterRichTextState extends State<TypewriterRichText> {
           style: widget.textBg.children![currentSpanIdx].style,
         );
       }
-
       currentLetterIdx++;
     });
+
+    return ((ml - remaining) / ml);
   }
 
   TextSpan getCurrentSpan() {
@@ -278,6 +271,21 @@ class TypewriterRichTextState extends State<TypewriterRichText> {
       children: [
         RichText(
           key: ValueKey("rtt_bg_${currentSpansBg.length}_$typedText"),
+          text: getCurrentSpanBg(),
+          strutStyle: widget.strutStyle,
+          textAlign: widget.textAlign,
+          textDirection: widget.textDirection,
+          locale: widget.locale,
+          softWrap: widget.softWrap,
+          overflow: widget.overflow,
+          textScaleFactor: widget.textScaleFactor,
+          maxLines: widget.maxLines,
+          textWidthBasis: widget.textWidthBasis,
+          textHeightBehavior: widget.textHeightBehavior,
+        )
+        ,
+        RichText(
+          key: ValueKey("rtt_bg2_${currentSpansBg.length}_$typedText"),
           text: getCurrentSpanBg(),
           strutStyle: widget.strutStyle,
           textAlign: widget.textAlign,
