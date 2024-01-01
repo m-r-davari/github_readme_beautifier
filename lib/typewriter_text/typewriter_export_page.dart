@@ -6,6 +6,7 @@ import 'package:github_readme_beautifier/typewriter_text/span_model.dart';
 import 'package:github_readme_beautifier/typewriter_text/typewriter_controller.dart';
 import 'package:github_readme_beautifier/utils/hex_color.dart';
 import 'package:github_readme_beautifier/widgets/type_rich_text.dart';
+import 'package:collection/collection.dart';
 
 class TypewriterExportPage extends StatefulWidget {
   const TypewriterExportPage({Key? key}) : super(key: key);
@@ -15,8 +16,10 @@ class TypewriterExportPage extends StatefulWidget {
 }
 
 class _TypewriterExportPageState extends State<TypewriterExportPage> {
+
   List<TextSpan> textSpans = [];
   final _typeWriterController = Get.find<TypeWriterController>();
+  double structFontSize = 16;
 
   @override
   void initState() {
@@ -28,6 +31,13 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
     else if (spansList.last.insert!.contains('\n')){
       spansList.last.insert = spansList.last.insert!.substring(0,spansList.last.insert!.length-2);
     }
+
+    structFontSize = spansList
+        .map((span) => span.attributes!.size!.toDouble())
+        .reduce((currentMax, fontSize) => fontSize > currentMax ? fontSize : currentMax);
+
+    print('----max size --- $structFontSize ---');
+
     for(final spanModel in spansList){
       TextSpan textSpan = TextSpan(
           text: spanModel.insert ?? '',
@@ -64,6 +74,7 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
                 //top: 0,
                 //bottom: 0,
                 child: TypeRichText(
+                  strutStyle: StrutStyle(fontSize: structFontSize),
                   text: TextSpan(
                     text: '',
                     style: const TextStyle(
@@ -71,7 +82,7 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
                     ),
                     children: textSpans,
                   ),
-                  duration: Duration(milliseconds: _typeWriterController.documentPlainText.length*30),
+                  duration: Duration(seconds: 4),//Duration(milliseconds: _typeWriterController.documentPlainText.length*30),
                   onType: (progress) {
                     debugPrint("Rich text %${(progress * 100).toStringAsFixed(0)} completed.");
                   },
@@ -79,7 +90,7 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
               )
               ,
               Opacity(
-                opacity: 0.3,
+                opacity: 0.0,
                 child: RichText(
                   text: TextSpan(
                     text: '',
