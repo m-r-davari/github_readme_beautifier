@@ -53,10 +53,10 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontStyle: spanModel.attributes!.italic! ? FontStyle.italic : FontStyle.normal,
-            color: Colors.red,//spanModel.attributes!.color! == 'FF000000' ? GithubGridThemes().lightBgColor : HexColor(spanModel.attributes!.color!),//"#FF000000" - #FFFFFFFF"
+            color: GithubGridThemes().lightBgColor,
             fontSize: spanModel.attributes!.size!.toDouble(),
-            shadows: [//GithubGridThemes().lightBgColor
-              Shadow(color: Colors.red,blurRadius: 1,offset: const Offset(0,0))
+            shadows: [
+              Shadow(color: GithubGridThemes().lightBgColor,blurRadius: 1,offset: const Offset(0,0))
             ]
           )
       );
@@ -74,12 +74,22 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Typewriter Text Export'),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          setState(() {
-
-          });
-        },
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: (){
+              typewriterRichTextKey.currentState!.reset();
+            },
+            child: Icon(Icons.delete),
+          ),
+          FloatingActionButton(
+            onPressed: (){
+              typewriterRichTextKey.currentState!.nextFrame();
+            },
+            child: Icon(Icons.skip_next),
+          ),
+        ],
       ),
       body: Container(
           margin: const EdgeInsets.all(24),
@@ -91,6 +101,7 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
           child: Stack(
             children: [
               TypewriterRichText(
+                key: typewriterRichTextKey,
                 strutStyle: StrutStyle(fontSize: structFontSize),
                 text: TextSpan(
                   text: '',

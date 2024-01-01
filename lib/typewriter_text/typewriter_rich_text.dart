@@ -162,8 +162,7 @@ class TypewriterRichTextState extends State<TypewriterRichText> {
   @override
   void didUpdateWidget(TypewriterRichText oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.duration != widget.duration ||
-        oldWidget.text != widget.text) {
+    if (oldWidget.duration != widget.duration || oldWidget.text != widget.text) {
       currentLetterIdx = 0;
       currentSpanIdx = -1;
       currentSpans.clear();
@@ -173,6 +172,82 @@ class TypewriterRichTextState extends State<TypewriterRichText> {
       setState(() {});
       restartTimer();
     }
+  }
+
+  void reset(){
+    currentLetterIdx = 0;
+    currentSpanIdx = -1;
+    currentSpans.clear();
+    currentSpansBg.clear();
+    refreshTargetText();
+    typedText = "";
+    setState(() {});
+  }
+
+  void replay(){
+    currentLetterIdx = 0;
+    currentSpanIdx = -1;
+    currentSpans.clear();
+    currentSpansBg.clear();
+    refreshTargetText();
+    typedText = "";
+    setState(() {});
+    restartTimer();
+  }
+
+
+  void nextFrame(){
+    final ml = getMaxLen();
+    final typeTextLength = typedText.codeUnits.length;
+    final targetTextLength = targetText.codeUnits.length;
+    final remaining = remainingLen();
+    if (remaining == 0) {
+      //timer.cancel();
+      widget.onType?.call(1.0);
+      return;
+    } else if (typeTextLength == targetTextLength ||
+        currentLetterIdx >= targetTextLength) {
+      currentSpanIdx++;
+
+      if (currentSpanIdx >= (widget.text.children ?? []).length) {
+        //timer.cancel();
+        widget.onType?.call(1.0);
+        return;
+      }
+      currentLetterIdx = 0;
+      typedText = "";
+
+      currentSpans.add(TextSpan(
+        text: "",
+        style: widget.text.children![currentSpanIdx].style,
+      ));
+      currentSpansBg.add(TextSpan(
+        text: "",
+        style: widget.textBg.children![currentSpanIdx].style,
+      ));
+
+      targetText = widget.text.children![currentSpanIdx].toPlainText();
+    }
+
+    widget.onType?.call((ml - remaining) / ml);
+
+    setState(() {
+      typedText +=
+          String.fromCharCode(targetText.codeUnitAt(currentLetterIdx));
+
+      if (currentSpanIdx != -1) {
+        currentSpans[currentSpanIdx] = TextSpan(
+          text: typedText,
+          style: widget.text.children![currentSpanIdx].style,
+        );
+        currentSpansBg[currentSpanIdx] = TextSpan(
+          text: typedText,
+          style: widget.textBg.children![currentSpanIdx].style,
+        );
+      }
+
+      currentLetterIdx++;
+    });
   }
 
   TextSpan getCurrentSpan() {
