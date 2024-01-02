@@ -15,6 +15,7 @@ class TypeWriterController extends GetxController {
 
   String documentJson = '{}';
   String documentPlainText = '';
+  Rx<bool> isLight = true.obs;
 
   Future<void> export()async{
     List<Uint8List> lightTextFrames = [];
@@ -28,8 +29,21 @@ class TypeWriterController extends GetxController {
       progress = typewriterRichTextKey.currentState!.nextFrame();
       await Future.delayed(Duration.zero);
     }
+    print('----light frame lenght is : ---- ${lightTextFrames.length} -----');
 
-    print('----frmae lenght is : ---- ${lightTextFrames.length} -----');
+    isLight.value = !isLight.value;
+    typewriterRichTextKey.currentState!.reset();
+    List<Uint8List> darkTextFrames = [];
+    progress = 0;
+    await Future.delayed(const Duration(milliseconds: 200));
+    while(progress*100 < 100){
+      print('----capture frame --- $progress ---');
+      final frame = await _captureScreen();
+      darkTextFrames.add(frame);
+      progress = typewriterRichTextKey.currentState!.nextFrame();
+      await Future.delayed(Duration.zero);
+    }
+    print('----dark frame lenght is : ---- ${darkTextFrames.length} -----');
 
 
     showDialog(
@@ -49,7 +63,11 @@ class TypeWriterController extends GetxController {
                   return Container(
                     color: Colors.white,
                     height: 100,
-                    child: Image.memory(lightTextFrames[index],),
+                    child: Row(
+                      children: [
+                        Image.memory(lightTextFrames[index],),Image.memory(darkTextFrames[index],)
+                      ],
+                    ),
                   );
                 },
               separatorBuilder: (ctx,index){

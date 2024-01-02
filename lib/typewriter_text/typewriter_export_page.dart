@@ -16,53 +16,27 @@ class TypewriterExportPage extends StatefulWidget {
 
 class _TypewriterExportPageState extends State<TypewriterExportPage> {
 
-  List<TextSpan> textSpans = [];
-  List<TextSpan> textSpansBg = [];
-  final _typeWriterController = Get.find<TypeWriterController>();
+  List<Span> spansModelList = [];
+  // List<TextSpan> textSpans = [];
+  // List<TextSpan> textSpansBg = [];
   double structFontSize = 16;
+  final _typeWriterController = Get.find<TypeWriterController>();
 
   @override
   void initState() {
     final json = jsonDecode(_typeWriterController.documentJson);
-    final spansList = SpanModel.fromDynamicListJson(json).spans;
-    if(spansList!.last.insert =='\n'){
-      spansList.removeLast();
+    spansModelList = SpanModel.fromDynamicListJson(json).spans!;
+    if(spansModelList.last.insert =='\n'){
+      spansModelList.removeLast();
     }
-    else if (spansList.last.insert!.contains('\n')){
-      spansList.last.insert = spansList.last.insert!.substring(0,spansList.last.insert!.length-1);
+    else if (spansModelList.last.insert!.contains('\n')){
+      spansModelList.last.insert = spansModelList.last.insert!.substring(0,spansModelList.last.insert!.length-1);
     }
 
-    structFontSize = spansList
+    structFontSize = spansModelList
         .map((span) => span.attributes!.size!.toDouble())
         .reduce((currentMax, fontSize) => fontSize > currentMax ? fontSize : currentMax);
 
-    print('----max size --- $structFontSize ---');
-
-    for(final spanModel in spansList){
-      TextSpan textSpan = TextSpan(
-          text: spanModel.insert ?? '',
-          style: TextStyle(
-            fontWeight: spanModel.attributes!.bold! ? FontWeight.bold : FontWeight.normal,
-            fontStyle: spanModel.attributes!.italic! ? FontStyle.italic : FontStyle.normal,
-            color: spanModel.attributes!.color! == 'FF000000' ? GithubGridThemes().lightTextColor : HexColor(spanModel.attributes!.color!),//"#FF000000" - #FFFFFFFF"
-            fontSize: spanModel.attributes!.size!.toDouble() ,
-          )
-      );
-      TextSpan textSpanBg = TextSpan(
-          text: spanModel.insert ?? '',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontStyle: spanModel.attributes!.italic! ? FontStyle.italic : FontStyle.normal,
-            color: GithubGridThemes().lightBgColor,
-            fontSize: spanModel.attributes!.size!.toDouble(),
-            shadows: [
-              Shadow(color: GithubGridThemes().lightBgColor,blurRadius: 1,offset: const Offset(0,0))
-            ]
-          )
-      );
-      textSpans.add(textSpan);
-      textSpansBg.add(textSpanBg);
-    }
     super.initState();
   }
 
@@ -80,7 +54,8 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
           FloatingActionButton(
             heroTag: 'replay',
             onPressed: (){
-              typewriterRichTextKey.currentState!.reset();
+              _typeWriterController.isLight.value = !_typeWriterController.isLight.value;
+              typewriterRichTextKey.currentState!.replay();
             },
             child: Icon(Icons.replay),
           ),
@@ -101,30 +76,32 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
           ),
           child: RepaintBoundary(
             key: typeWriterBoundryGlobalKey,
-            child: Stack(
-              children: [
-                TypewriterRichText(
-                  key: typewriterRichTextKey,
-                  strutStyle: StrutStyle(fontSize: structFontSize),
-                  text: TextSpan(
-                    text: '',
-                    style: const TextStyle(
-                      color: Colors.black,
+            child: Obx((){
+              final listSpans = generateSpans(_typeWriterController.isLight.value);
+              return Stack(
+                children: [
+                  TypewriterRichText(
+                    key: typewriterRichTextKey,
+                    strutStyle: StrutStyle(fontSize: structFontSize),
+                    text: TextSpan(
+                      text: '',
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                      children: listSpans[0],
                     ),
-                    children: textSpans,
-                  ),
-                  textBg: TextSpan(
-                    text: '',
-                    style: const TextStyle(
-                      color: Colors.black,
+                    textBg: TextSpan(
+                      text: '',
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                      children: listSpans[1],
                     ),
-                    children: textSpansBg,
-                  ),
-                  duration: Duration(milliseconds: _typeWriterController.documentPlainText.length*30),
-                  // onType: (progress) {
-                  //   debugPrint("Rich text %${(progress * 100).toStringAsFixed(0)} completed.");
-                  // },
-                )
+                    duration: Duration(milliseconds: _typeWriterController.documentPlainText.length*30),
+                    // onType: (progress) {
+                    //   debugPrint("Rich text %${(progress * 100).toStringAsFixed(0)} completed.");
+                    // },
+                  )
                 ,
                 Opacity(// this for place holer to have the text container size for recording
                   opacity: 0.0,
@@ -134,15 +111,50 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
                       style: const TextStyle(
                         color: Colors.black,
                       ),
-                      children: textSpans,
+                      children: listSpans[0],
                     ),
                   ),
                 )
-              ],
-            ),
+                ],
+              );
+            }),
           )
-
       ),
     );
   }
+
+
+
+
+  List<List<TextSpan>> generateSpans (isLight){
+    List<List<TextSpan>> totalSpans = [[],[]];
+    for(final spanModel in spansModelList){
+      TextSpan textSpan = TextSpan(
+          text: spanModel.insert ?? '',
+          style: TextStyle(
+            fontWeight: spanModel.attributes!.bold! ? FontWeight.bold : FontWeight.normal,
+            fontStyle: spanModel.attributes!.italic! ? FontStyle.italic : FontStyle.normal,
+            color: spanModel.attributes!.color! == '#FF000000' ? (isLight ? GithubGridThemes().lightTextColor : GithubGridThemes().darkTextColor) : HexColor(spanModel.attributes!.color!),//"#FF000000" - #FFFFFFFF"
+            fontSize: spanModel.attributes!.size!.toDouble() ,
+          )
+      );
+      TextSpan textSpanBg = TextSpan(
+          text: spanModel.insert ?? '',
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontStyle: spanModel.attributes!.italic! ? FontStyle.italic : FontStyle.normal,
+              color: isLight ? GithubGridThemes().lightBgColor : GithubGridThemes().darkBgColor,
+              fontSize: spanModel.attributes!.size!.toDouble(),
+              shadows: [
+                Shadow(color: isLight ? GithubGridThemes().lightBgColor : GithubGridThemes().darkBgColor,blurRadius: 1,offset: const Offset(0,0))
+              ]
+          )
+      );
+      totalSpans[0].add(textSpan);
+      totalSpans[1].add(textSpanBg);
+    }
+    return totalSpans;
+  }
+
 }
+

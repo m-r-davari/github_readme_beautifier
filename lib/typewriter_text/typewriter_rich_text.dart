@@ -162,7 +162,7 @@ class TypewriterRichTextState extends State<TypewriterRichText> {
   @override
   void didUpdateWidget(TypewriterRichText oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.duration != widget.duration || oldWidget.text != widget.text) {
+    if (false) {//oldWidget.duration != widget.duration || oldWidget.text != widget.text
       currentLetterIdx = 0;
       currentSpanIdx = -1;
       currentSpans.clear();
