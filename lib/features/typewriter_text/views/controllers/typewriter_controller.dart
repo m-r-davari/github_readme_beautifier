@@ -56,7 +56,7 @@ class TypeWriterController extends GetxController {
     final originalTypewriterLightGif = await gifMaker.createGif(frames: lightTextFrames, fileName: 'typewriter_text_light',frameRate: '${lightTextFrames.length}',exportRate: '${lightTextFrames.length}',loopNum: '-1');
     final optimizedTypewriterLightGif = await gifOptimizer.optimizeGif(originalGif: originalTypewriterLightGif,);
     final originalTypewriterDarkGif = await gifMaker.createGif(frames: darkTextFrames, fileName: 'typewriter_text_dark',frameRate: '${darkTextFrames.length}',exportRate: '${lightTextFrames.length}',loopNum: '-1');
-    final optimizedTypewriterDarkGif = await gifOptimizer.optimizeGif(originalGif: originalTypewriterDarkGif);
+    final optimizedTypewriterDarkGif = await gifOptimizer.optimizeGif(originalGif: originalTypewriterDarkGif);//
 
     showDialog(
       context: Get.context!,
