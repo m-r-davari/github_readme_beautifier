@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:github_readme_beautifier/app_bindings.dart';
-import 'package:github_readme_beautifier/github_meme/github_meme_controller.dart';
-import 'package:github_readme_beautifier/github_meme/github_meme_page.dart';
+import 'package:github_readme_beautifier/features/github_meme/github_meme_controller.dart';
+import 'package:github_readme_beautifier/features/github_meme/github_meme_page.dart';
 import 'package:github_readme_beautifier/home_page.dart';
 import 'package:github_readme_beautifier/splash_page.dart';
-import 'package:github_readme_beautifier/typewriter_text/typewriter_controller.dart';
-import 'package:github_readme_beautifier/typewriter_text/typewriter_export_page.dart';
-import 'package:github_readme_beautifier/typewriter_text/typewriter_text_page.dart';
+import 'package:github_readme_beautifier/features/typewriter_text/views/controllers/typewriter_controller.dart';
+import 'package:github_readme_beautifier/features/typewriter_text/views/pages/typewriter_export_page.dart';
+import 'package:github_readme_beautifier/features/typewriter_text/views/pages/typewriter_text_page.dart';
 
 void main()async{
   AppBindings appBindings = AppBindings();

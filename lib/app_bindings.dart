@@ -1,19 +1,28 @@
 import 'package:ffmpeg_wasm/ffmpeg_wasm.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:github_readme_beautifier/core/downloader/downloader.dart';
+import 'package:github_readme_beautifier/core/downloader/i_downloader.dart';
+import 'package:github_readme_beautifier/core/gif_maker/gif_maker.dart';
+import 'package:github_readme_beautifier/core/gif_maker/i_gif_maker.dart';
+import 'package:github_readme_beautifier/core/gif_optimizer/gif_optimizer.dart';
+import 'package:github_readme_beautifier/core/gif_optimizer/i_gif_optimizer.dart';
+import 'package:github_readme_beautifier/core/screenshot_maker/i_screenshot_maker.dart';
+import 'package:github_readme_beautifier/core/screenshot_maker/screenshot_maker.dart';
 import 'package:github_readme_beautifier/utils/const_keeper.dart';
 
 class AppBindings extends Bindings {
 
   @override
   Future<void> dependencies() async {
-    Get.putAsync<FFmpeg>(getFFmpeg,permanent: true);
-
+    Get.put<FFmpeg>(getFFmpeg(),permanent: true);
+    Get.put<IGifMaker>(GifMaker(Get.find<FFmpeg>()),permanent: true);
+    Get.put<IScreenshotMaker>(ScreenshotMaker(),permanent: true);
+    Get.put<IGifOptimizer>(GifOptimizer(),permanent: true);
+    Get.put<IDownloader>(Downloader());
   }
 
-
-
-  Future<FFmpeg> getFFmpeg ()async{
-    //await Future.delayed(const Duration(milliseconds: 2000));
+  FFmpeg getFFmpeg (){
     return createFFmpeg(
       CreateFFmpegParam(
         log: true,

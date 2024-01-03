@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
-import 'package:github_readme_beautifier/typewriter_text/span_model.dart';
-import 'package:github_readme_beautifier/typewriter_text/typewriter_controller.dart';
+import 'package:github_readme_beautifier/features/typewriter_text/models/span_model.dart';
+import 'package:github_readme_beautifier/features/typewriter_text/views/controllers/typewriter_controller.dart';
 import 'package:github_readme_beautifier/utils/hex_color.dart';
-import 'package:github_readme_beautifier/typewriter_text/typewriter_rich_text.dart';
+import 'package:github_readme_beautifier/features/typewriter_text/views/widgets/typewriter_rich_text.dart';
 
 class TypewriterExportPage extends StatefulWidget {
   const TypewriterExportPage({Key? key}) : super(key: key);
@@ -17,8 +17,6 @@ class TypewriterExportPage extends StatefulWidget {
 class _TypewriterExportPageState extends State<TypewriterExportPage> {
 
   List<Span> spansModelList = [];
-  // List<TextSpan> textSpans = [];
-  // List<TextSpan> textSpansBg = [];
   double structFontSize = 16;
   final _typeWriterController = Get.find<TypeWriterController>();
 
