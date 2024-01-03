@@ -28,13 +28,13 @@ class TypeWriterController extends GetxController {
     List<Uint8List> lightTextFrames = [];
     double progress = 0;
     typewriterRichTextKey.currentState!.reset();
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 200));
     while(progress*100 < 100){
       print('----capture frame --- $progress ---');
       final frame = await screenShotMaker.captureScreen(key: typeWriterBoundryGlobalKey);
       lightTextFrames.add(frame);
       progress = typewriterRichTextKey.currentState!.nextFrame();
-      await Future.delayed(Duration.zero);
+      await Future.delayed(const Duration(milliseconds: 100));
     }
     print('----light frame lenght is : ---- ${lightTextFrames.length} -----');
 
@@ -42,13 +42,13 @@ class TypeWriterController extends GetxController {
     typewriterRichTextKey.currentState!.reset();
     List<Uint8List> darkTextFrames = [];
     progress = 0;
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 200));
     while(progress*100 < 100){
       print('----capture frame --- $progress ---');
       final frame = await screenShotMaker.captureScreen(key: typeWriterBoundryGlobalKey);
       darkTextFrames.add(frame);
       progress = typewriterRichTextKey.currentState!.nextFrame();
-      await Future.delayed(Duration.zero);
+      await Future.delayed(const Duration(milliseconds: 100));
     }
     print('----dark frame lenght is : ---- ${darkTextFrames.length} -----');
 
@@ -71,6 +71,7 @@ class TypeWriterController extends GetxController {
             padding: const EdgeInsets.all(24),
             child: Column(
               children: [
+                Image.memory(lightTextFrames.last), const SizedBox(height: 16,),
                 Image.memory(originalTypewriterLightGif), const SizedBox(height: 16,),
                 Image.memory(optimizedTypewriterLightGif), const SizedBox(height: 16,),
                 Image.memory(originalTypewriterDarkGif), const SizedBox(height: 16,),
