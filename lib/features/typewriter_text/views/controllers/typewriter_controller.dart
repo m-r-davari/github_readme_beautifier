@@ -28,6 +28,7 @@ class TypeWriterController extends GetxController {
   }
 
   Future<void> export()async{
+    //todo : befor exporting must check if ffmpeg is loaded or not
     exporterController.fileName.value = 'typewriter_text';
     List<Uint8List> lightTextFrames = [];
     double progress = 0;
@@ -64,6 +65,14 @@ class TypeWriterController extends GetxController {
     final originalTypewriterDarkGif = await gifMaker.createGif(frames: darkTextFrames, fileName: 'typewriter_text_dark',exportFileName: 'out_text_dark',frameRate: '${darkTextFrames.length}',exportRate: '${lightTextFrames.length}',loopNum: '-1');
     final optimizedTypewriterDarkGif = await gifOptimizer.optimizeGif(originalGif: originalTypewriterDarkGif);//
 
+    //slslfkjfjriyp mjdhj djduwuiikf ififid ejfiigigir fjfujguigif eksoofpvbpbmjdu djfuji8gkhle jdjfujugvg wjskisio xxx.
+    //sfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffzzzzzzzzzzxxxc.
+
+    print('---- json document is : --- $documentJson----');
+    print('----plain text is  : ---- $documentPlainText --- txtLen is : ${documentPlainText.length} -- lighFLen is : ${lightTextFrames.length} --- darkFLen is : ${darkTextFrames.length}--');
+
+
+    exporterController.gifs.clear();
     exporterController.gifs.add(originalTypewriterLightGif);
     exporterController.gifs.add(optimizedTypewriterLightGif);
     exporterController.gifs.add(originalTypewriterDarkGif);

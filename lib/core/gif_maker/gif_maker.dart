@@ -26,7 +26,7 @@ class GifMaker extends IGifMaker {
     // best -r values is between 20~24.
 
     for (int i = 0; i < frames.length; i++) {
-      _fFmpeg.writeFile(i < 10 ? '${fileName}_00$i.png' : '${fileName}_0$i.png', frames[i]);
+      _fFmpeg.writeFile(i < 10 ? '${fileName}_00$i.png' : i < 100 ? '${fileName}_0$i.png' : '${fileName}_$i.png', frames[i]);
     }
 
     await _fFmpeg.run([
