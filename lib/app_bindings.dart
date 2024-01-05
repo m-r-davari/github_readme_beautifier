@@ -1,6 +1,6 @@
 import 'package:ffmpeg_wasm/ffmpeg_wasm.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:github_readme_beautifier/common/exporter/exporter_controller.dart';
 import 'package:github_readme_beautifier/core/downloader/downloader.dart';
 import 'package:github_readme_beautifier/core/downloader/i_downloader.dart';
 import 'package:github_readme_beautifier/core/gif_maker/gif_maker.dart';
@@ -20,6 +20,7 @@ class AppBindings extends Bindings {
     Get.put<IScreenshotMaker>(ScreenshotMaker(),permanent: true);
     Get.put<IGifOptimizer>(GifOptimizer(),permanent: true);
     Get.put<IDownloader>(Downloader());
+    Get.lazyPut(() => ExporterController(Get.find<IDownloader>()));
   }
 
   FFmpeg getFFmpeg (){

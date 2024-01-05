@@ -6,6 +6,7 @@ import 'package:github_readme_beautifier/features/typewriter_text/models/span_mo
 import 'package:github_readme_beautifier/features/typewriter_text/views/controllers/typewriter_controller.dart';
 import 'package:github_readme_beautifier/utils/hex_color.dart';
 import 'package:github_readme_beautifier/features/typewriter_text/views/widgets/typewriter_rich_text.dart';
+import 'package:github_readme_beautifier/common/exporter/exporter_view.dart';
 
 class TypewriterExportPage extends StatefulWidget {
   const TypewriterExportPage({Key? key}) : super(key: key);
@@ -46,77 +47,110 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Typewriter Text Export'),
       ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            heroTag: 'replay',
-            onPressed: (){
-              _typeWriterController.isLight.value = !_typeWriterController.isLight.value;
-              typewriterRichTextKey.currentState!.replay();
-            },
-            child: Icon(Icons.replay),
-          ),
-          FloatingActionButton(
-            onPressed: (){
-              _typeWriterController.export();
-            },
-            child: Icon(Icons.skip_next),
-          ),
-        ],
-      ),
-      body: Container(
-          margin: const EdgeInsets.all(24),
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-              color: const Color(0xffEDEDED),
-              borderRadius: BorderRadius.circular(16)
-          ),
-          child: RepaintBoundary(
-            key: typeWriterBoundryGlobalKey,
-            child: Obx((){
-              final listSpans = generateSpans(_typeWriterController.isLight.value);
-              return Stack(
-                children: [
-                  TypewriterRichText(
-                    key: typewriterRichTextKey,
-                    strutStyle: StrutStyle(fontSize: structFontSize),
-                    text: TextSpan(
-                      text: '',
-                      style: const TextStyle(
-                        color: Colors.black,
-                      ),
-                      children: listSpans[0],
-                    ),
-                    textBg: TextSpan(
-                      text: '',
-                      style: const TextStyle(
-                        color: Colors.black,
-                      ),
-                      children: listSpans[1],
-                    ),
-                    duration: Duration(milliseconds: _typeWriterController.documentPlainText.length*30),
-                    // onType: (progress) {
-                    //   debugPrint("Rich text %${(progress * 100).toStringAsFixed(0)} completed.");
-                    // },
-                  )
-                ,
-                Opacity(// this for place holer to have the text container size for recording
-                  opacity: 0.0,
-                  child: RichText(
-                    text: TextSpan(
-                      text: '',
-                      style: const TextStyle(
-                        color: Colors.black,
-                      ),
-                      children: listSpans[0],
-                    ),
-                  ),
+      body: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+                //margin: const EdgeInsets.all(24),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                    color: const Color(0xffEDEDED),
+                    borderRadius: BorderRadius.circular(16)
+                ),
+                child: RepaintBoundary(
+                  key: typeWriterBoundryGlobalKey,
+                  child: Obx((){
+                    final listSpans = generateSpans(_typeWriterController.isLight.value);
+                    return Stack(
+                      children: [
+                        TypewriterRichText(
+                          key: typewriterRichTextKey,
+                          strutStyle: StrutStyle(fontSize: structFontSize),
+                          text: TextSpan(
+                            text: '',
+                            style: const TextStyle(
+                              color: Colors.black,
+                            ),
+                            children: listSpans[0],
+                          ),
+                          textBg: TextSpan(
+                            text: '',
+                            style: const TextStyle(
+                              color: Colors.black,
+                            ),
+                            children: listSpans[1],
+                          ),
+                          duration: Duration(milliseconds: _typeWriterController.documentPlainText.length*30),
+                          // onType: (progress) {
+                          //   debugPrint("Rich text %${(progress * 100).toStringAsFixed(0)} completed.");
+                          // },
+                        )
+                      ,
+                      Opacity(// this for place holer to have the text container size for recording
+                        opacity: 0.0,
+                        child: RichText(
+                          text: TextSpan(
+                            text: '',
+                            style: const TextStyle(
+                              color: Colors.black,
+                            ),
+                            children: listSpans[0],
+                          ),
+                        ),
+                      )
+                      ],
+                    );
+                  }),
                 )
-                ],
-              );
-            }),
-          )
+            ),
+            const SizedBox(height: 24,),
+            Row(
+              children: [
+                ElevatedButton(
+                    onPressed: (){
+                      _typeWriterController.replay();
+                    },
+                    child: const Row(
+                      children: [
+                        Text('Replay'),
+                        SizedBox(width: 4,),
+                        Icon(Icons.play_arrow,size: 16,)
+                      ],
+                    )
+                )
+                ,
+                const SizedBox(width: 16,)
+                ,
+                ElevatedButton(
+                    onPressed: (){
+                      showDialog(
+                        context: Get.context!,
+                        barrierDismissible: false,
+                        builder: (context) {
+                          return const AlertDialog(
+                            backgroundColor: Colors.white,
+                            surfaceTintColor: Colors.white,
+                            content: ExporterDialog(),
+                          );
+                        },
+                      );
+                      _typeWriterController.export();
+                    },
+                    child: const Row(
+                      children: [
+                        Text('Export'),
+                        SizedBox(width: 8,),
+                        Icon(Icons.save_alt,size: 16,)
+                      ],
+                    )
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

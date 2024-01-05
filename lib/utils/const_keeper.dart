@@ -2,6 +2,6 @@ import 'package:get/get.dart';
 
 class ConstKeeper{
 
-  static Rx<bool> isFFmpegLoaded = RxBool(false);
+  static RxBool isFFmpegLoaded = RxBool(false);
 
 }
