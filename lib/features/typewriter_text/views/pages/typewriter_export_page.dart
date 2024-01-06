@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
 import 'package:github_readme_beautifier/features/typewriter_text/models/span_model.dart';
 import 'package:github_readme_beautifier/features/typewriter_text/views/controllers/typewriter_controller.dart';
+import 'package:github_readme_beautifier/utils/const_keeper.dart';
 import 'package:github_readme_beautifier/utils/hex_color.dart';
 import 'package:github_readme_beautifier/features/typewriter_text/views/widgets/typewriter_rich_text.dart';
 import 'package:github_readme_beautifier/common/exporter/exporter_view.dart';
@@ -125,7 +126,7 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
                 const SizedBox(width: 16,)
                 ,
                 ElevatedButton(
-                    onPressed: (){
+                    onPressed: ()async{
                       showDialog(
                         context: Get.context!,
                         barrierDismissible: false,
@@ -133,11 +134,18 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
                           return const AlertDialog(
                             backgroundColor: Colors.white,
                             surfaceTintColor: Colors.white,
+
                             content: ExporterDialog(),
                           );
                         },
                       );
-                      _typeWriterController.export();
+                      if(ConstKeeper.isFFmpegLoaded.value){
+                        await _typeWriterController.export();
+                      }
+                      else{
+                        await ConstKeeper.isFFmpegLoaded.stream.firstWhere((loaded) => loaded == true);
+                        await _typeWriterController.export();
+                      }
                     },
                     child: const Row(
                       children: [

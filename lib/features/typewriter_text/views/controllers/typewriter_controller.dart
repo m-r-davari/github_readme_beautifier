@@ -8,6 +8,7 @@ import 'package:github_readme_beautifier/core/gif_maker/i_gif_maker.dart';
 import 'package:github_readme_beautifier/core/gif_optimizer/i_gif_optimizer.dart';
 import 'package:github_readme_beautifier/core/screenshot_maker/i_screenshot_maker.dart';
 import 'package:github_readme_beautifier/features/typewriter_text/views/widgets/typewriter_rich_text.dart';
+import 'package:github_readme_beautifier/utils/const_keeper.dart';
 
 GlobalKey<TypewriterRichTextState> typewriterRichTextKey = GlobalKey();
 GlobalKey typeWriterBoundryGlobalKey = GlobalKey();
@@ -28,8 +29,8 @@ class TypeWriterController extends GetxController {
   }
 
   Future<void> export()async{
-    //todo : befor exporting must check if ffmpeg is loaded or not
     exporterController.fileName.value = 'typewriter_text';
+    isLight.value = true;
     List<Uint8List> lightTextFrames = [];
     double progress = 0;
     typewriterRichTextKey.currentState!.reset();
@@ -44,7 +45,7 @@ class TypeWriterController extends GetxController {
     }
     exporterController.progress.value = 0.5;
     print('----light frame lenght is : ---- ${lightTextFrames.length} -----');
-    isLight.value = !isLight.value;
+    isLight.value = false;
     typewriterRichTextKey.currentState!.reset();
     List<Uint8List> darkTextFrames = [];
     progress = 0;
@@ -72,12 +73,17 @@ class TypeWriterController extends GetxController {
     print('----plain text is  : ---- $documentPlainText --- txtLen is : ${documentPlainText.length} -- lighFLen is : ${lightTextFrames.length} --- darkFLen is : ${darkTextFrames.length}--');
 
 
+
     exporterController.gifs.clear();
     exporterController.gifs.add(originalTypewriterLightGif);
     exporterController.gifs.add(optimizedTypewriterLightGif);
     exporterController.gifs.add(originalTypewriterDarkGif);
     exporterController.gifs.add(optimizedTypewriterDarkGif);
     exporterController.progress.value = 1.0;
+
+    isLight.value = true;
+    typewriterRichTextKey.currentState!.reset();
+    typewriterRichTextKey.currentState!.lastFrame();
 
   }
 

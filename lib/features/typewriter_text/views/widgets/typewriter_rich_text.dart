@@ -184,6 +184,7 @@ class TypewriterRichTextState extends State<TypewriterRichText> {
     setState(() {});
   }
 
+
   void replay(){
     currentLetterIdx = 0;
     currentSpanIdx = -1;
@@ -242,6 +243,71 @@ class TypewriterRichTextState extends State<TypewriterRichText> {
 
     return ((ml - remaining) / ml);
   }
+
+
+  void lastFrame() {
+    timer?.cancel();
+    final ml = getMaxLen();
+
+    timer = Timer.periodic(
+      const Duration(
+        microseconds: 0,//widget.duration.inMicroseconds ~/ ml,
+      ),
+          (timer) {
+        final typeTextLength = typedText.codeUnits.length;
+        final targetTextLength = targetText.codeUnits.length;
+        final remaining = remainingLen();
+        if (remaining == 0) {
+          timer.cancel();
+          widget.onType?.call(1.0);
+          return;
+        } else if (typeTextLength == targetTextLength ||
+            currentLetterIdx >= targetTextLength) {
+          currentSpanIdx++;
+
+          if (currentSpanIdx >= (widget.text.children ?? []).length) {
+            timer.cancel();
+            widget.onType?.call(1.0);
+            return;
+          }
+          currentLetterIdx = 0;
+          typedText = "";
+
+          currentSpans.add(TextSpan(
+            text: "",
+            style: widget.text.children![currentSpanIdx].style,
+          ));
+          currentSpansBg.add(TextSpan(
+            text: "",
+            style: widget.textBg.children![currentSpanIdx].style,
+          ));
+
+          targetText = widget.text.children![currentSpanIdx].toPlainText();
+        }
+
+        widget.onType?.call((ml - remaining) / ml);
+
+        setState(() {
+          typedText +=
+              String.fromCharCode(targetText.codeUnitAt(currentLetterIdx));
+
+          if (currentSpanIdx != -1) {
+            currentSpans[currentSpanIdx] = TextSpan(
+              text: typedText,
+              style: widget.text.children![currentSpanIdx].style,
+            );
+            currentSpansBg[currentSpanIdx] = TextSpan(
+              text: typedText,
+              style: widget.textBg.children![currentSpanIdx].style,
+            );
+          }
+
+          currentLetterIdx++;
+        });
+      },
+    );
+  }
+
 
   TextSpan getCurrentSpan() {
     return TextSpan(

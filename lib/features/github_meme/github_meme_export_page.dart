@@ -29,6 +29,7 @@ class _GithubMemeExportPageState extends State<GithubMemeExportPage> with Ticker
       }
       else{
         if(!controller.hasAnimListener){//it means its exporting so do not export again
+          return;
         }
         await ConstKeeper.isFFmpegLoaded.stream.firstWhere((loaded) => loaded == true);
         gifs = await controller.exportGifs();
