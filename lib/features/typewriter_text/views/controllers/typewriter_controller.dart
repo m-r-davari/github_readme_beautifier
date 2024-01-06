@@ -8,7 +8,6 @@ import 'package:github_readme_beautifier/core/gif_maker/i_gif_maker.dart';
 import 'package:github_readme_beautifier/core/gif_optimizer/i_gif_optimizer.dart';
 import 'package:github_readme_beautifier/core/screenshot_maker/i_screenshot_maker.dart';
 import 'package:github_readme_beautifier/features/typewriter_text/views/widgets/typewriter_rich_text.dart';
-import 'package:github_readme_beautifier/utils/const_keeper.dart';
 
 GlobalKey<TypewriterRichTextState> typewriterRichTextKey = GlobalKey();
 GlobalKey typeWriterBoundryGlobalKey = GlobalKey();
@@ -66,13 +65,10 @@ class TypeWriterController extends GetxController {
     final originalTypewriterDarkGif = await gifMaker.createGif(frames: darkTextFrames, fileName: 'typewriter_text_dark',exportFileName: 'out_text_dark',frameRate: '${darkTextFrames.length}',exportRate: '${lightTextFrames.length}',loopNum: '-1');
     final optimizedTypewriterDarkGif = await gifOptimizer.optimizeGif(originalGif: originalTypewriterDarkGif);//
 
-    //slslfkjfjriyp mjdhj djduwuiikf ififid ejfiigigir fjfujguigif eksoofpvbpbmjdu djfuji8gkhle jdjfujugvg wjskisio xxx.
     //sfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffzzzzzzzzzzxxxc.
 
     print('---- json document is : --- $documentJson----');
     print('----plain text is  : ---- $documentPlainText --- txtLen is : ${documentPlainText.length} -- lighFLen is : ${lightTextFrames.length} --- darkFLen is : ${darkTextFrames.length}--');
-
-
 
     exporterController.gifs.clear();
     exporterController.gifs.add(originalTypewriterLightGif);
@@ -81,9 +77,13 @@ class TypeWriterController extends GetxController {
     exporterController.gifs.add(optimizedTypewriterDarkGif);
     exporterController.progress.value = 1.0;
 
+    progress = 0;
     isLight.value = true;
     typewriterRichTextKey.currentState!.reset();
-    typewriterRichTextKey.currentState!.lastFrame();
+    await Future.delayed(const Duration(milliseconds: 50));
+    while(progress*100 < 100){
+      progress = typewriterRichTextKey.currentState!.nextFrame();
+    }
 
   }
 
