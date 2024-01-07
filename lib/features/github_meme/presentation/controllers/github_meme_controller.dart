@@ -19,12 +19,6 @@ GlobalKey githubMemeBoundryGlobalKey = GlobalKey();
 external dynamic optimizeGifAndReturn(blob);
 
 
-class AnimBackupModel{
-  double? value;
-  AnimationStatus? status;
-  AnimBackupModel(this.value, this.status);
-}
-
 class GithubMemeController extends GetxController{
 
   List<int> grids = List.filled(368, 0);
@@ -33,8 +27,8 @@ class GithubMemeController extends GetxController{
   final ffmpeg = Get.find<FFmpeg>();
   GithubThemes themes = GithubThemes();
   Rx<bool> isLight = true.obs;
-  final Utils _utils = Utils();
   RxDouble exportProgressValue = 0.0.obs;
+  List<double> startValuesBackup = [];
 
   Future<Uint8List> _createAnimatedGif()async{
 
@@ -57,22 +51,29 @@ class GithubMemeController extends GetxController{
     // '-r' is the frame rate of export it must be 24 and it effects the size of gif higher -r will cause higher size. 20~24 is good.
 
 
+    // new document
+    // -framerate must be equals to total number of png frames
+    // -r is the export framerate (fps), it can effect the export gif size
+    // every grid tile takes 20 step to get completely played for both forward and reverse anim, so in 20 step we can be sure every grid
+    // anim value got fully played and its back to the firs step and if we consider the anim time 1000ms so our every step movement
+    // must be 0.05 then we can be sure for 1000ms and with 20 frame and 0.05 step we can cover the whole anim one time
+
     await ffmpeg.run([
-      '-framerate', '50',
+      '-framerate', '40',// must be equals to frames length
       '-i', 'github_meme_%03d.png',
       '-vf', 'palettegen=max_colors=200', //palettegen //palettegen=max_colors=256 //'palettegen=stats_mode=single:max_colors=256'
       'palette.png',
     ]);
 
     await ffmpeg.run([
-      '-framerate', '50',
+      '-framerate', '40',// must be equals to frames length
       '-i', 'github_meme_%03d.png',
       '-i', 'palette.png',
       '-lavfi', 'paletteuse=dither=bayer:bayer_scale=5',
       //'-filter_complex', //'[0:v][1:v]paletteuse',//'[0:v][1:v]paletteuse=dither=bayer:bayer_scale=5' // [0:v][1:v]paletteuse=dither=floyd_steinberg //[0:v][1:v]paletteuse ////paletteuse
       '-t', '1',
       '-loop', '0',
-      '-r', '24',
+      '-r', '20', // export fps
       '-f', 'gif',
       'output.gif',
     ]);
@@ -86,38 +87,31 @@ class GithubMemeController extends GetxController{
     List<Uint8List> frames = [];//frames list
     const int exportDuration = 1000; //milSec
     //exportDuration / 41 = 24 fps
-    List<AnimBackupModel> startValues = [];
     for(var controller in gridsAnimControllers){
       controller?.stop();
-      startValues.add(AnimBackupModel(controller!.value, controller.status));
     }
     await Future.delayed(Duration.zero);
-    for(int i = 0 ; i < exportDuration/41 ; i++){
+    for(int i = 0 ; i < exportDuration/50 ; i++){
       for(var controller in gridsAnimControllers){
-        print('---- valuesss---- v1 ${controller!.value} -- v2 ${startValues[gridsAnimControllers.indexOf(controller)].value} --');
-        if(i != 0 && (controller.value - startValues[gridsAnimControllers.indexOf(controller)].value!).abs() < 0.02 && controller!.status == startValues[gridsAnimControllers.indexOf(controller)].status){
-          print('---- got it ---- Continue -----');
-          continue;
-        }
         if (controller!.status == AnimationStatus.forward){
-          controller.value += 0.041;
+          controller.value += 0.05;
         }
         else if (controller.status == AnimationStatus.completed){
           controller.reverse();
-          controller.value -= 0.041;
+          controller.value -= 0.05;
         }
         else if (controller.status == AnimationStatus.reverse){
-          controller.value -= 0.041;
+          controller.value -= 0.05;
         }
         else if (controller.status == AnimationStatus.dismissed){
           controller.forward() ;
-          controller.value += 0.041;
+          controller.value += 0.05;
         }
       }
       await Future.delayed(Duration.zero);
       final frame = await _captureScreen();
       frames.add(frame);
-      exportProgressValue.value += (1.98/100).toDouble();
+      exportProgressValue.value += (2.48/100).toDouble();
     }
 
     final List<Uint8List> reverseFrames = [];
@@ -149,6 +143,10 @@ class GithubMemeController extends GetxController{
 
   Future<List<Uint8List>> exportGifs()async{
     hasAnimListener = false ;
+    startValuesBackup.clear();
+    for(final animController in gridsAnimControllers){
+      startValuesBackup.add(animController!.value);
+    }
     final originalLightGif = await _createAnimatedGif();
     dynamic jsOptimizedLightGif = await jsUtil.promiseToFuture(optimizeGifAndReturn(html.Blob([originalLightGif])));
     final html.FileReader reader = html.FileReader();
@@ -169,14 +167,21 @@ class GithubMemeController extends GetxController{
     isLight.value = !isLight.value;
     GithubThemes.isLight.value = !GithubThemes.isLight.value;
     hasAnimListener = true;
-    //todo :  replace below text with backup value
-    for(final gridAnimController in gridsAnimControllers){
-      Future.delayed(Duration(milliseconds: _utils.generateRandomNumFromRange(50, 500)),(){
-        gridAnimController!.forward();
-      });
+    for(final animController in gridsAnimControllers){
+      animController!.value = startValuesBackup[gridsAnimControllers.indexOf(animController)];
+      if (animController.status == AnimationStatus.forward || animController.status == AnimationStatus.dismissed){
+        animController.forward();
+      }
+      else {
+        animController.reverse();
+      }
     }
     return List.of([originalLightGif,optimizedLightGif,originalDarkGif,optimizedDarkGif]);
   }
+
+
+
+
 
 
   void downloadGif(Uint8List gif,{String typeName='',required String themeName})async{

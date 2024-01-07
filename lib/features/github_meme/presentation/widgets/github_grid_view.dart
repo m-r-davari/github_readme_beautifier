@@ -237,9 +237,6 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
       isSelected = widget.initialColorNum != 0;
       initialColor = themes.theme(widget.themeName)[colorNum] ?? themes.theme(widget.themeName)[0]!;
       _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.theme(widget.themeName)[0]!, colorLerpPercent)).animate(_animationController);
-      Future.delayed(Duration(milliseconds: _utils.generateRandomNumFromRange(50, 500)),(){
-        _animationController.forward();
-      });
     }
     else{
       _colorTween = ColorTween(begin: initialColor, end: Color.lerp(initialColor, themes.theme(widget.themeName)[0]!, colorLerpPercent)).animate(_animationController);
