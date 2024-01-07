@@ -18,6 +18,13 @@ GlobalKey githubMemeBoundryGlobalKey = GlobalKey();
 @JS('optimizeGifAndReturn')
 external dynamic optimizeGifAndReturn(blob);
 
+
+class AnimBackupModel{
+  double? value;
+  AnimationStatus? status;
+  AnimBackupModel(this.value, this.status);
+}
+
 class GithubMemeController extends GetxController{
 
   List<int> grids = List.filled(368, 0);
@@ -65,7 +72,7 @@ class GithubMemeController extends GetxController{
       //'-filter_complex', //'[0:v][1:v]paletteuse',//'[0:v][1:v]paletteuse=dither=bayer:bayer_scale=5' // [0:v][1:v]paletteuse=dither=floyd_steinberg //[0:v][1:v]paletteuse ////paletteuse
       '-t', '1',
       '-loop', '0',
-      '-r', '20',
+      '-r', '24',
       '-f', 'gif',
       'output.gif',
     ]);
@@ -79,23 +86,32 @@ class GithubMemeController extends GetxController{
     List<Uint8List> frames = [];//frames list
     const int exportDuration = 1000; //milSec
     //exportDuration / 41 = 24 fps
+    List<AnimBackupModel> startValues = [];
     for(var controller in gridsAnimControllers){
       controller?.stop();
+      startValues.add(AnimBackupModel(controller!.value, controller.status));
     }
     await Future.delayed(Duration.zero);
     for(int i = 0 ; i < exportDuration/41 ; i++){
       for(var controller in gridsAnimControllers){
+        print('---- valuesss---- v1 ${controller!.value} -- v2 ${startValues[gridsAnimControllers.indexOf(controller)].value} --');
+        if(i != 0 && (controller.value - startValues[gridsAnimControllers.indexOf(controller)].value!).abs() < 0.02 && controller!.status == startValues[gridsAnimControllers.indexOf(controller)].status){
+          print('---- got it ---- Continue -----');
+          continue;
+        }
         if (controller!.status == AnimationStatus.forward){
           controller.value += 0.041;
         }
         else if (controller.status == AnimationStatus.completed){
           controller.reverse();
+          controller.value -= 0.041;
         }
         else if (controller.status == AnimationStatus.reverse){
           controller.value -= 0.041;
         }
         else if (controller.status == AnimationStatus.dismissed){
           controller.forward() ;
+          controller.value += 0.041;
         }
       }
       await Future.delayed(Duration.zero);
@@ -105,8 +121,10 @@ class GithubMemeController extends GetxController{
     }
 
     final List<Uint8List> reverseFrames = [];
-    reverseFrames.addAll(List.of(frames).reversed);
-    frames.addAll(reverseFrames);
+    reverseFrames.addAll(List.of(frames));
+    reverseFrames.removeAt(0);
+    reverseFrames.removeLast();
+    frames.addAll(reverseFrames.reversed);
     return frames;
 
   }
@@ -151,6 +169,7 @@ class GithubMemeController extends GetxController{
     isLight.value = !isLight.value;
     GithubThemes.isLight.value = !GithubThemes.isLight.value;
     hasAnimListener = true;
+    //todo :  replace below text with backup value
     for(final gridAnimController in gridsAnimControllers){
       Future.delayed(Duration(milliseconds: _utils.generateRandomNumFromRange(50, 500)),(){
         gridAnimController!.forward();
