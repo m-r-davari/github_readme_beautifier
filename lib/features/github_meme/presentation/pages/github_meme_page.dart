@@ -3,10 +3,10 @@ import 'package:ffmpeg_wasm/ffmpeg_wasm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:github_readme_beautifier/features/github_meme/github_grid_view.dart';
-import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
+import 'package:github_readme_beautifier/features/github_meme/presentation/widgets/github_grid_view.dart';
+import 'package:github_readme_beautifier/resources/github_themes.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'github_meme_controller.dart';
+import '../controllers/github_meme_controller.dart';
 import 'github_meme_export_page.dart';
 
 class GithubMemePage extends StatefulWidget {
@@ -18,7 +18,7 @@ class GithubMemePage extends StatefulWidget {
 
 class _GithubMemePageState extends State<GithubMemePage> {
   String themeName = 'Default';
-  GithubGridThemes themes = GithubGridThemes();
+  GithubThemes themes = GithubThemes();
   bool showBorder = true;
   bool showAuthor = true;
   bool showProgressHint = true;

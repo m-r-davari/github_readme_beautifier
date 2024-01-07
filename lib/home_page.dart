@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:github_readme_beautifier/widgets/drawer_widget.dart';
 import 'package:github_readme_beautifier/widgets/hover_effect.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'models/feature_model.dart';
+import 'features/common/models/feature_model.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -90,7 +90,7 @@ class FeatureCardItem extends StatelessWidget {
                       alignment: Alignment.center,
                       color: Colors.black38,
                       child: Text(
-                        '$title${index != 0 ? ' (Coming Soon)' : ''}',
+                        '$title${index == 2 ? ' (Coming Soon)' : ''}',
                         maxLines: 1,
                         style: const TextStyle(color: Colors.white),
                       )),

@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
-import 'package:github_readme_beautifier/features/typewriter_text/models/span_model.dart';
-import 'package:github_readme_beautifier/features/typewriter_text/views/controllers/typewriter_controller.dart';
+import 'package:github_readme_beautifier/resources/github_themes.dart';
+import 'package:github_readme_beautifier/features/typewriter_text/data/models/span_model.dart';
+import 'package:github_readme_beautifier/features/typewriter_text/presentation/controllers/typewriter_controller.dart';
 import 'package:github_readme_beautifier/utils/const_keeper.dart';
 import 'package:github_readme_beautifier/utils/hex_color.dart';
-import 'package:github_readme_beautifier/features/typewriter_text/views/widgets/typewriter_rich_text.dart';
-import 'package:github_readme_beautifier/common/exporter/exporter_view.dart';
+import 'package:github_readme_beautifier/features/typewriter_text/presentation/widgets/typewriter_rich_text.dart';
+import 'package:github_readme_beautifier/features/common/exporter/exporter_view.dart';
 
 class TypewriterExportPage extends StatefulWidget {
   const TypewriterExportPage({Key? key}) : super(key: key);
@@ -174,7 +174,7 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
           style: TextStyle(
             fontWeight: spanModel.attributes!.bold! ? FontWeight.bold : FontWeight.normal,
             fontStyle: spanModel.attributes!.italic! ? FontStyle.italic : FontStyle.normal,
-            color: spanModel.attributes!.color! == '#FF000000' ? (isLight ? GithubGridThemes().lightTextColor : GithubGridThemes().darkTextColor) : HexColor(spanModel.attributes!.color!),//"#FF000000" - #FFFFFFFF"
+            color: spanModel.attributes!.color! == '#FF000000' ? (isLight ? GithubThemes().lightTextColor : GithubThemes().darkTextColor) : HexColor(spanModel.attributes!.color!),//"#FF000000" - #FFFFFFFF"
             fontSize: spanModel.attributes!.size!.toDouble() ,
           )
       );
@@ -183,10 +183,10 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
           style: TextStyle(
               fontWeight: FontWeight.bold,
               fontStyle: spanModel.attributes!.italic! ? FontStyle.italic : FontStyle.normal,
-              color: isLight ? GithubGridThemes().lightBgColor : GithubGridThemes().darkBgColor,
+              color: isLight ? GithubThemes().lightBgColor : GithubThemes().darkBgColor,
               fontSize: spanModel.attributes!.size!.toDouble(),
               shadows: [
-                Shadow(color: isLight ? GithubGridThemes().lightBgColor : GithubGridThemes().darkBgColor,blurRadius: 1,offset: const Offset(0,0))
+                Shadow(color: isLight ? GithubThemes().lightBgColor : GithubThemes().darkBgColor,blurRadius: 1,offset: const Offset(0,0))
               ]
           )
       );

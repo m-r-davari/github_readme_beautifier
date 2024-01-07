@@ -3,8 +3,8 @@ import 'dart:typed_data';
 import 'package:ffmpeg_wasm/ffmpeg_wasm.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:github_readme_beautifier/features/github_meme/github_meme_controller.dart';
-import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
+import 'package:github_readme_beautifier/features/github_meme/presentation/controllers/github_meme_controller.dart';
+import 'package:github_readme_beautifier/resources/github_themes.dart';
 import 'package:github_readme_beautifier/utils/const_keeper.dart';
 
 class GithubMemeExportPage extends StatefulWidget {
@@ -107,7 +107,7 @@ class _GithubMemeExportPageState extends State<GithubMemeExportPage> with Ticker
                         const Align(alignment: Alignment.centerLeft,child: Text(' Light Gif')),
                         const SizedBox(height: 2,),
                         Container(
-                          decoration: BoxDecoration(color: GithubGridThemes().lightBgColor,borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))),
+                          decoration: BoxDecoration(color: GithubThemes().lightBgColor,borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))),
                           child: Image.memory(
                               Uint8List.fromList(gifs[1])
                           ),
@@ -155,7 +155,7 @@ class _GithubMemeExportPageState extends State<GithubMemeExportPage> with Ticker
                         const Align(alignment: Alignment.centerLeft,child: Text(' Dark Gif')),
                         const SizedBox(height: 2,),
                         Container(
-                          decoration: BoxDecoration(color: GithubGridThemes().darkBgColor,borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))),
+                          decoration: BoxDecoration(color: GithubThemes().darkBgColor,borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))),
                           child: Image.memory(
                               Uint8List.fromList(gifs[3])
                           ),

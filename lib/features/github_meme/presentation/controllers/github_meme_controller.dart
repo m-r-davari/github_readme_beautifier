@@ -10,7 +10,7 @@ import 'package:js/js.dart';
 import 'dart:html' as html;
 import 'dart:js' as js;
 import 'package:js/js_util.dart' as jsUtil;
-import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
+import 'package:github_readme_beautifier/resources/github_themes.dart';
 import 'package:github_readme_beautifier/utils/utils.dart';
 
 GlobalKey githubMemeBoundryGlobalKey = GlobalKey();
@@ -24,7 +24,7 @@ class GithubMemeController extends GetxController{
   List<AnimationController?> gridsAnimControllers = [];
   bool hasAnimListener = true;
   final ffmpeg = Get.find<FFmpeg>();
-  GithubGridThemes themes = GithubGridThemes();
+  GithubThemes themes = GithubThemes();
   Rx<bool> isLight = true.obs;
   final Utils _utils = Utils();
   RxDouble exportProgressValue = 0.0.obs;
@@ -139,7 +139,7 @@ class GithubMemeController extends GetxController{
     final Uint8List optimizedLightGif = Uint8List.fromList(reader.result as List<int>);
     exportProgressValue.value = (50/100).toDouble();
     isLight.value = !isLight.value;
-    GithubGridThemes.isLight.value = !GithubGridThemes.isLight.value;
+    GithubThemes.isLight.value = !GithubThemes.isLight.value;
     await Future.delayed(const Duration(milliseconds: 700));
     final originalDarkGif= await _createAnimatedGif();
     dynamic jsOptimizedDarkGif = await jsUtil.promiseToFuture(optimizeGifAndReturn(html.Blob([originalDarkGif])));
@@ -149,7 +149,7 @@ class GithubMemeController extends GetxController{
     final Uint8List optimizedDarkGif = Uint8List.fromList(reader2.result as List<int>);
     exportProgressValue.value = (100/100).toDouble();
     isLight.value = !isLight.value;
-    GithubGridThemes.isLight.value = !GithubGridThemes.isLight.value;
+    GithubThemes.isLight.value = !GithubThemes.isLight.value;
     hasAnimListener = true;
     for(final gridAnimController in gridsAnimControllers){
       Future.delayed(Duration(milliseconds: _utils.generateRandomNumFromRange(50, 500)),(){

@@ -2,8 +2,8 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:github_readme_beautifier/common/exporter/exporter_controller.dart';
-import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
+import 'package:github_readme_beautifier/features/common/exporter/exporter_controller.dart';
+import 'package:github_readme_beautifier/resources/github_themes.dart';
 
 class ExporterDialog extends GetView<ExporterController> {
   const ExporterDialog({super.key});
@@ -83,7 +83,7 @@ class ExporterDialog extends GetView<ExporterController> {
                       const SizedBox(height: 2,),
                       Container(
                         padding: const EdgeInsets.all(24),
-                        decoration: BoxDecoration(color: GithubGridThemes().lightBgColor,borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8), bottomRight: Radius.circular(8),bottomLeft: Radius.circular(8))),
+                        decoration: BoxDecoration(color: GithubThemes().lightBgColor,borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8), bottomRight: Radius.circular(8),bottomLeft: Radius.circular(8))),
                         child: Image.memory(
                             Uint8List.fromList(controller.gifs[1])
                         ),
@@ -132,7 +132,7 @@ class ExporterDialog extends GetView<ExporterController> {
                       const SizedBox(height: 2,),
                       Container(
                         padding: const EdgeInsets.all(24),
-                        decoration: BoxDecoration(color: GithubGridThemes().darkBgColor,borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8), bottomRight: Radius.circular(8),bottomLeft: Radius.circular(8))),
+                        decoration: BoxDecoration(color: GithubThemes().darkBgColor,borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8), bottomRight: Radius.circular(8),bottomLeft: Radius.circular(8))),
                         child: Image.memory(
                             Uint8List.fromList(controller.gifs[3])
                         ),

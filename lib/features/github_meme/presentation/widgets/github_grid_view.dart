@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:github_readme_beautifier/features/github_meme/github_meme_text.dart';
-import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
+import 'package:github_readme_beautifier/features/github_meme/presentation/widgets/github_meme_text.dart';
+import 'package:github_readme_beautifier/resources/github_themes.dart';
 import 'package:github_readme_beautifier/utils/utils.dart';
-import 'github_meme_controller.dart';
+import '../controllers/github_meme_controller.dart';
 
 class GithubGridView extends StatefulWidget {
 
@@ -24,7 +24,7 @@ class GithubGridView extends StatefulWidget {
 
 class GithubGridViewState extends State<GithubGridView> {
 
-  GithubGridThemes themes = GithubGridThemes();
+  GithubThemes themes = GithubThemes();
   final memeController = Get.find<GithubMemeController>();
 
   @override
@@ -184,14 +184,14 @@ class _GithubGridItemState extends State<GithubGridItem> with SingleTickerProvid
   late Animation _colorTween;
   late Utils _utils;
   late Color initialColor;
-  late GithubGridThemes themes;
+  late GithubThemes themes;
   double colorLerpPercent = 0.4;
   final controller = Get.find<GithubMemeController>();
 
   @override
   void initState() {
     _utils = Utils();
-    themes = GithubGridThemes();
+    themes = GithubThemes();
     colorNum = widget.initialColorNum;
     isSelected = widget.initialColorNum != 0;
     initialColor = themes.theme(widget.themeName)[colorNum] ?? themes.theme(widget.themeName)[0]! ;
