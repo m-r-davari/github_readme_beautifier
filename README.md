@@ -21,10 +21,11 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 ## Features
 1 - **Github Meme View**, it provides github gridview to create desire custom meme with various colorful themes.\
 **Support 28 themes** like Default Github theme, Halloween Github theme, Flutter theme and many other themes.
+\
+2 - **Typewriter Text View**(coming soon), it provides text with type writer effect.\
 
 ## Next Version
-1 - **Typewriter Text View**(coming soon), it provides text with type writer effect.\
-2 - **Commits Linear Chart**(coming soon), it provides commits linear chart from your github commits data.
+1 - **Commits Linear Chart**(coming soon), it provides commits linear chart from your github commits data.
 
 ## Samples
 
@@ -46,7 +47,7 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/typewriter_text_dark.gif">
-  <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/typewriter_text_light.gif" width="100%">
+  <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/typewriter_text_light.gif" width="95%">
 </picture>
 
 <div style="overflow-x: scroll">
