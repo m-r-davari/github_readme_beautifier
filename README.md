@@ -43,7 +43,7 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 </picture>
 
 \
-**2 - TypeWriter Text**
+**2 - TypeWriter Text View**
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/typewriter_text_dark.gif">
