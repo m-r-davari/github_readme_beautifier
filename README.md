@@ -38,6 +38,13 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 </picture>
 
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/typewriter_text_dark.gif">
+  <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/typewriter_text_light.gif" width="80%">
+</picture>
+
+
+
 ## How To Use
 1 - Go to the web app from [**here**](https://m-r-davari.github.io/github_readme_beautifier).\
 2 - Go to your desire feature widget for example 'GithubMemeView'.\
