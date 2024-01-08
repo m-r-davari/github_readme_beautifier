@@ -14,7 +14,7 @@ class TypewriterTextPage extends StatefulWidget {
 
 class _TypewriterTextPageState extends State<TypewriterTextPage> {
   final _typeWriterController = Get.find<TypeWriterController>();
-  final QuillController _quillController = QuillController.basic();//..selectFontSize('20')..setContents(Delta.fromJson([{"insert":"hh\n"}]))
+  final QuillController _quillController = QuillController.basic();
 
   @override
   void initState() {
@@ -26,6 +26,7 @@ class _TypewriterTextPageState extends State<TypewriterTextPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: false,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Typewriter Text'),

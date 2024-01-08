@@ -21,9 +21,19 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
   List<Span> spansModelList = [];
   double structFontSize = 16;
   final _typeWriterController = Get.find<TypeWriterController>();
+  String dropdownValue = '0';
+  Map<String,String> loopMode = {
+    '0' : '-1',
+    '1' : '1',
+    '2' : '2',
+    '3' : '3',
+    'Infinite' : '0'
+  };
+
 
   @override
   void initState() {
+    _typeWriterController.loopCount = loopMode[dropdownValue]!;
     final json = jsonDecode(_typeWriterController.documentJson);
     spansModelList = SpanModel.fromDynamicListJson(json).spans!;
     if(spansModelList.last.insert =='\n'){
@@ -44,6 +54,7 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: false,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Typewriter Text Export'),
@@ -55,7 +66,6 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-                //margin: const EdgeInsets.all(24),
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                     color: const Color(0xffEDEDED),
@@ -155,6 +165,43 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
                       ],
                     )
                 )
+                ,
+                const SizedBox(width: 16,)
+                ,
+                Container(
+                  height: 35,
+                  padding: EdgeInsets.only(left: 8,right: 8),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(16),border: Border.all(color: Colors.deepPurpleAccent,width: 1)),
+                  child: Row(
+                    children: [
+                      const Text('Loop Count : ',style: TextStyle(color: Colors.deepPurple),),
+                      const SizedBox(width: 8,),
+                      DropdownButton<String>(
+                        value: dropdownValue,
+                        icon: const Icon(Icons.arrow_drop_down,size: 17,color: Colors.deepPurple,),
+                        elevation: 16,
+                        style: const TextStyle(color: Colors.deepPurple),
+                        underline: Container(
+                          height: 0.1,
+                          color: Colors.deepPurpleAccent,
+                        ),
+                        onChanged: (String? value) {
+                          setState(() {
+                            dropdownValue = value!;
+                            _typeWriterController.loopCount = loopMode[value]!;
+                          });
+                        },
+                        items: loopMode.keys.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      )
+                    ],
+                  ),
+                )
+
               ],
             )
           ],
@@ -162,8 +209,6 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
       ),
     );
   }
-
-
 
 
   List<List<TextSpan>> generateSpans (isLight){

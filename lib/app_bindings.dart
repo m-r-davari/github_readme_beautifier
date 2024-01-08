@@ -20,7 +20,7 @@ class AppBindings extends Bindings {
     Get.put<IScreenshotMaker>(ScreenshotMaker(),permanent: true);
     Get.put<IGifOptimizer>(GifOptimizer(),permanent: true);
     Get.put<IDownloader>(Downloader());
-    Get.lazyPut(() => ExporterController(Get.find<IDownloader>()));
+    Get.put<ExporterController>(ExporterController(Get.find<IDownloader>()),permanent: true);
   }
 
   FFmpeg getFFmpeg (){

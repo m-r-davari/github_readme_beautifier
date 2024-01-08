@@ -29,11 +29,12 @@ class _GithubMemePageState extends State<GithubMemePage> {
   Widget build(BuildContext context) {
 
     return ResponsiveScaledBox(width: 1038, child: Scaffold(
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: (){
-      //     print('--desire size -- width : ${MediaQuery.of(context).size.width} , height : ${MediaQuery.of(context).size.height}');
-      //   },
-      // ),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: false,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text('Github Meme'),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
