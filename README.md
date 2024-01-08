@@ -20,13 +20,18 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 
 ## Features
 1 - **Github Meme View**, it provides github gridview to create desire custom meme with various colorful themes.\
-**Support 28 themes** like Default Github theme, Halloween Github theme, Flutter theme and many other themes.
+**Support 28 themes** like Default Github theme, Halloween Github theme, Flutter theme and many other themes.\
+\
+2 - **Typewriter Text View**, it provides text with different styles and typewriter effect.
 
 ## Next Version
-1 - **Typewriter Text View**(coming soon), it provides text with type writer effect.\
-2 - **Commits Linear Chart**(coming soon), it provides commits linear chart from your github commits data.
+1 - **Commits Linear Chart**(coming soon), it provides commits linear chart from your github commits data.
 
 ## Samples
+
+
+**1 - Github Meme View**
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/github_meme_dark.gif">
   <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/github_meme_light.gif" width="49%">
@@ -37,6 +42,21 @@ You are welcomed to contribute, instead of copying the Idea or Code.
   <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_github_meme_light.gif" width="49%">
 </picture>
 
+\
+**2 - TypeWriter Text View**
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/typewriter_text_dark.gif">
+  <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/typewriter_text_light.gif" width="95%">
+</picture>
+
+<div style="overflow-x: scroll">
+
+| Infinite Loop Sample with No Delay                                                                                                                                                                                                                                                                                                                                                                    | One Time Play Sample With No Loop                                                                                                                                                                                                                                                                                                                                                                                     |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_typewriter_text_dark_loop.gif"><img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_typewriter_text_light_loop.gif" width="49%"></picture> | <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/colorful_typewriter_text_dark_noloop.gif"><img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/colorful_typewriter_text_light_noloop.gif" width="49%"></picture> |
+
+</div>
 
 ## How To Use
 1 - Go to the web app from [**here**](https://m-r-davari.github.io/github_readme_beautifier).\
