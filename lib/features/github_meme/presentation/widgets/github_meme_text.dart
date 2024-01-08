@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
+import 'package:github_readme_beautifier/resources/github_themes.dart';
 
 class GithubMemeText extends StatelessWidget {
 
@@ -12,8 +12,8 @@ class GithubMemeText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final bgColor = isLight ? GithubGridThemes().lightBgColor : GithubGridThemes().darkBgColor;
-    final txtColor = isLight ? GithubGridThemes().lightTextColor : GithubGridThemes().darkTextColor;
+    final bgColor = isLight ? GithubThemes().lightBgColor : GithubThemes().darkBgColor;
+    final txtColor = isLight ? GithubThemes().lightTextColor : GithubThemes().darkTextColor;
 
     //The gif images could not have semi-transparent color(transparent color with percent).
     //all of gif images pixel mus be either full transparent or colored pixel with full transparency

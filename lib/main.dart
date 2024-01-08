@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:github_readme_beautifier/app_bindings.dart';
-import 'package:github_readme_beautifier/github_meme/github_meme_controller.dart';
-import 'package:github_readme_beautifier/github_meme/github_meme_page.dart';
+import 'package:github_readme_beautifier/features/github_meme/presentation/controllers/github_meme_controller.dart';
+import 'package:github_readme_beautifier/features/github_meme/presentation/pages/github_meme_page.dart';
 import 'package:github_readme_beautifier/home_page.dart';
 import 'package:github_readme_beautifier/splash_page.dart';
+import 'package:github_readme_beautifier/features/typewriter_text/presentation/controllers/typewriter_controller.dart';
+import 'package:github_readme_beautifier/features/typewriter_text/presentation/pages/typewriter_export_page.dart';
+import 'package:github_readme_beautifier/features/typewriter_text/presentation/pages/typewriter_text_page.dart';
 
 void main()async{
   AppBindings appBindings = AppBindings();
@@ -41,6 +44,24 @@ class MyApp extends StatelessWidget {
           transition: Transition.fade,
           binding: BindingsBuilder(() {
             Get.put(GithubMemeController());
+          }),
+        )
+        ,
+        GetPage(
+          name: "/typewriter_page",
+          page: () => const TypewriterTextPage(),
+          transition: Transition.fade,
+          binding: BindingsBuilder(() {
+            Get.put(TypeWriterController());
+          }),
+        )
+        ,
+        GetPage(
+          name: "/typewriter_export_page",
+          page: () => const TypewriterExportPage(),
+          transition: Transition.fade,
+          binding: BindingsBuilder(() {
+            Get.put(TypeWriterController());
           }),
         )
       ],

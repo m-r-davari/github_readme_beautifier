@@ -27,7 +27,7 @@ class DrawerWidget extends StatelessWidget {
                   Stack(
                     children: [
                       Align(alignment: Alignment.centerLeft,child: FlipperView(child: Image.asset('assets/logo_github_1.png',width: 80,height: 80,),)),
-                      Positioned(top: 5,right: 5,child: IconButton(onPressed: ()=>Get.back(), icon: Icon(Icons.close,size: 16,)))
+                      Positioned(top: 5,right: 5,child: IconButton(onPressed: ()=>Get.back(), icon: const Icon(Icons.close,size: 16,)))
                     ],
                   ),
                   const SizedBox(

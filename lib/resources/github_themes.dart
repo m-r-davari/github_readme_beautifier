@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class GithubGridThemes {
+class GithubThemes {
 
   static Rx<bool> isLight = true.obs;
   Color lightBgColor = const Color(0xffffffff);

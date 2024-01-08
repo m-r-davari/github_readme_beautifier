@@ -3,10 +3,10 @@ import 'package:ffmpeg_wasm/ffmpeg_wasm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:github_readme_beautifier/github_meme/github_grid_view.dart';
-import 'package:github_readme_beautifier/resources/github_grid_themes.dart';
+import 'package:github_readme_beautifier/features/github_meme/presentation/widgets/github_grid_view.dart';
+import 'package:github_readme_beautifier/resources/github_themes.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'github_meme_controller.dart';
+import '../controllers/github_meme_controller.dart';
 import 'github_meme_export_page.dart';
 
 class GithubMemePage extends StatefulWidget {
@@ -18,7 +18,7 @@ class GithubMemePage extends StatefulWidget {
 
 class _GithubMemePageState extends State<GithubMemePage> {
   String themeName = 'Default';
-  GithubGridThemes themes = GithubGridThemes();
+  GithubThemes themes = GithubThemes();
   bool showBorder = true;
   bool showAuthor = true;
   bool showProgressHint = true;
@@ -29,11 +29,12 @@ class _GithubMemePageState extends State<GithubMemePage> {
   Widget build(BuildContext context) {
 
     return ResponsiveScaledBox(width: 1038, child: Scaffold(
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: (){
-      //     print('--desire size -- width : ${MediaQuery.of(context).size.width} , height : ${MediaQuery.of(context).size.height}');
-      //   },
-      // ),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: false,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text('Github Meme'),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -118,15 +119,6 @@ class _GithubMemePageState extends State<GithubMemePage> {
                 const SizedBox(
                   width: 24,
                 ),
-                // ElevatedButton(
-                //     onPressed: () {
-                //       memeController.isLight.value = !memeController.isLight.value;
-                //       GithubGridThemes.isLight.value = !GithubGridThemes.isLight.value;
-                //     },
-                //     child: const Text('isLight/isDark')),
-                // const SizedBox(
-                //   width: 24,
-                // ),
                 ElevatedButton(
                     onPressed: () async {
                       showDialog(
@@ -152,129 +144,6 @@ class _GithubMemePageState extends State<GithubMemePage> {
       ),
     ),);
 
-    return Scaffold(
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: (){
-      //     print('--desire size -- width : ${MediaQuery.of(context).size.width} , height : ${MediaQuery.of(context).size.height}');
-      //   },
-      // ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          GithubGridView(
-            grids: memeController.grids,
-            themeName: themeName,
-            showBorder: showBorder,
-            showAuthor: showAuthor,
-            showDate: showDate,
-            showProgressHint: showProgressHint,
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          FittedBox(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  width: 24,
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      memeController.grids.fillRange(0, memeController.grids.length, 0);
-                      setState(() {});
-                    },
-                    child: const Text('Reset')),
-                const SizedBox(
-                  width: 24,
-                ),
-                ElevatedButton(
-                    onPressed: () async {
-                      var result = await showThemePickerDialog(themes.themesMap.keys.toList(), themeName);
-                      if (result != null) {
-                        themeName = result;
-                        setState(() {});
-                      }
-                    },
-                    child: const Text('Choose Theme')),
-                const SizedBox(
-                  width: 24,
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        showBorder = !showBorder;
-                      });
-                    },
-                    child: Text(showBorder ? 'Hide Border' : 'Show Border')),
-                const SizedBox(
-                  width: 24,
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        showAuthor = !showAuthor;
-                      });
-                    },
-                    child: Text(showAuthor ? 'Hide Author' : 'Show Author')),
-                const SizedBox(
-                  width: 24,
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        showProgressHint = !showProgressHint;
-                      });
-                    },
-                    child: Text(showProgressHint ? 'Hide Progress Hint' : 'Show Progress Hint')),
-                const SizedBox(
-                  width: 24,
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        showDate = !showDate;
-                      });
-                    },
-                    child: Text(showDate ? 'Hide Date' : 'Show Date')),
-                const SizedBox(
-                  width: 24,
-                ),
-                // ElevatedButton(
-                //     onPressed: () {
-                //       memeController.isLight.value = !memeController.isLight.value;
-                //       GithubGridThemes.isLight.value = !GithubGridThemes.isLight.value;
-                //     },
-                //     child: const Text('isLight/isDark')),
-                // const SizedBox(
-                //   width: 24,
-                // ),
-                ElevatedButton(
-                    onPressed: () async {
-                      showDialog(
-                        context: Get.context!,
-                        barrierDismissible: false,
-                        builder: (context) {
-                          return const AlertDialog(
-                            backgroundColor: Colors.white,
-                            surfaceTintColor: Colors.white,
-                            content: GithubMemeExportPage(),
-                          );
-                        },
-                      );
-                    },
-                    child: const Text('Export')),
-                const SizedBox(
-                  width: 24,
-                )
-              ],
-            ),
-          )
-        ],
-      ),
-    );
   }
 
   @override
