@@ -23,6 +23,7 @@ class TypeWriterController extends GetxController {
   IGifOptimizer gifOptimizer = Get.find();
   ExporterController exporterController = Get.find();
   String loopCount = '-1';
+  bool loopDelay = true;
 
   void replay(){
     typewriterRichTextKey.currentState!.replay();
@@ -61,9 +62,9 @@ class TypeWriterController extends GetxController {
     print('----dark frame lenght is : ---- ${darkTextFrames.length} -----');
 
     //creating gif
-    final originalTypewriterLightGif = await gifMaker.createGif(frames: lightTextFrames, fileName: 'typewriter_text_light',exportFileName: 'out_text_light',frameRate: '${lightTextFrames.length}',exportRate: '${lightTextFrames.length}',loopNum: loopCount);
+    final originalTypewriterLightGif = await gifMaker.createGif(frames: lightTextFrames, fileName: 'typewriter_text_light',exportFileName: 'out_text_light',frameRate: '${lightTextFrames.length}',exportRate: '${lightTextFrames.length}',loopNum: loopCount, loopDelay: loopDelay);
     final optimizedTypewriterLightGif = await gifOptimizer.optimizeGif(originalGif: originalTypewriterLightGif,);
-    final originalTypewriterDarkGif = await gifMaker.createGif(frames: darkTextFrames, fileName: 'typewriter_text_dark',exportFileName: 'out_text_dark',frameRate: '${darkTextFrames.length}',exportRate: '${lightTextFrames.length}',loopNum: loopCount);
+    final originalTypewriterDarkGif = await gifMaker.createGif(frames: darkTextFrames, fileName: 'typewriter_text_dark',exportFileName: 'out_text_dark',frameRate: '${darkTextFrames.length}',exportRate: '${lightTextFrames.length}',loopNum: loopCount, loopDelay: loopDelay);
     final optimizedTypewriterDarkGif = await gifOptimizer.optimizeGif(originalGif: originalTypewriterDarkGif);//
 
     //sfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffzzzzzzzzzzxxxc.

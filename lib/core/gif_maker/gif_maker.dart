@@ -10,7 +10,7 @@ class GifMaker extends IGifMaker {
   @override
   Future<Uint8List> createGif(
       {required List<Uint8List> frames, String frameRate = '50', String exportRate = '20', required String fileName,
-      String loopNum = '0', String maxColors = '200', String exportFileName = 'output'}) async {
+      String loopNum = '0', String maxColors = '200', String exportFileName = 'output', bool loopDelay = false}) async {
 
     //frame rate changes from 24 to 50
     //because with reverse frames we have total 50 frames and if we want to use 24 fps export it will deduct frames and cause the
@@ -24,6 +24,7 @@ class GifMaker extends IGifMaker {
     // below is the sample code for this idea, it should be test
     // '-r' is the frame rate of export it must be 24 and it effects the size of export gif higher -r will cause higher size.
     // best -r values is between 20~24.
+
 
     for (int i = 0; i < frames.length; i++) {
       _fFmpeg.writeFile(i < 10 ? '${fileName}_00$i.png' : i < 100 ? '${fileName}_0$i.png' : '${fileName}_$i.png', frames[i]);
@@ -41,10 +42,10 @@ class GifMaker extends IGifMaker {
       '-framerate', frameRate,
       '-i', '${fileName}_%03d.png',
       '-i', 'palette.png',
-      '-lavfi', 'paletteuse=dither=bayer:bayer_scale=5',
+      '-lavfi', 'paletteuse=dither=bayer:bayer_scale=5${loopDelay ? ', setpts=\'if(eq(N,${frames.length - 1}),2/TB,PTS)\'' : ''}',
       //'-filter_complex', //'[0:v][1:v]paletteuse',//'[0:v][1:v]paletteuse=dither=bayer:bayer_scale=5'
       // [0:v][1:v]paletteuse=dither=floyd_steinberg //[0:v][1:v]paletteuse ////paletteuse
-      '-t', '1',
+      //'-t', '1',
       '-loop', loopNum,
       '-r', exportRate,
       '-f', 'gif',

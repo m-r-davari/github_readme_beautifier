@@ -29,11 +29,12 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
     '3' : '3',
     'Infinite' : '0'
   };
-
+  bool loopDelay = true;
 
   @override
   void initState() {
     _typeWriterController.loopCount = loopMode[dropdownValue]!;
+    _typeWriterController.loopDelay = loopDelay;
     final json = jsonDecode(_typeWriterController.documentJson);
     spansModelList = SpanModel.fromDynamicListJson(json).spans!;
     if(spansModelList.last.insert =='\n'){
@@ -41,6 +42,7 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
     }
     else if (spansModelList.last.insert!.contains('\n')){
       spansModelList.last.insert = spansModelList.last.insert!.substring(0,spansModelList.last.insert!.length-1);
+      spansModelList.last.insert = '${spansModelList.last.insert} ';
     }
 
     structFontSize = spansModelList
@@ -197,6 +199,29 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
                             child: Text(value),
                           );
                         }).toList(),
+                      )
+                    ],
+                  ),
+                )
+                ,
+                const SizedBox(width: 16,)
+                ,
+                Container(
+                  height: 35,
+                  padding: const EdgeInsets.only(left: 8,),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(16),border: Border.all(color: Colors.deepPurpleAccent,width: 1)),
+                  child: Row(
+                    children: [
+                      const Text('Loop Delay : ',style: TextStyle(color: Colors.deepPurple),),
+                      const SizedBox(width: 8,),
+                      Switch(
+                          value: loopDelay,
+                          onChanged: (value){
+                            _typeWriterController.loopDelay = value;
+                            setState(() {
+                              loopDelay = value;
+                            });
+                          }
                       )
                     ],
                   ),
