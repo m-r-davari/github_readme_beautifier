@@ -41,7 +41,7 @@ class TypeWriterController extends GetxController {
       final frame = await screenShotMaker.captureScreen(key: typeWriterBoundryGlobalKey);
       lightTextFrames.add(frame);
       progress = typewriterRichTextKey.currentState!.nextFrame();
-      await Future.delayed(Duration.zero);
+      await Future.delayed(const Duration(milliseconds: 10));
       exporterController.progress.value = progress/2;
     }
     exporterController.progress.value = 0.5;
@@ -56,7 +56,7 @@ class TypeWriterController extends GetxController {
       final frame = await screenShotMaker.captureScreen(key: typeWriterBoundryGlobalKey);
       darkTextFrames.add(frame);
       progress = typewriterRichTextKey.currentState!.nextFrame();
-      await Future.delayed(Duration.zero);
+      await Future.delayed(const Duration(milliseconds: 10));
       exporterController.progress.value = progress < 1.0 ? 0.5+progress/2 : 0.99;
     }
     print('----dark frame lenght is : ---- ${darkTextFrames.length} -----');

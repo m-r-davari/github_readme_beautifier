@@ -38,11 +38,11 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
     final json = jsonDecode(_typeWriterController.documentJson);
     spansModelList = SpanModel.fromDynamicListJson(json).spans!;
     if(spansModelList.last.insert =='\n'){
-      spansModelList.removeLast();
+      spansModelList.last.insert = ' ';
     }
     else if (spansModelList.last.insert!.contains('\n')){
-      spansModelList.last.insert = spansModelList.last.insert!.substring(0,spansModelList.last.insert!.length-1);
-      spansModelList.last.insert = '${spansModelList.last.insert} ';
+      spansModelList.last.insert = spansModelList.last.insert!.trimRight();
+      spansModelList.last.insert = '${spansModelList.last.insert!} ';
     }
 
     structFontSize = spansModelList
