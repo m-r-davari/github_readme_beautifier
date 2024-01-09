@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:github_readme_beautifier/app_bindings.dart';
+import 'package:github_readme_beautifier/core/di/app_bindings.dart';
 import 'package:github_readme_beautifier/features/github_meme/presentation/controllers/github_meme_controller.dart';
 import 'package:github_readme_beautifier/features/github_meme/presentation/pages/github_meme_page.dart';
+import 'package:github_readme_beautifier/features/language_statistics%20/presentation/controllers/language_statistics_controller.dart';
+import 'package:github_readme_beautifier/features/language_statistics%20/presentation/pages/language_statistics_page.dart';
 import 'package:github_readme_beautifier/home_page.dart';
 import 'package:github_readme_beautifier/splash_page.dart';
 import 'package:github_readme_beautifier/features/typewriter_text/presentation/controllers/typewriter_controller.dart';
@@ -62,6 +64,15 @@ class MyApp extends StatelessWidget {
           transition: Transition.fade,
           binding: BindingsBuilder(() {
             Get.put(TypeWriterController());
+          }),
+        )
+        ,
+        GetPage(
+          name: "/language_statistics_page",
+          page: () => const LanguageStatisticsPage(),
+          transition: Transition.fade,
+          binding: BindingsBuilder(() {
+            Get.put(LanguageStatisticsController());
           }),
         )
       ],
