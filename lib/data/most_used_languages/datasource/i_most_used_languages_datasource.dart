@@ -1,4 +1,4 @@
 
 abstract class IMostUsedLanguagesDatasource {
-  Future<dynamic> getMostUsedLanguages({required String userName});
+  Future<Map<String,int>> getMostUsedLanguages({required String userName});
 }

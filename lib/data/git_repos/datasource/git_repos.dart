@@ -7,12 +7,15 @@ class GitReposRemoteDataSource extends IGitReposRemoteDataSource {
   
   final INetworkManager networkManager;
   GitReposRemoteDataSource({required this.networkManager});
-  
+
   @override
   Future<List<GitRepoModel>> getUserGitRepos({required String userName}) async {
     final result =  await networkManager.getRequest(path: 'users/$userName/repos');
-    final List<dynamic> jsonList = json.decode(result);
-    return jsonList.map((json) => GitRepoModel.fromJson(json)).toList();
+    List<GitRepoModel> repos = <GitRepoModel>[];
+    result.forEach((v) {
+      repos.add(GitRepoModel.fromJson(v));
+    });
+    return repos;
   }
   
 }

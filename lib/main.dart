@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:github_readme_beautifier/core/di/app_bindings.dart';
+import 'package:github_readme_beautifier/core/network_manager/i_nework_manager.dart';
+import 'package:github_readme_beautifier/data/git_repos/datasource/i_git_repos.dart';
+import 'package:github_readme_beautifier/data/most_used_languages/datasource/i_most_used_languages_datasource.dart';
+import 'package:github_readme_beautifier/data/most_used_languages/datasource/most_used_languages_datasource.dart';
+import 'package:github_readme_beautifier/data/most_used_languages/repository/i_most_used_languages_repository.dart';
+import 'package:github_readme_beautifier/data/most_used_languages/repository/most_languages_repository.dart';
 import 'package:github_readme_beautifier/presentation/github_meme/controllers/github_meme_controller.dart';
 import 'package:github_readme_beautifier/presentation/github_meme/pages/github_meme_page.dart';
 import 'package:github_readme_beautifier/home_page.dart';
@@ -68,10 +74,12 @@ class MyApp extends StatelessWidget {
         )
         ,
         GetPage(
-          name: "/language_statistics_page",
+          name: "/most_used_languages_page",
           page: () => const MostUsedLanguagesPage(),
           transition: Transition.fade,
           binding: BindingsBuilder(() {
+            Get.put<IMostUsedLanguagesDatasource>(MostUsedLanguagesDatasource(networkManager: Get.find<INetworkManager>(), reposDataSource: Get.find<IGitReposRemoteDataSource>()));
+            Get.put<IMostLanguagesRepository>(MostLanguagesRepository(datasource: Get.find<IMostUsedLanguagesDatasource>()));
             Get.put(MostUsedLanguagesController());
           }),
         )

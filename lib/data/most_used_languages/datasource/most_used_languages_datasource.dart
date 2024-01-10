@@ -9,13 +9,18 @@ class MostUsedLanguagesDatasource extends IMostUsedLanguagesDatasource{
   MostUsedLanguagesDatasource({required this.networkManager,required this.reposDataSource});
 
   @override
-  Future<dynamic> getMostUsedLanguages({required String userName})async{
+  Future<Map<String,int>> getMostUsedLanguages({required String userName})async{
     final repos = await reposDataSource.getUserGitRepos(userName: userName);
-    List<dynamic> langs = [];
-    for(final repo in repos){
-      final lang = await networkManager.getRequest(path: '');
-      langs.add(lang);
+    List<String> reposLangs = repos.where((element) => element.language != null).map<String>((e) => e.language!).toList();
+    print('--------> langslst : ${reposLangs}');
+    final everyPartSize = 100 /reposLangs.length;
+    final langsSets = reposLangs.toSet();
+    Map<String,int> langsData = {};
+    for(var langSet in langsSets){
+      langsData[langSet] = (everyPartSize * reposLangs.where((element) => element == langSet).length).round();
     }
+    print('----langs map data ----- $langsData -');
+    return langsData;
   }
 
 }

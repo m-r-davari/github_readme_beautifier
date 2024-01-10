@@ -6,8 +6,9 @@ import 'i_nework_manager.dart';
 
 class DioNetworkManager extends INetworkManager {
 
-  final _connectionTimeout = 30000;
-  final _receiveTimeout = 30000;
+  final _connectionTimeout = 5000;
+  final _receiveTimeout = 5000;
+  final _sendTimeout = 5000;
   late Dio _dio;
   BaseOptions? options;
   String baseUrl;
@@ -17,7 +18,7 @@ class DioNetworkManager extends INetworkManager {
       baseUrl: baseUrl,
       connectTimeout: Duration(milliseconds: _connectionTimeout),
       receiveTimeout: Duration(milliseconds: _receiveTimeout),
-      sendTimeout: Duration(milliseconds: _receiveTimeout),
+      sendTimeout: Duration(milliseconds: _sendTimeout),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',

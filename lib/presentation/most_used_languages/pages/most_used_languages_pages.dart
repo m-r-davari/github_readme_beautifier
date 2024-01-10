@@ -29,12 +29,12 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          // controller.
+          controller.getMostLanguages();
         },
-        child: Text('get'),
+        child: const Text('get'),
       ),
       body: Container(
-        child: Center(child: Text('langiages'),),
+        child: const Center(child: Text('languages'),),
       ),
     );
   }

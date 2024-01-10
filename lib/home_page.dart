@@ -112,7 +112,7 @@ class FeatureCardItem extends StatelessWidget {
                                 Get.toNamed('/typewriter_page');
                             }
                             : index == 2 ? (){
-                                Get.toNamed('/language_statistics_page');
+                                Get.toNamed('/most_used_languages_page');
                             }
                             : null,
                         borderRadius: const BorderRadius.all(Radius.circular(16)),
