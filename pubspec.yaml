@@ -23,6 +23,7 @@ dependencies:
   flutter_quill: ^9.1.1
   dio: ^5.4.0
   pretty_dio_logger: ^1.1.1
+  fl_chart: ^0.66.0
 
 dev_dependencies:
   flutter_test:
