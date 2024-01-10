@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:ffmpeg_wasm/ffmpeg_wasm.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:github_readme_beautifier/features/github_meme/presentation/controllers/github_meme_controller.dart';
+import 'package:github_readme_beautifier/presentation/github_meme/controllers/github_meme_controller.dart';
 import 'package:github_readme_beautifier/resources/github_themes.dart';
 import 'package:github_readme_beautifier/utils/const_keeper.dart';
 

@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
-import 'package:github_readme_beautifier/features/typewriter_text/presentation/controllers/typewriter_controller.dart';
-import 'package:github_readme_beautifier/features/typewriter_text/presentation/pages/typewriter_export_page.dart';
+import 'package:github_readme_beautifier/presentation/typewriter_text/controllers/typewriter_controller.dart';
+import 'package:github_readme_beautifier/presentation/typewriter_text/pages/typewriter_export_page.dart';
 
 class TypewriterTextPage extends StatefulWidget {
   const TypewriterTextPage({Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:github_readme_beautifier/features/github_meme/presentation/widgets/github_meme_text.dart';
+import 'package:github_readme_beautifier/presentation/github_meme/widgets/github_meme_text.dart';
 import 'package:github_readme_beautifier/resources/github_themes.dart';
 import 'package:github_readme_beautifier/utils/utils.dart';
 import '../controllers/github_meme_controller.dart';

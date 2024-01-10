@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:github_readme_beautifier/features/language_statistics%20/presentation/controllers/language_statistics_controller.dart';
+import 'package:github_readme_beautifier/presentation/most_used_languages/controllers/most_used_languages_controller.dart';
 
-class LanguageStatisticsPage extends StatefulWidget {
-  const LanguageStatisticsPage({Key? key}) : super(key: key);
+class MostUsedLanguagesPage extends StatefulWidget {
+  const MostUsedLanguagesPage({Key? key}) : super(key: key);
 
   @override
-  State<LanguageStatisticsPage> createState() => _LanguageStatisticsPageState();
+  State<MostUsedLanguagesPage> createState() => _MostUsedLanguagesPageState();
 }
 
-class _LanguageStatisticsPageState extends State<LanguageStatisticsPage> {
+class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
 
-  final controller = Get.find<LanguageStatisticsController>();
+  final controller = Get.find<MostUsedLanguagesController>();
 
   @override
   void initState() {

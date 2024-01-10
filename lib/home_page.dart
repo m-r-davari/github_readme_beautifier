@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:github_readme_beautifier/widgets/drawer_widget.dart';
 import 'package:github_readme_beautifier/widgets/hover_effect.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'features/common/general/feature_model.dart';
+import 'data/common/models/feature_model.dart';
 
 
 class HomePage extends StatefulWidget {

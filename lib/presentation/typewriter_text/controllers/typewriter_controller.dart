@@ -2,12 +2,12 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:github_readme_beautifier/features/common/exporter/exporter_controller.dart';
+import 'package:github_readme_beautifier/presentation/exporter/exporter_controller.dart';
 import 'package:github_readme_beautifier/core/downloader/i_downloader.dart';
 import 'package:github_readme_beautifier/core/gif_maker/i_gif_maker.dart';
 import 'package:github_readme_beautifier/core/gif_optimizer/i_gif_optimizer.dart';
 import 'package:github_readme_beautifier/core/screenshot_maker/i_screenshot_maker.dart';
-import 'package:github_readme_beautifier/features/typewriter_text/presentation/widgets/typewriter_rich_text.dart';
+import 'package:github_readme_beautifier/presentation/typewriter_text/widgets/typewriter_rich_text.dart';
 
 GlobalKey<TypewriterRichTextState> typewriterRichTextKey = GlobalKey();
 GlobalKey typeWriterBoundryGlobalKey = GlobalKey();

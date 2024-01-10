@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:github_readme_beautifier/resources/github_themes.dart';
-import 'package:github_readme_beautifier/features/typewriter_text/data/models/span_model.dart';
-import 'package:github_readme_beautifier/features/typewriter_text/presentation/controllers/typewriter_controller.dart';
+import 'package:github_readme_beautifier/data/typewriter/models/span_model.dart';
+import 'package:github_readme_beautifier/presentation/typewriter_text/controllers/typewriter_controller.dart';
 import 'package:github_readme_beautifier/utils/const_keeper.dart';
 import 'package:github_readme_beautifier/utils/hex_color.dart';
-import 'package:github_readme_beautifier/features/typewriter_text/presentation/widgets/typewriter_rich_text.dart';
-import 'package:github_readme_beautifier/features/common/exporter/exporter_view.dart';
+import 'package:github_readme_beautifier/presentation/typewriter_text/widgets/typewriter_rich_text.dart';
+import 'package:github_readme_beautifier/presentation/exporter/exporter_view.dart';
 
 class TypewriterExportPage extends StatefulWidget {
   const TypewriterExportPage({Key? key}) : super(key: key);

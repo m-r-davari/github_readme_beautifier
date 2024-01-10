@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:github_readme_beautifier/features/common/exporter/exporter_controller.dart';
+import 'package:github_readme_beautifier/presentation/exporter/exporter_controller.dart';
 import 'package:github_readme_beautifier/resources/github_themes.dart';
 
 class ExporterDialog extends GetView<ExporterController> {
