@@ -4,6 +4,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:github_readme_beautifier/presentation/most_used_languages/controllers/most_used_languages_controller.dart';
+import 'package:github_readme_beautifier/presentation/user/user_controller.dart';
 import 'package:github_readme_beautifier/widgets/github_text.dart';
 
 class MostUsedLanguagesPage extends StatefulWidget {
@@ -21,6 +22,7 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
 
   @override
   void initState() {
+    controller.getMostLanguages(Get.find<UserController>().userName);
     super.initState();
   }
 
@@ -40,46 +42,55 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
         },
         child: const Text('get'),
       ),
-      body: Container(
-          margin: const EdgeInsets.all(40),
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            border: Border.all(width: 1, color: Colors.grey),
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const GithubText(
-                str: 'Most Used Languages',
-                isLight: true,
-                isBold: true,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Container(
-                color: Colors.transparent,
-                //height: 100,
-                child: AnimationLimiter(
+      body: Obx(
+          (){
+            if(controller.langsData.isEmpty){
+              return Center(child: CircularProgressIndicator(),);
+            }
+            else{
+              return Container(
+                  margin: const EdgeInsets.all(40),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: Colors.grey),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                   child: Column(
-                    children: AnimationConfiguration.toStaggeredList(
-                        duration: const Duration(milliseconds: 575),
-                        childAnimationBuilder: (widget) => SlideAnimation(
-                          verticalOffset: 50,
-                          child: FadeInAnimation(
-                            child: widget,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const GithubText(
+                        str: 'Most Used Languages',
+                        isLight: true,
+                        isBold: true,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Container(
+                        color: Colors.transparent,
+                        //height: 100,
+                        child: AnimationLimiter(
+                          child: Column(
+                            children: AnimationConfiguration.toStaggeredList(
+                                duration: const Duration(milliseconds: 575),
+                                childAnimationBuilder: (widget) => SlideAnimation(
+                                  verticalOffset: 50,
+                                  child: FadeInAnimation(
+                                    child: widget,
+                                  ),
+                                ),
+                                children: generateSections(data: controller.langsData)
+                            ),
                           ),
                         ),
-                        children: generateSections(data: controller.langsData)
-                    ),
-                  ),
-                ),
-              )
-            ],
-          )
+                      )
+                    ],
+                  )
+              );
+            }
+          }
       ),
     );
   }
