@@ -4,11 +4,11 @@ import 'package:github_readme_beautifier/data/most_used_languages/repository/i_m
 class MostUsedLanguagesController extends GetxController {
 
 
-  Map<String,int>? langsData;
+  RxMap<String,int> langsData = <String,int>{}.obs;
   final repository = Get.find<IMostLanguagesRepository>();
 
   Future<void> getMostLanguages(String userName)async{
-    langsData = await repository.getMostLanguages(userName: userName);
+    langsData.value = await repository.getMostLanguages(userName: userName);
   }
 
 }

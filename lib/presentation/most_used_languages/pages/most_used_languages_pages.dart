@@ -14,6 +14,7 @@ class MostUsedLanguagesPage extends StatefulWidget {
 }
 
 class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
+
   final controller = Get.find<MostUsedLanguagesController>();
   int touchedIndex = -1;
   bool isChartLoaded = false;
