@@ -12,6 +12,9 @@ import 'package:github_readme_beautifier/presentation/github_meme/pages/github_m
 import 'package:github_readme_beautifier/home_page.dart';
 import 'package:github_readme_beautifier/presentation/most_used_languages/controllers/most_used_languages_controller.dart';
 import 'package:github_readme_beautifier/presentation/most_used_languages/pages/most_used_languages_pages.dart';
+
+import 'package:github_readme_beautifier/presentation/user/user_controller.dart';
+import 'package:github_readme_beautifier/presentation/user/user_page.dart';
 import 'package:github_readme_beautifier/splash_page.dart';
 import 'package:github_readme_beautifier/presentation/typewriter_text/controllers/typewriter_controller.dart';
 import 'package:github_readme_beautifier/presentation/typewriter_text/pages/typewriter_export_page.dart';
@@ -39,6 +42,14 @@ class MyApp extends StatelessWidget {
             name: "/splash_page",
             page: () => const SplashPage(),
             transition: Transition.fade,
+        ),
+        GetPage(
+          name: "/user_page",
+          page: () => const UserPage(),
+          transition: Transition.fade,
+          binding: BindingsBuilder(() {
+            Get.put(UserController());
+          }),
         ),
         GetPage(
           name: "/home_page",
@@ -83,6 +94,7 @@ class MyApp extends StatelessWidget {
             Get.put(MostUsedLanguagesController());
           }),
         )
+
       ],
       initialRoute: "/splash_page",
       initialBinding: appBindings,

@@ -25,6 +25,7 @@ dependencies:
   pretty_dio_logger: ^1.1.1
   fl_chart: ^0.66.0
   flutter_svg: ^2.0.9
+  flutter_staggered_animations: ^1.1.1
 
 dev_dependencies:
   flutter_test:
