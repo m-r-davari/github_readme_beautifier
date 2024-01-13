@@ -76,108 +76,110 @@ class ExporterDialog extends GetView<ExporterController> {
                 const SizedBox(height: 8,),
                 const Align(alignment: Alignment.centerLeft,child: Text('You can download exported Gifs file for both Light and Dark theme.')),
                 const SizedBox(height: 16,),
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const Align(alignment: Alignment.centerLeft,child: Text(' Light Gif')),
-                      const SizedBox(height: 2,),
-                      Container(
-                        padding: const EdgeInsets.all(24),
-                        decoration: BoxDecoration(color: GithubThemes().lightBgColor,borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8), bottomRight: Radius.circular(8),bottomLeft: Radius.circular(8))),
-                        child: Image.memory(
-                            Uint8List.fromList(controller.gifs[1])
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const Align(alignment: Alignment.centerLeft,child: Text(' Light Gif')),
+                        const SizedBox(height: 2,),
+                        Container(
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(color: GithubThemes().lightBgColor,borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8), bottomRight: Radius.circular(8),bottomLeft: Radius.circular(8))),
+                          child: Image.memory(
+                              Uint8List.fromList(controller.gifs[1])
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 16,),//
-                      FittedBox(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ElevatedButton(
-                                onPressed: (){
-                                  controller.downloadGif(gif: controller.gifs[0], typeName: 'original', fileName: controller.fileName.value, themeName: 'light');
-                                },
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    const Text('Original Light Gif'),
-                                    const SizedBox(width: 8,),
-                                    const Icon(Icons.cloud_download_outlined,size: 19,),
-                                    const SizedBox(width: 8,),
-                                    Text('${controller.gifs[0].lengthInBytes~/1024} kb',style: const TextStyle(color: Colors.grey,fontSize: 12),),
-                                  ],
-                                )
-                            ),
-                            const SizedBox(width: 16,),
-                            ElevatedButton(
-                                onPressed: (){
-                                  controller.downloadGif(gif: controller.gifs[1], typeName: 'optimized', fileName: controller.fileName.value, themeName: 'light');
-                                },
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    const Text('Optimized Light Gif'),
-                                    const SizedBox(width: 8,),
-                                    const Icon(Icons.cloud_download_outlined,size: 19,),
-                                    const SizedBox(width: 8,),
-                                    Text('${controller.gifs[1].lengthInBytes~/1024} kb',style: const TextStyle(color: Colors.green,fontSize: 12),),
-                                  ],
-                                )
-                            ),
-                          ],
+                        const SizedBox(height: 16,),//
+                        FittedBox(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                  onPressed: (){
+                                    controller.downloadGif(gif: controller.gifs[0], typeName: 'original', fileName: controller.fileName.value, themeName: 'light');
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Text('Original Light Gif'),
+                                      const SizedBox(width: 8,),
+                                      const Icon(Icons.cloud_download_outlined,size: 19,),
+                                      const SizedBox(width: 8,),
+                                      Text('${controller.gifs[0].lengthInBytes~/1024} kb',style: const TextStyle(color: Colors.grey,fontSize: 12),),
+                                    ],
+                                  )
+                              ),
+                              const SizedBox(width: 16,),
+                              ElevatedButton(
+                                  onPressed: (){
+                                    controller.downloadGif(gif: controller.gifs[1], typeName: 'optimized', fileName: controller.fileName.value, themeName: 'light');
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Text('Optimized Light Gif'),
+                                      const SizedBox(width: 8,),
+                                      const Icon(Icons.cloud_download_outlined,size: 19,),
+                                      const SizedBox(width: 8,),
+                                      Text('${controller.gifs[1].lengthInBytes~/1024} kb',style: const TextStyle(color: Colors.green,fontSize: 12),),
+                                    ],
+                                  )
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 16,),
-                      const Align(alignment: Alignment.centerLeft,child: Text(' Dark Gif')),
-                      const SizedBox(height: 2,),
-                      Container(
-                        padding: const EdgeInsets.all(24),
-                        decoration: BoxDecoration(color: GithubThemes().darkBgColor,borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8), bottomRight: Radius.circular(8),bottomLeft: Radius.circular(8))),
-                        child: Image.memory(
-                            Uint8List.fromList(controller.gifs[3])
+                        const SizedBox(height: 16,),
+                        const Align(alignment: Alignment.centerLeft,child: Text(' Dark Gif')),
+                        const SizedBox(height: 2,),
+                        Container(
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(color: GithubThemes().darkBgColor,borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8), bottomRight: Radius.circular(8),bottomLeft: Radius.circular(8))),
+                          child: Image.memory(
+                              Uint8List.fromList(controller.gifs[3])
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 16,),
-                      FittedBox(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ElevatedButton(
-                                onPressed: (){
-                                  controller.downloadGif(gif: controller.gifs[2], typeName: 'original', fileName: controller.fileName.value, themeName: 'dark');
-                                },
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    const Text('Original Dark Gif'),
-                                    const SizedBox(width: 8,),
-                                    const Icon(Icons.cloud_download,size: 19,),
-                                    const SizedBox(width: 8,),
-                                    Text('${controller.gifs[2].lengthInBytes~/1024} kb',style: const TextStyle(color: Colors.grey,fontSize: 12),),
-                                  ],
-                                )
-                            ),
-                            const SizedBox(width: 16,),
-                            ElevatedButton(
-                                onPressed: (){
-                                  controller.downloadGif(gif: controller.gifs[3], typeName: 'optimized', fileName: controller.fileName.value, themeName: 'dark');
-                                },
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    const Text('Optimized Dark Gif'),
-                                    const SizedBox(width: 8,),
-                                    const Icon(Icons.cloud_download,size: 19,),
-                                    const SizedBox(width: 8,),
-                                    Text('${controller.gifs[3].lengthInBytes~/1024} kb',style: const TextStyle(color: Colors.green,fontSize: 12),),
-                                  ],
-                                )
-                            ),
-                          ],
+                        const SizedBox(height: 16,),
+                        FittedBox(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                  onPressed: (){
+                                    controller.downloadGif(gif: controller.gifs[2], typeName: 'original', fileName: controller.fileName.value, themeName: 'dark');
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Text('Original Dark Gif'),
+                                      const SizedBox(width: 8,),
+                                      const Icon(Icons.cloud_download,size: 19,),
+                                      const SizedBox(width: 8,),
+                                      Text('${controller.gifs[2].lengthInBytes~/1024} kb',style: const TextStyle(color: Colors.grey,fontSize: 12),),
+                                    ],
+                                  )
+                              ),
+                              const SizedBox(width: 16,),
+                              ElevatedButton(
+                                  onPressed: (){
+                                    controller.downloadGif(gif: controller.gifs[3], typeName: 'optimized', fileName: controller.fileName.value, themeName: 'dark');
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Text('Optimized Dark Gif'),
+                                      const SizedBox(width: 8,),
+                                      const Icon(Icons.cloud_download,size: 19,),
+                                      const SizedBox(width: 8,),
+                                      Text('${controller.gifs[3].lengthInBytes~/1024} kb',style: const TextStyle(color: Colors.green,fontSize: 12),),
+                                    ],
+                                  )
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 8,),
-                    ],
+                        const SizedBox(height: 8,),
+                      ],
+                    ),
                   ),
                 ),
               ],

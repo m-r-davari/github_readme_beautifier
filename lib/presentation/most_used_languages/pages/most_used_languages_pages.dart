@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:github_readme_beautifier/presentation/exporter/exporter_view.dart';
 import 'package:github_readme_beautifier/presentation/most_used_languages/controllers/most_used_languages_controller.dart';
 import 'package:github_readme_beautifier/presentation/user/user_controller.dart';
+import 'package:github_readme_beautifier/utils/const_keeper.dart';
+import 'package:github_readme_beautifier/widgets/github_loading.dart';
 import 'package:github_readme_beautifier/widgets/github_text.dart';
 
 class MostUsedLanguagesPage extends StatefulWidget {
@@ -17,8 +20,7 @@ class MostUsedLanguagesPage extends StatefulWidget {
 class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
 
   final controller = Get.find<MostUsedLanguagesController>();
-  int touchedIndex = -1;
-  bool isChartLoaded = false;
+
 
   @override
   void initState() {
@@ -43,51 +45,87 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
         child: const Text('get'),
       ),
       body: Obx(
-          (){
+              (){
             if(controller.langsData.isEmpty){
-              return Center(child: CircularProgressIndicator(),);
+              return const Center(child: GithubLoading());
             }
             else{
-              return Container(
-                  margin: const EdgeInsets.all(40),
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const GithubText(
-                        str: 'Most Used Languages',
-                        isLight: true,
-                        isBold: true,
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Container(
-                        color: Colors.transparent,
-                        //height: 100,
-                        child: AnimationLimiter(
+              final rec = controller.isRecording.value;
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(40.0),
+                    child: RepaintBoundary(
+                      key: mostLangsBoundryGlobalKey,
+                      child: Container(
+                          margin: const EdgeInsets.all(2),
+                          padding: const EdgeInsets.all(16),
+                          width: 400,
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 1, color: Colors.grey),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
                           child: Column(
-                            children: AnimationConfiguration.toStaggeredList(
-                                duration: const Duration(milliseconds: 575),
-                                childAnimationBuilder: (widget) => SlideAnimation(
-                                  verticalOffset: 50,
-                                  child: FadeInAnimation(
-                                    child: widget,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              GithubText(
+                                str: 'Most Used Languages',
+                                isLight: controller.isLight.value,
+                                isBold: true,
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              Container(
+                                color: Colors.transparent,
+                                //height: 100,
+                                child: Column(
+                                  key: UniqueKey(),
+                                  children: AnimationConfiguration.toStaggeredList(
+                                      duration: const Duration(milliseconds: 500),
+                                      delay: const Duration(milliseconds: 500),
+                                      childAnimationBuilder: (widget) => SlideAnimation(
+                                        verticalOffset: 50,
+                                        child: FadeInAnimation(
+                                          child: widget,
+                                        ),
+                                      ),
+                                      children: generateSections(data: controller.langsData)
                                   ),
                                 ),
-                                children: generateSections(data: controller.langsData)
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  )
+                              )
+                            ],
+                          )
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                      onPressed: ()async {
+                        showDialog(
+                          context: Get.context!,
+                          barrierDismissible: false,
+                          builder: (context) {
+                            return const AlertDialog(
+                              backgroundColor: Colors.white,
+                              surfaceTintColor: Colors.white,
+
+                              content: ExporterDialog(),
+                            );
+                          },
+                        );
+                        if(ConstKeeper.isFFmpegLoaded.value){
+                          await controller.export();
+                        }
+                        else{
+                          await ConstKeeper.isFFmpegLoaded.stream.firstWhere((loaded) => loaded == true);
+                          await controller.export();
+                        }
+                      },
+                      child: Text(rec ? 'Export' :'---')
+                  ),
+                ],
               );
             }
           }
@@ -108,7 +146,7 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              GithubText(str: '${data.keys.toList()[i]}', isLight: true),
+              GithubText(str: data.keys.toList()[i], isLight: controller.isLight.value),
               const SizedBox(
                 width: 6,
               ),
@@ -118,9 +156,10 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
                     width: 16,
                     height: 16,
                     'https://abrudz.github.io/logos/${data.keys.toList()[i]}.svg',
-                    placeholderBuilder: (BuildContext context) =>
-                        SizedBox(width: 16, height: 16, child: Container() //CircularProgressIndicator(strokeWidth: 2,),
-                        )),
+                    // placeholderBuilder: (BuildContext context) =>
+                    //     SizedBox(width: 16, height: 16, child: Container() //CircularProgressIndicator(strokeWidth: 2,),
+                    //     ),
+                ),
               ),
             ],
           ),
@@ -146,11 +185,10 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
                                 if (!event.isInterestedForInteractions ||
                                     barTouchResponse == null ||
                                     barTouchResponse.spot == null) {
-                                  touchedIndex = -1;
+                                  controller.touchedIndex = -1;
                                   return;
                                 }
-                                touchedIndex = i;
-                                print('edcjnejnzzzz zzzzzzzz zzzzzzz $touchedIndex');
+                                controller.touchedIndex = i;
                               });
                             },
                           ),
@@ -159,14 +197,14 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
                               x: 0,
                               barRods: [
                                 BarChartRodData(
-                                  toY: i == touchedIndex ? data.values.toList()[i].toDouble()+1  : data.values.toList()[i].toDouble(),
-                                  color: i == touchedIndex ? Colors.amber : Colors.blue,
+                                  toY: i == controller.touchedIndex ? data.values.toList()[i].toDouble()+1  : data.values.toList()[i].toDouble(),
+                                  color: i == controller.touchedIndex ? Colors.amber : Colors.blue,
                                   width: 22,
                                   borderSide: const BorderSide(color: Colors.orangeAccent),
                                   backDrawRodData: BackgroundBarChartRodData(
                                     show: true,
                                     toY: 100,
-                                    color: Colors.grey,
+                                    color: const Color(0xffcecece),
                                   ),
                                 ),
                               ],
@@ -179,11 +217,11 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
                 ),
               ),
               const SizedBox(
-                width: 16,
+                width: 10,
               ),
               GithubText(
-                str: '${data.values.toList()[i]}%',
-                isLight: true,
+                str: '${data.values.toList()[i].toString().length == 1 ? '  ' : ''}${data.values.toList()[i]}%',
+                isLight: controller.isLight.value,
               )
             ],
           ),

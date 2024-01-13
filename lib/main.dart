@@ -79,9 +79,9 @@ class MyApp extends StatelessWidget {
           name: "/typewriter_export_page",
           page: () => const TypewriterExportPage(),
           transition: Transition.fade,
-          binding: BindingsBuilder(() {
-            Get.put(TypeWriterController());
-          }),
+          // binding: BindingsBuilder(() {
+          //   Get.put(TypeWriterController());
+          // }),
         )
         ,
         GetPage(

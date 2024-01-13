@@ -19,7 +19,6 @@ class TypeWriterController extends GetxController {
   Rx<bool> isLight = true.obs;
   IGifMaker gifMaker = Get.find<IGifMaker>();
   IScreenshotMaker screenShotMaker = Get.find();
-  IDownloader downloader = Get.find();
   IGifOptimizer gifOptimizer = Get.find();
   ExporterController exporterController = Get.find();
   String loopCount = '-1';

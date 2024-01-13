@@ -63,7 +63,7 @@ class _UserPageState extends State<UserPage> {
                   return;
                 }
                 userController.userName = textEditingController.text;
-                Get.toNamed('/home_page');
+                Get.offNamed('/home_page');
               },
               isLoading: false,
             )
