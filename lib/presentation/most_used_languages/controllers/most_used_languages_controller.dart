@@ -28,10 +28,9 @@ class MostUsedLanguagesController extends GetxController {
 
   Future<void> export()async{
 
-    exporterController.progress.value = 0.1;
+    exporterController.progress.value = 0.0;
     List<Uint8List> lightFrames = [];
-    double progress = 0;
-
+    exporterController.fileName.value = 'most_used_language';
     await Future.delayed(const Duration(milliseconds: 200));
 
     //formule inyeki : tedade item ha * duration haye widget stagred / 41 k fps baeshe
@@ -47,6 +46,7 @@ class MostUsedLanguagesController extends GetxController {
       for(int j = 0; j < 30; j++){
         final frame = await screenShotMaker.captureScreen(key: mostLangsBoundryGlobalKey);
         lightFrames.add(frame);
+        exporterController.progress.value += (1/(30*langsData.length))/2;
         await Future.delayed(const Duration(milliseconds: 10));
       }
     }
@@ -64,6 +64,7 @@ class MostUsedLanguagesController extends GetxController {
       for(int j = 0; j < 30; j++){
         final frame = await screenShotMaker.captureScreen(key: mostLangsBoundryGlobalKey);
         darkFrames.add(frame);
+        exporterController.progress.value += (1/(30*langsData.length))/2;
         await Future.delayed(const Duration(milliseconds: 10));
       }
     }

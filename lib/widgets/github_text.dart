@@ -8,13 +8,16 @@ class GithubText extends StatelessWidget {
   final bool isLight;
   final isBold;
 
-  const GithubText({super.key,required this.str,this.fontSize=14,required this.isLight,this.isBold=false});
+  final GithubThemes themes = GithubThemes();
+
+  GithubText({super.key,required this.str,this.fontSize=14,required this.isLight,this.isBold=false});
+
 
   @override
   Widget build(BuildContext context) {
 
-    final bgColor = isLight ? GithubThemes().lightBgColor : GithubThemes().darkBgColor;
-    final txtColor = isLight ? GithubThemes().lightTextColor : GithubThemes().darkTextColor;
+    final bgColor = isLight ? themes.lightBgColor : themes.darkBgColor;
+    final txtColor = isLight ? themes.lightTextColor : themes.darkTextColor;
 
     //The gif images could not have semi-transparent color(transparent color with percent).
     //all of gif images pixel mus be either full transparent or colored pixel with full transparency
@@ -36,6 +39,7 @@ class GithubText extends StatelessWidget {
     //the area of our main text covers with first bg text.
 
     return Stack(
+      //alignment: Alignment.centerRight,
       children: [
         Text(str,style: TextStyle(color: bgColor,fontSize: fontSize,fontWeight: isBold ? FontWeight.bold : FontWeight.w900,shadows: [
           Shadow(color: bgColor,blurRadius: 1,offset: const Offset(0,0))
