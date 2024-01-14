@@ -58,7 +58,6 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
               return const Center(child: GithubLoading());
             }
             else{
-              final rec = controller.isRecording.value;
               print('-----rebuilding');
               return Column(
                 children: [
@@ -91,18 +90,7 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
                                 color: Colors.transparent,
                                 //height: 100,
                                 child: Column(
-                                  key: controller.staggeredKey.value,
-                                  children: AnimationConfiguration.toStaggeredList(
-                                      duration: const Duration(milliseconds: 250),
-                                      delay: const Duration(milliseconds: 250),
-                                      childAnimationBuilder: (widget) => SlideAnimation(
-                                        verticalOffset: 50,
-                                        child: FadeInAnimation(
-                                          child: widget,
-                                        ),
-                                      ),
-                                      children: generateSections(data: controller.langsData)
-                                  ),
+                                  children: generateSections(data: controller.langsData),
                                 ),
                               )
                             ],
@@ -132,7 +120,7 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
                           await controller.export();
                         }
                       },
-                      child: Text(rec ? 'Export' :'---')
+                      child: const Text('Export')
                   ),
                 ],
               );
@@ -183,7 +171,7 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
                     child: RotatedBox(
                       quarterTurns: 1,
                       child: BarChart(
-                        swapAnimationDuration: const Duration(milliseconds: 250),
+                        swapAnimationDuration: const Duration(milliseconds: 500),
                         BarChartData(
                           gridData: const FlGridData(show: false),
                           titlesData:  const FlTitlesData(show: false,),

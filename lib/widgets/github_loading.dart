@@ -5,6 +5,6 @@ class GithubLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset('assets/github_loading.gif',width: 70,height: 70,fit: BoxFit.contain,);
+    return Image.asset('assets/github_loading.gif',width: 60,height: 60,fit: BoxFit.contain,);
   }
 }
