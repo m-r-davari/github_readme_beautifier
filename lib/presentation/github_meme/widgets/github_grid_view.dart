@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:github_readme_beautifier/presentation/github_meme/widgets/github_meme_text.dart';
 import 'package:github_readme_beautifier/resources/github_themes.dart';
 import 'package:github_readme_beautifier/utils/utils.dart';
+import 'package:github_readme_beautifier/widgets/github_text.dart';
 import '../controllers/github_meme_controller.dart';
 
 class GithubGridView extends StatefulWidget {
@@ -55,9 +56,9 @@ class GithubGridViewState extends State<GithubGridView> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      GithubMemeText(str :'Mon', isLight: memeController.isLight.value,fontSize: 13,),
-                      GithubMemeText(str :'Wed', isLight: memeController.isLight.value,fontSize: 13,),
-                      GithubMemeText(str :'Fri', isLight: memeController.isLight.value,fontSize: 13,),
+                      GithubText(str :'Mon', isLight: memeController.isLight.value,fontSize: 13,),
+                      GithubText(str :'Wed', isLight: memeController.isLight.value,fontSize: 13,),
+                      GithubText(str :'Fri', isLight: memeController.isLight.value,fontSize: 13,),
                     ],
                   ),
                 ) : const SizedBox(width: 0,)
@@ -75,18 +76,18 @@ class GithubGridViewState extends State<GithubGridView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            GithubMemeText(str :'Dec', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'Jan', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'Feb', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'Mar', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'Apr', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'May', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'Jun', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'Jul', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'Aug', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'Sep', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'Oct', isLight: memeController.isLight.value,fontSize: 13,),
-                            GithubMemeText(str :'Nov', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubText(str :'Dec', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubText(str :'Jan', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubText(str :'Feb', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubText(str :'Mar', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubText(str :'Apr', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubText(str :'May', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubText(str :'Jun', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubText(str :'Jul', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubText(str :'Aug', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubText(str :'Sep', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubText(str :'Oct', isLight: memeController.isLight.value,fontSize: 13,),
+                            GithubText(str :'Nov', isLight: memeController.isLight.value,fontSize: 13,),
                             const Text('',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w500)),
                           ],
                         ),
@@ -127,11 +128,11 @@ class GithubGridViewState extends State<GithubGridView> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
 
-                            Flexible(child: GithubMemeText(str: 'Github Readme Beautifier',isLight: memeController.isLight.value,)),
-                            widget.showAuthor && widget.showProgressHint ? GithubMemeText(str: 'By \'m-r-davari\'',isLight: memeController.isLight.value,) : const SizedBox(width: 0,),
+                            Flexible(child: GithubText(str: 'Github Readme Beautifier',isLight: memeController.isLight.value,)),
+                            widget.showAuthor && widget.showProgressHint ? GithubText(str: 'By \'m-r-davari\'',isLight: memeController.isLight.value,) : const SizedBox(width: 0,),
                             widget.showProgressHint ? Row(
                               children: [
-                                GithubMemeText(str :'Less', isLight: memeController.isLight.value,),
+                                GithubText(str :'Less', isLight: memeController.isLight.value,),
                                 const SizedBox(width: 6,),
                                 Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.theme(widget.themeName)[0],borderRadius: BorderRadius.circular(2)),),
                                 const SizedBox(width: 5,),
@@ -143,9 +144,9 @@ class GithubGridViewState extends State<GithubGridView> {
                                 const SizedBox(width: 5,),
                                 Container(width: 14,height: 14,decoration: BoxDecoration(color: themes.theme(widget.themeName)[4],borderRadius: BorderRadius.circular(2)),),
                                 const SizedBox(width: 6,),
-                                GithubMemeText(str :'More', isLight: memeController.isLight.value,),
+                                GithubText(str :'More', isLight: memeController.isLight.value,),
                               ],
-                            ) : widget.showAuthor ? GithubMemeText(str :'By \'m-r-davari\'', isLight: memeController.isLight.value,) : const SizedBox(width: 0,),
+                            ) : widget.showAuthor ? GithubText(str :'By \'m-r-davari\'', isLight: memeController.isLight.value,) : const SizedBox(width: 0,),
                           ],
                         ),
                       )

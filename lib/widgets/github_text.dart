@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:github_readme_beautifier/resources/github_themes.dart';
 
 class GithubText extends StatelessWidget {
-
   final String str;
   final double fontSize;
   final bool isLight;
@@ -10,12 +9,10 @@ class GithubText extends StatelessWidget {
 
   final GithubThemes themes = GithubThemes();
 
-  GithubText({super.key,required this.str,this.fontSize=14,required this.isLight,this.isBold=false});
-
+  GithubText({super.key, required this.str, this.fontSize = 14, required this.isLight, this.isBold = false});
 
   @override
   Widget build(BuildContext context) {
-
     final bgColor = isLight ? themes.lightBgColor : themes.darkBgColor;
     final txtColor = isLight ? themes.lightTextColor : themes.darkTextColor;
 
@@ -41,13 +38,39 @@ class GithubText extends StatelessWidget {
     return Stack(
       //alignment: Alignment.centerRight,
       children: [
-        Text(str,style: TextStyle(color: bgColor,fontSize: fontSize,fontWeight: isBold ? FontWeight.bold : FontWeight.w900,shadows: [
-          Shadow(color: bgColor,blurRadius: 1,offset: const Offset(0,0))
-        ]),)
-        ,
-        Text(str,style: TextStyle(color: bgColor,fontSize: fontSize,fontWeight: isBold ? FontWeight.bold : FontWeight.w900,),)
-        ,
-        Text(str,style: TextStyle(color: txtColor,fontSize: fontSize,fontWeight: isBold ? FontWeight.bold : null),)
+        Text(
+          str,
+          style: TextStyle(
+            color: bgColor,
+            fontSize: fontSize,
+            fontWeight: isBold ? FontWeight.bold : FontWeight.w900,
+            shadows: !isBold
+                ? [
+                    Shadow(color: bgColor, blurRadius: 1.3, offset: const Offset(0, 0)),
+                    Shadow(color: bgColor, blurRadius: 1.3, offset: const Offset(0, 0)),
+                    Shadow(color: bgColor, blurRadius: 1.3, offset: const Offset(0, 0)),
+                  ]
+                : [
+                    Shadow(color: bgColor, blurRadius: 2.3, offset: const Offset(0, 0)),
+                    Shadow(color: bgColor, blurRadius: 2.3, offset: const Offset(0, 0)),
+                    Shadow(color: bgColor, blurRadius: 2.3, offset: const Offset(0, 0)),
+                    Shadow(color: bgColor, blurRadius: 2.3, offset: const Offset(0, 0)),
+                    Shadow(color: bgColor, blurRadius: 2.3, offset: const Offset(0, 0))
+                  ],
+          ),
+        ),
+        Text(
+          str,
+          style: TextStyle(
+            color: bgColor,
+            fontSize: fontSize,
+            fontWeight: isBold ? FontWeight.bold : FontWeight.w900,
+          ),
+        ),
+        Text(
+          str,
+          style: TextStyle(color: txtColor, fontSize: fontSize, fontWeight: isBold ? FontWeight.bold : null),
+        )
       ],
     );
   }

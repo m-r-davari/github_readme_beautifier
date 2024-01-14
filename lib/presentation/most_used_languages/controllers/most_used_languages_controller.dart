@@ -31,7 +31,7 @@ class MostUsedLanguagesController extends GetxController {
     exporterController.progress.value = 0.0;
     List<Uint8List> lightFrames = [];
     exporterController.fileName.value = 'most_used_language';
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future.delayed(const Duration(milliseconds: 20));
 
     //formule inyeki : tedade item ha * duration haye widget stagred / 41 k fps baeshe
     //masalan : 6ta item lang darin va duration haye delay/duration stagred 500 mili sanie hast bayad
@@ -56,7 +56,7 @@ class MostUsedLanguagesController extends GetxController {
     isLight.value = false;
 
     List<Uint8List> darkFrames = [];
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future.delayed(const Duration(milliseconds: 20));
 
     for(int i = 0; i < langsData.length ; i++){
       touchedIndex.value = i;
