@@ -1,8 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:github_readme_beautifier/core/states/states.dart';
 import 'package:github_readme_beautifier/presentation/exporter/exporter_view.dart';
 import 'package:github_readme_beautifier/presentation/most_used_languages/controllers/most_used_languages_controller.dart';
 import 'package:github_readme_beautifier/presentation/user/user_controller.dart';
@@ -10,8 +10,6 @@ import 'package:github_readme_beautifier/resources/github_themes.dart';
 import 'package:github_readme_beautifier/utils/const_keeper.dart';
 import 'package:github_readme_beautifier/widgets/github_loading.dart';
 import 'package:github_readme_beautifier/widgets/github_text.dart';
-import 'package:github_readme_beautifier/widgets/outer_shadow.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 
 class MostUsedLanguagesPage extends StatefulWidget {
   const MostUsedLanguagesPage({Key? key}) : super(key: key);
@@ -39,25 +37,20 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Most Used Languages'),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          //langData = await controller.getMostLanguages();
-          //setState(() {});
-
-          for (int i = 0; i < controller.langsData.length; i++) {
-            controller.touchedIndex.value = i;
-            // final frame = await screenShotMaker.captureScreen(key: mostLangsBoundryGlobalKey);
-            // lightFrames.add(frame);
-            await Future.delayed(const Duration(milliseconds: 1000));
-          }
-        },
-        child: const Text('get'),
-      ),
       body: Obx(() {
-        if (controller.langsData.isEmpty) {
+        if (controller.state.value is LoadingState) {
           return const Center(child: GithubLoading());
-        } else {
-          print('-----rebuilding');
+        } else if (controller.state.value is SuccessState) {
+          Map<String, int> data = (controller.state.value as SuccessState).data;
+          if (data.isEmpty) {
+            return const Center(
+              child: Text(
+                textAlign: TextAlign.center,
+                'You don\'t have any individual Repo, or all of them are Forked repos.\n Must have at least 1 individual repo.',
+                style: TextStyle(color: Colors.red),
+              ),
+            );
+          }
           return Column(
             children: [
               Padding(
@@ -72,8 +65,8 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
                           padding: const EdgeInsets.all(16),
                           width: 400,
                           decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 1, color: controller.isLight.value ? githubTheme.lightBgColor : githubTheme.darkBgColor),
+                            border:
+                                Border.all(width: 1, color: controller.isLight.value ? githubTheme.lightBgColor : githubTheme.darkBgColor),
                             borderRadius: BorderRadius.circular(16),
                           ),
                         ),
@@ -84,8 +77,7 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
                           width: 400,
                           decoration: BoxDecoration(
                             border: Border.all(
-                                width: 1,
-                                color: controller.isLight.value ? githubTheme.lightBorderColor : githubTheme.darkBorderColor),
+                                width: 1, color: controller.isLight.value ? githubTheme.lightBorderColor : githubTheme.darkBorderColor),
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Column(
@@ -105,7 +97,7 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
                                 color: Colors.transparent,
                                 //height: 100,
                                 child: Column(
-                                  children: generateSections(data: controller.langsData),
+                                  children: generateSections(data: data),
                                 ),
                               )
                             ],
@@ -137,6 +129,11 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
                   child: const Text('Export')),
             ],
           );
+        } else {
+          String error = (controller.state.value as FailureState).error;
+          return Center(
+            child: Text(error),
+          );
         }
       }),
     );
@@ -164,8 +161,7 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
               padding: const EdgeInsets.only(bottom: 2),
               child: Stack(
                 children: [
-                  Positioned.fill(
-                      child: Container(color: controller.isLight.value ? githubTheme.lightBgColor : githubTheme.darkBgColor)),
+                  Positioned.fill(child: Container(color: controller.isLight.value ? githubTheme.lightBgColor : githubTheme.darkBgColor)),
                   SvgPicture.network(
                     width: 16,
                     height: 16,
@@ -185,8 +181,7 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
             Flexible(
               child: Stack(
                 children: [
-                  Positioned.fill(
-                      child: Container(color: controller.isLight.value ? githubTheme.lightBgColor : githubTheme.darkBgColor)),
+                  Positioned.fill(child: Container(color: controller.isLight.value ? githubTheme.lightBgColor : githubTheme.darkBgColor)),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: SizedBox(
@@ -206,9 +201,7 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
                             barTouchData: BarTouchData(
                               enabled: false,
                               touchCallback: (FlTouchEvent event, barTouchResponse) {
-                                if (!event.isInterestedForInteractions ||
-                                    barTouchResponse == null ||
-                                    barTouchResponse.spot == null) {
+                                if (!event.isInterestedForInteractions || barTouchResponse == null || barTouchResponse.spot == null) {
                                   controller.touchedIndex.value = -1;
                                   return;
                                 }

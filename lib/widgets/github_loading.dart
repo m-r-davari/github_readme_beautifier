@@ -5,6 +5,17 @@ class GithubLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset('assets/github_loading.gif',width: 60,height: 60,fit: BoxFit.contain,);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Image.asset('assets/github_loading.gif',width: 50,height: 50,fit: BoxFit.contain,)
+        ,
+        const SizedBox(height: 8,)
+        ,
+        const Text('One moment please...',style: TextStyle(fontSize: 13),)
+      ],
+    );
   }
 }
