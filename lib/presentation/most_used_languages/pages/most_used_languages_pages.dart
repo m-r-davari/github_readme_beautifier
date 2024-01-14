@@ -40,7 +40,15 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           //langData = await controller.getMostLanguages();
-          setState(() {});
+          //setState(() {});
+
+          for(int i = 0; i < controller.langsData.length ; i++){
+
+            controller.touchedIndex.value = i;
+            // final frame = await screenShotMaker.captureScreen(key: mostLangsBoundryGlobalKey);
+            // lightFrames.add(frame);
+            await Future.delayed(const Duration(milliseconds: 1000));
+          }
         },
         child: const Text('get'),
       ),
@@ -51,6 +59,7 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
             }
             else{
               final rec = controller.isRecording.value;
+              print('-----rebuilding');
               return Column(
                 children: [
                   Padding(
@@ -82,10 +91,10 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
                                 color: Colors.transparent,
                                 //height: 100,
                                 child: Column(
-                                  key: UniqueKey(),
+                                  key: controller.staggeredKey.value,
                                   children: AnimationConfiguration.toStaggeredList(
-                                      duration: const Duration(milliseconds: 500),
-                                      delay: const Duration(milliseconds: 500),
+                                      duration: const Duration(milliseconds: 250),
+                                      delay: const Duration(milliseconds: 250),
                                       childAnimationBuilder: (widget) => SlideAnimation(
                                         verticalOffset: 50,
                                         child: FadeInAnimation(
@@ -146,7 +155,7 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              GithubText(str: data.keys.toList()[i], isLight: controller.isLight.value),
+              GithubText(str: data.keys.toList()[i], isLight: controller.isLight.value, isBold: i == controller.touchedIndex.value,),
               const SizedBox(
                 width: 6,
               ),
@@ -174,6 +183,7 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
                     child: RotatedBox(
                       quarterTurns: 1,
                       child: BarChart(
+                        swapAnimationDuration: const Duration(milliseconds: 250),
                         BarChartData(
                           gridData: const FlGridData(show: false),
                           titlesData:  const FlTitlesData(show: false,),
@@ -181,14 +191,15 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
                           barTouchData: BarTouchData(
                             enabled: false,
                             touchCallback: (FlTouchEvent event, barTouchResponse) {
+                              print('---- ontouch----');
                               setState(() {
                                 if (!event.isInterestedForInteractions ||
                                     barTouchResponse == null ||
                                     barTouchResponse.spot == null) {
-                                  controller.touchedIndex = -1;
+                                  controller.touchedIndex.value = -1;
                                   return;
                                 }
-                                controller.touchedIndex = i;
+                                controller.touchedIndex.value = i;
                               });
                             },
                           ),
@@ -197,8 +208,8 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
                               x: 0,
                               barRods: [
                                 BarChartRodData(
-                                  toY: i == controller.touchedIndex ? data.values.toList()[i].toDouble()+1  : data.values.toList()[i].toDouble(),
-                                  color: i == controller.touchedIndex ? Colors.amber : Colors.blue,
+                                  toY: i == controller.touchedIndex.value ? data.values.toList()[i].toDouble()+1  : data.values.toList()[i].toDouble(),
+                                  color: i == controller.touchedIndex.value ? Colors.amber : Colors.blue,
                                   width: 22,
                                   borderSide: const BorderSide(color: Colors.orangeAccent),
                                   backDrawRodData: BackgroundBarChartRodData(
@@ -222,6 +233,7 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
               GithubText(
                 str: '${data.values.toList()[i].toString().length == 1 ? '  ' : ''}${data.values.toList()[i]}%',
                 isLight: controller.isLight.value,
+                isBold: i == controller.touchedIndex.value,
               )
             ],
           ),

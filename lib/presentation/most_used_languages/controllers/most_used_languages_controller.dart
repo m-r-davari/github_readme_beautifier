@@ -19,9 +19,10 @@ class MostUsedLanguagesController extends GetxController {
   IScreenshotMaker screenShotMaker = Get.find();
   IGifOptimizer gifOptimizer = Get.find();
   ExporterController exporterController = Get.find();
-  int touchedIndex = -1;
+  RxInt touchedIndex = (-1).obs;
   int staggeredDuration = 1000;
   RxBool isRecording = false.obs;
+  Rx<Key> staggeredKey = UniqueKey().obs;
 
   Future<void> getMostLanguages(String userName)async{
     langsData.value = await repository.getMostLanguages(userName: userName);
@@ -33,7 +34,8 @@ class MostUsedLanguagesController extends GetxController {
     List<Uint8List> lightFrames = [];
     double progress = 0;
     //start anims
-    isRecording.value = !isRecording.value;
+    //isRecording.value = !isRecording.value;
+    staggeredKey.value = UniqueKey();
 
     await Future.delayed(const Duration(milliseconds: 200));
 
@@ -44,10 +46,20 @@ class MostUsedLanguagesController extends GetxController {
     // ghabl az for beshe ta dar akhare gif delay nadashte bashim
     // edame formul ((10 * 73) / 41 => 17) va (200 / 41 => 4) va dar akhar (73 - 17 + 4) => 60
 
-    for(int i = 0; i<60; i++){
+    for(int i = 0; i<36; i++){
       final frame = await screenShotMaker.captureScreen(key: mostLangsBoundryGlobalKey);
       lightFrames.add(frame);
       await Future.delayed(const Duration(milliseconds: 10));
+    }
+
+    for(int i = 0; i < langsData.length ; i++){
+      touchedIndex.value = i;
+      for(int j = 0; j < 12; j++){
+        final frame = await screenShotMaker.captureScreen(key: mostLangsBoundryGlobalKey);
+        lightFrames.add(frame);
+        await Future.delayed(const Duration(milliseconds: 10));
+      }
+      await Future.delayed(const Duration(milliseconds: 50));
     }
 
     exporterController.progress.value = 0.5;
@@ -55,15 +67,24 @@ class MostUsedLanguagesController extends GetxController {
     isLight.value = false;
 
     List<Uint8List> darkFrames = [];
-
+    staggeredKey.value = UniqueKey();
     await Future.delayed(const Duration(milliseconds: 200));
 
-    for(int i = 0; i<60; i++){
+    for(int i = 0; i<36; i++){
       final frame = await screenShotMaker.captureScreen(key: mostLangsBoundryGlobalKey);
       darkFrames.add(frame);
       await Future.delayed(const Duration(milliseconds: 10));
     }
 
+    for(int i = 0; i < langsData.length ; i++){
+      touchedIndex.value = i;
+      for(int j = 0; j < 12; j++){
+        final frame = await screenShotMaker.captureScreen(key: mostLangsBoundryGlobalKey);
+        darkFrames.add(frame);
+        await Future.delayed(const Duration(milliseconds: 10));
+      }
+      await Future.delayed(const Duration(milliseconds: 50));
+    }
 
     final originalTypewriterLightGif = await gifMaker.createGif(frames: lightFrames, fileName: 'most_langs_light',exportFileName: 'out_most_langs_light',frameRate: '${lightFrames.length}',exportRate: '${lightFrames.length}');
     final optimizedTypewriterLightGif = await gifOptimizer.optimizeGif(originalGif: originalTypewriterLightGif,);
@@ -78,6 +99,7 @@ class MostUsedLanguagesController extends GetxController {
     exporterController.progress.value = 1.0;
 
     isLight.value = true;
+    touchedIndex.value = -1;
 
 
     print('----ligh frames ---- ${lightFrames.length} ----');

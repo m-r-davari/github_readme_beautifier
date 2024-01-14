@@ -17,7 +17,13 @@ class MostUsedLanguagesDatasource extends IMostUsedLanguagesDatasource{
     final langsSets = reposLangs.toSet();
     Map<String,int> langsData = {};
     for(var langSet in langsSets){
-      langsData[langSet] = (everyPartSize * reposLangs.where((element) => element == langSet).length).round();
+      if(langSet == langsSets.first){
+        langsData[langSet] = (everyPartSize * reposLangs.where((element) => element == langSet).length).ceil();
+      }
+      else{
+        langsData[langSet] = (everyPartSize * reposLangs.where((element) => element == langSet).length).round();
+      }
+
     }
     print('----langs map data ----- $langsData -');
     return langsData;
