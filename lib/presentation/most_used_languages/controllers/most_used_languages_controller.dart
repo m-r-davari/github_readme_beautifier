@@ -59,7 +59,7 @@ class MostUsedLanguagesController extends GetxController {
         touchedIndex.value = i;
         await Future.delayed(const Duration(milliseconds: 10));
         for(int j = 0; j < 30; j++){
-          final frame = await screenShotMaker.captureScreen(key: mostLangsBoundryGlobalKey);
+          final frame = await screenShotMaker.captureScreen(key: mostLangsBoundryGlobalKey,);
           lightFrames.add(frame);
           exporterController.progress.value += (1/(30*langsData.length))/2;
           await Future.delayed(const Duration(milliseconds: 10));

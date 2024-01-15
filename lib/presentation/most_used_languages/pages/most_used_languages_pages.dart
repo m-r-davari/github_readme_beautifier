@@ -67,7 +67,7 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
                           decoration: BoxDecoration(
                             border:
                                 Border.all(width: 1, color: controller.isLight.value ? githubTheme.lightBgColor : githubTheme.darkBgColor),
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(8),
                           ),
                         ),
                       ),
@@ -78,7 +78,7 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
                           decoration: BoxDecoration(
                             border: Border.all(
                                 width: 1, color: controller.isLight.value ? githubTheme.lightBorderColor : githubTheme.darkBorderColor),
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(8),
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
