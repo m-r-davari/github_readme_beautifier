@@ -54,15 +54,15 @@ class MostUsedLanguagesController extends GetxController {
     }
     else{
       touchedIndex.value = langsData.length-1;
-      await Future.delayed(const Duration(milliseconds: 500));
+      await Future.delayed(const Duration(milliseconds: 400));
       for(int i = 0; i < langsData.length ; i++){
         touchedIndex.value = i;
-        await Future.delayed(const Duration(milliseconds: 10));
-        for(int j = 0; j < 30; j++){
+        //await Future.delayed(const Duration(milliseconds: 5));
+        for(int j = 0; j < 15; j++){
           final frame = await screenShotMaker.captureScreen(key: mostLangsBoundryGlobalKey,);
           lightFrames.add(frame);
           exporterController.progress.value += (1/(30*langsData.length))/2;
-          await Future.delayed(const Duration(milliseconds: 10));
+          await Future.delayed(const Duration(milliseconds: 5));
         }
       }
     }
@@ -72,7 +72,7 @@ class MostUsedLanguagesController extends GetxController {
     isLight.value = false;
 
     List<Uint8List> darkFrames = [];
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future.delayed(const Duration(milliseconds: 150));
 
     if(langsData.length==1){
       final frame = await screenShotMaker.captureScreen(key: mostLangsBoundryGlobalKey);
@@ -81,8 +81,8 @@ class MostUsedLanguagesController extends GetxController {
     else{
       for(int i = 0; i < langsData.length ; i++){
         touchedIndex.value = i;
-        await Future.delayed(const Duration(milliseconds: 10));
-        for(int j = 0; j < 30; j++){
+        //await Future.delayed(const Duration(milliseconds: 10));
+        for(int j = 0; j < 15; j++){
           final frame = await screenShotMaker.captureScreen(key: mostLangsBoundryGlobalKey);
           darkFrames.add(frame);
           exporterController.progress.value += ((1/(30*langsData.length))/2)-0.0001;
@@ -94,9 +94,9 @@ class MostUsedLanguagesController extends GetxController {
 
     exporterController.progress.value = 0.99;
 
-    final originalTypewriterLightGif = await gifMaker.createGif(frames: lightFrames, fileName: 'most_langs_light',exportFileName: 'out_most_langs_light',frameRate: '24',exportRate: '24');
+    final originalTypewriterLightGif = await gifMaker.createGif(frames: lightFrames, fileName: 'most_langs_light',exportFileName: 'out_most_langs_light',frameRate: '15',exportRate: '15');
     final optimizedTypewriterLightGif = await gifOptimizer.optimizeGif(originalGif: originalTypewriterLightGif,);
-    final originalTypewriterDarkGif = await gifMaker.createGif(frames: darkFrames, fileName: 'most_langs_dark',exportFileName: 'out_most_langs_dark',frameRate: '24',exportRate: '24');
+    final originalTypewriterDarkGif = await gifMaker.createGif(frames: darkFrames, fileName: 'most_langs_dark',exportFileName: 'out_most_langs_dark',frameRate: '15',exportRate: '15');
     final optimizedTypewriterDarkGif = await gifOptimizer.optimizeGif(originalGif: originalTypewriterDarkGif);
 
     exporterController.gifs.clear();

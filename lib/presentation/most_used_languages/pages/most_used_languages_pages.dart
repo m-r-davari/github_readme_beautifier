@@ -189,7 +189,7 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
                       child: RotatedBox(
                         quarterTurns: 1,
                         child: BarChart(
-                          swapAnimationDuration: const Duration(milliseconds: 500),
+                          swapAnimationDuration: const Duration(milliseconds: 150),
                           BarChartData(
                             gridData: const FlGridData(show: false),
                             titlesData: const FlTitlesData(
