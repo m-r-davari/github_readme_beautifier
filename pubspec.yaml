@@ -21,6 +21,11 @@ dependencies:
   ffmpeg_wasm: ^1.0.1
   responsive_framework: ^1.1.1
   flutter_quill: ^9.1.1
+  dio: ^5.4.0
+  pretty_dio_logger: ^1.1.1
+  fl_chart: ^0.66.0
+  flutter_svg: ^2.0.9
+  flutter_staggered_animations: ^1.1.1
 
 dev_dependencies:
   flutter_test:

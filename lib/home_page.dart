@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:github_readme_beautifier/widgets/drawer_widget.dart';
 import 'package:github_readme_beautifier/widgets/hover_effect.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'features/common/models/feature_model.dart';
+import 'data/common/models/feature_model.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -17,7 +17,8 @@ class _HomePageState extends State<HomePage> {
   List<FeatureModel> features = List.of([
     FeatureModel('Github Meme View', '', 'assets/github_meme_thumbnail.gif'),
     FeatureModel('Typewriter Text View', '', 'assets/typewriter_text_thumbnail.gif'),
-    FeatureModel('Linear Commits Chart', '', 'assets/linear_chart_thumbnail.png'),
+    FeatureModel('Most Used Languages', '', 'assets/most_used_language_thumbnail.gif'),
+    //FeatureModel('Repos Languages Overview', '', 'assets/most_used_language_thumbnailz.gif'),
   ]);
 
   @override
@@ -90,7 +91,7 @@ class FeatureCardItem extends StatelessWidget {
                       alignment: Alignment.center,
                       color: Colors.black38,
                       child: Text(
-                        '$title${index == 2 ? ' (Coming Soon)' : ''}',
+                        '$title${index == 3 ? ' (Coming Soon)' : ''}',
                         maxLines: 1,
                         style: const TextStyle(color: Colors.white),
                       )),
@@ -110,7 +111,11 @@ class FeatureCardItem extends StatelessWidget {
                               }
                             : index == 1 ? (){
                                 Get.toNamed('/typewriter_page');
-                            } : null,
+                            }
+                            : index == 2 ? (){
+                                Get.toNamed('/most_used_languages_page');
+                            }
+                            : null,
                         borderRadius: const BorderRadius.all(Radius.circular(16)),
                       ),
                     ),

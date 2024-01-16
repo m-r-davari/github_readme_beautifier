@@ -55,7 +55,7 @@ class _LauncherPage extends State<SplashPage> with TickerProviderStateMixin {
 
           Future.delayed(const Duration(milliseconds: 300), () {
             //Get.to(const HomePage(),transition: Transition.fadeIn);
-            Get.offNamed('/home_page');
+            Get.offNamed('/user_page');
           });
         }
       }
