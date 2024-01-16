@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:github_readme_beautifier/app_bindings.dart';
-import 'package:github_readme_beautifier/features/github_meme/presentation/controllers/github_meme_controller.dart';
-import 'package:github_readme_beautifier/features/github_meme/presentation/pages/github_meme_page.dart';
+import 'package:github_readme_beautifier/core/di/app_bindings.dart';
+import 'package:github_readme_beautifier/core/network_manager/i_nework_manager.dart';
+import 'package:github_readme_beautifier/data/git_repos/datasource/i_git_repos.dart';
+import 'package:github_readme_beautifier/data/most_used_languages/datasource/i_most_used_languages_datasource.dart';
+import 'package:github_readme_beautifier/data/most_used_languages/datasource/most_used_languages_datasource.dart';
+import 'package:github_readme_beautifier/data/most_used_languages/repository/i_most_used_languages_repository.dart';
+import 'package:github_readme_beautifier/data/most_used_languages/repository/most_languages_repository.dart';
+import 'package:github_readme_beautifier/presentation/github_meme/controllers/github_meme_controller.dart';
+import 'package:github_readme_beautifier/presentation/github_meme/pages/github_meme_page.dart';
 import 'package:github_readme_beautifier/home_page.dart';
+import 'package:github_readme_beautifier/presentation/most_used_languages/controllers/most_used_languages_controller.dart';
+import 'package:github_readme_beautifier/presentation/most_used_languages/pages/most_used_languages_pages.dart';
+
+import 'package:github_readme_beautifier/presentation/user/user_controller.dart';
+import 'package:github_readme_beautifier/presentation/user/user_page.dart';
 import 'package:github_readme_beautifier/splash_page.dart';
-import 'package:github_readme_beautifier/features/typewriter_text/presentation/controllers/typewriter_controller.dart';
-import 'package:github_readme_beautifier/features/typewriter_text/presentation/pages/typewriter_export_page.dart';
-import 'package:github_readme_beautifier/features/typewriter_text/presentation/pages/typewriter_text_page.dart';
+import 'package:github_readme_beautifier/presentation/typewriter_text/controllers/typewriter_controller.dart';
+import 'package:github_readme_beautifier/presentation/typewriter_text/pages/typewriter_export_page.dart';
+import 'package:github_readme_beautifier/presentation/typewriter_text/pages/typewriter_text_page.dart';
 
 void main()async{
   AppBindings appBindings = AppBindings();
@@ -31,6 +42,14 @@ class MyApp extends StatelessWidget {
             name: "/splash_page",
             page: () => const SplashPage(),
             transition: Transition.fade,
+        ),
+        GetPage(
+          name: "/user_page",
+          page: () => const UserPage(),
+          transition: Transition.fade,
+          binding: BindingsBuilder(() {
+            Get.put(UserController());
+          }),
         ),
         GetPage(
           name: "/home_page",
@@ -60,10 +79,22 @@ class MyApp extends StatelessWidget {
           name: "/typewriter_export_page",
           page: () => const TypewriterExportPage(),
           transition: Transition.fade,
+          // binding: BindingsBuilder(() {
+          //   Get.put(TypeWriterController());
+          // }),
+        )
+        ,
+        GetPage(
+          name: "/most_used_languages_page",
+          page: () => const MostUsedLanguagesPage(),
+          transition: Transition.fade,
           binding: BindingsBuilder(() {
-            Get.put(TypeWriterController());
+            Get.put<IMostUsedLanguagesDatasource>(MostUsedLanguagesDatasource(networkManager: Get.find<INetworkManager>(), reposDataSource: Get.find<IGitReposRemoteDataSource>()));
+            Get.put<IMostLanguagesRepository>(MostLanguagesRepository(datasource: Get.find<IMostUsedLanguagesDatasource>()));
+            Get.put(MostUsedLanguagesController());
           }),
         )
+
       ],
       initialRoute: "/splash_page",
       initialBinding: appBindings,

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:github_readme_beautifier/presentation/user/user_controller.dart';
 import 'dart:js' as js;
 
 import 'flip_effect.dart';
 
 class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({Key? key}) : super(key: key);
+  final userController = Get.find<UserController>();
+  DrawerWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -33,6 +35,37 @@ class DrawerWidget extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: InkWell(
+                      onTap: (){
+                        Get.toNamed('/user_page');
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Username : ',style: TextStyle(fontWeight: FontWeight.bold),),
+                              Obx(() => Text(userController.userName.value,maxLines: 1,),)
+                            ],
+                          )
+                          ,
+                          const SizedBox(width: 8,)
+                          ,
+                          const Padding(
+                              padding: EdgeInsets.only(bottom: 2),
+                              child: Icon(Icons.edit,size: 18,color: Colors.blueAccent,)
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20,),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: InkWell(
