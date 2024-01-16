@@ -24,7 +24,7 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
 
   @override
   void initState() {
-    controller.getMostLanguages(Get.find<UserController>().userName);
+    controller.getMostLanguages(Get.find<UserController>().userName.value);
     super.initState();
   }
 

@@ -14,10 +14,12 @@ class _UserPageState extends State<UserPage> {
 
   final userController = Get.find<UserController>();
   final TextEditingController textEditingController = TextEditingController();
+  bool mustDispose = false;
 
   @override
   void initState() {
-    textEditingController.text = '0x48415a484952';
+    mustDispose = userController.userName.value.isNotEmpty;
+    textEditingController.text = userController.userName.value;
     super.initState();
   }
 
@@ -58,12 +60,19 @@ class _UserPageState extends State<UserPage> {
                 if (textEditingController.text.isEmpty) {
                   Get.showSnackbar(const GetSnackBar(
                     title: 'Error',
-                    message: 'UserName can not be empty',
+                    message: 'Username can not be empty',
+                    duration: Duration(seconds: 5),
                   ));
                   return;
                 }
-                userController.userName = textEditingController.text;
-                Get.offNamed('/home_page');
+                Get.closeCurrentSnackbar();
+                userController.userName.value = textEditingController.text;
+                if(mustDispose){
+                  Get.back();
+                }
+                else{
+                  Get.offNamed('/home_page');
+                }
               },
               isLoading: false,
             )

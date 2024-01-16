@@ -17,7 +17,8 @@ class _HomePageState extends State<HomePage> {
   List<FeatureModel> features = List.of([
     FeatureModel('Github Meme View', '', 'assets/github_meme_thumbnail.gif'),
     FeatureModel('Typewriter Text View', '', 'assets/typewriter_text_thumbnail.gif'),
-    FeatureModel('Linear Commits Chart', '', 'assets/linear_chart_thumbnail.png'),
+    FeatureModel('Most Used Languages', '', 'assets/most_used_language_thumbnail.gif'),
+    //FeatureModel('Repos Languages Overview', '', 'assets/most_used_language_thumbnailz.gif'),
   ]);
 
   @override
@@ -90,7 +91,7 @@ class FeatureCardItem extends StatelessWidget {
                       alignment: Alignment.center,
                       color: Colors.black38,
                       child: Text(
-                        '$title${index == 2 ? ' (Coming Soon)' : ''}',
+                        '$title${index == 3 ? ' (Coming Soon)' : ''}',
                         maxLines: 1,
                         style: const TextStyle(color: Colors.white),
                       )),
