@@ -1,16 +1,15 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:github_readme_beautifier/core/exceptions/exceptions.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'i_nework_manager.dart';
 
-
 class DioNetworkManager extends INetworkManager {
-
   final _connectionTimeout = 5000;
   final _receiveTimeout = 5000;
   final _sendTimeout = 5000;
   late Dio _dio;
-  BaseOptions? options;
+  late BaseOptions options;
   String baseUrl;
 
   DioNetworkManager({required this.baseUrl}) {
@@ -39,45 +38,46 @@ class DioNetworkManager extends INetworkManager {
           return handler.next(response);
         },
         onError: (DioException err, handler) async {
-          print("Error on dio ${err.response}");
+          print("Error on dio ${err.response}, ${err.type}");
           switch (err.type) {
-            case DioExceptionType.receiveTimeout ://DioErrorType.receiveTimeout:
-              return handler.next(DioError(
+            case DioExceptionType.receiveTimeout:
+              return handler.next(DioException(
                 requestOptions: err.requestOptions,
                 response: err.response,
-                error: "Connection Problem",
+                message: "Receive Connection Timeout",
               ));
               break;
             case DioExceptionType.connectionTimeout:
               return handler.next(DioException(
                 requestOptions: err.requestOptions,
                 response: err.response,
-                error: "Connection Problem",
+                message: "Connection Timeout",
               ));
-              break;
             case DioExceptionType.sendTimeout:
-              return handler
-                  .next(DioException(requestOptions: err.requestOptions, response: err.response, error: "Check Internet Connection"));
-              break;
-            case DioExceptionType.unknown:
-              return handler.next(
-                  DioException(requestOptions: err.requestOptions, response: err.response, error: "Failed to Connect to Server"));
-              break;
+              return handler.next(DioException(
+                requestOptions: err.requestOptions,
+                response: err.response,
+                message: "Send Connection Timeout",
+              ));
             case DioExceptionType.cancel:
               return handler.next(DioException(
                 requestOptions: err.requestOptions,
                 response: err.response,
-                error: "Request has been canceled",
+                message: "Request has been canceled",
               ));
-              break;
-            default :
+            case DioExceptionType.badResponse:
               return handler.next(DioException(
-              requestOptions: err.requestOptions,
-              response: err.response,
-              error: "Something went wrong",
-            ));
+                requestOptions: err.requestOptions,
+                response: err.response,
+                message: '${err.response?.data['message'] ?? err.message}'//err.response?.statusMessage,
+              ));
+            default:
+              return handler.next(DioException(
+                requestOptions: err.requestOptions,
+                response: err.response,
+                message: "Unknown Network Error",
+              ));
           }
-          return handler.next(err);
         },
       ), //
     );
@@ -92,8 +92,7 @@ class DioNetworkManager extends INetworkManager {
   }
 
   @override
-  Future<dynamic> getRequest(
-      {required String path, Map<String, dynamic>? parameters,  Map<String, String>? headers}) async {
+  Future<dynamic> getRequest({required String path, Map<String, dynamic>? parameters, Map<String, String>? headers}) async {
     try {
       final response = await _dio.get(
         path,
@@ -102,13 +101,12 @@ class DioNetworkManager extends INetworkManager {
       );
       return response.data;
     } on DioException catch (e) {
-      rethrow;
+      throw NetworkException(code: e.response?.statusCode, message: e.message);
     }
   }
 
   @override
-  Future<dynamic> postRequest(
-      {required String path, Map<String, String>? parameters, body, Map<String, String>? headers}) async {
+  Future<dynamic> postRequest({required String path, Map<String, String>? parameters, body, Map<String, String>? headers}) async {
     try {
       final response = await _dio.post(
         path,
@@ -117,8 +115,10 @@ class DioNetworkManager extends INetworkManager {
       );
       return response.data;
     } on DioException catch (e) {
-      rethrow;
+      throw NetworkException(code: e.response?.statusCode, message: e.message);
     }
   }
+
+
 
 }

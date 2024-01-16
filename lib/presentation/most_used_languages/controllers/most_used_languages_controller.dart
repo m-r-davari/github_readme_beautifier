@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:github_readme_beautifier/core/exceptions/exceptions.dart';
 import 'package:github_readme_beautifier/core/gif_maker/i_gif_maker.dart';
 import 'package:github_readme_beautifier/core/gif_optimizer/i_gif_optimizer.dart';
 import 'package:github_readme_beautifier/core/screenshot_maker/i_screenshot_maker.dart';
@@ -25,8 +26,12 @@ class MostUsedLanguagesController extends GetxController {
     try {
       final result = await repository.getMostLanguages(userName: userName);
       state.value = SuccessState<Map<String,int>>(result);
-    } catch (e) {
-      state.value = FailureState();
+    }
+    on NetworkException catch(e){
+      state.value = FailureState(error: e.message);
+    }
+    catch (e) {
+      state.value = FailureState(error: e.toString());
     }
   }
 
