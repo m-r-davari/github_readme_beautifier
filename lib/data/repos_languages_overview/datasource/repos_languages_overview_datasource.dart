@@ -26,20 +26,23 @@ class ReposLanguagesOverviewDatasource extends IReposLanguagesOverviewDatasource
 
     // Assuming reposLangsRawData is a List<dynamic>
     List<dynamic> reposLangsRawData = (await Future.wait(reposLangFutures));
-
     // Convert to JSON string
     String apiResponse = jsonEncode(reposLangsRawData);
-
-
     // Now you can use the parseApiResponse function from the previous example
-    List<Map<String, int>> dataList = parseApiResponse(apiResponse);
-
-    // Print the result
-    for (Map<String, int> data in dataList) {
-      print(data);
+    List<Map<String, int>> allReposRawMapList = parseApiResponse(apiResponse);
+    // generate repos langs percent list
+    List<Map<String,int>> reposLangsPercentList = [];
+    for (Map<String, int> repoRawMap in allReposRawMapList) {
+      int sumOfvalues = repoRawMap.values.toList().fold(0, (previousValue, element) => previousValue + element);
+      Map<String,int> repoPercentMap = {};
+      for(final langRawMap in repoRawMap.entries.toList()){
+        repoPercentMap[langRawMap.key] = (langRawMap.value / sumOfvalues * 100).toInt();
+      }
+      reposLangsPercentList.add(repoPercentMap);
     }
     
-    print('---repos data---- $reposLangsRawData ----');
+    //print('---repos raw data---- $reposLangsRawData ----');
+    print('---repos percens data---- $reposLangsPercentList ----');
 
     return {'DDD':10};
     //throw UnimplementedError();
