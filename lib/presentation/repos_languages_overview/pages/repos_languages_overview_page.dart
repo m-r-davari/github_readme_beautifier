@@ -2,17 +2,20 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:github_readme_beautifier/presentation/most_used_languages/controllers/most_used_languages_controller.dart';
+import 'package:github_readme_beautifier/presentation/repos_languages_overview/controllers/repos_languages_overview_controller.dart';
+import 'package:github_readme_beautifier/presentation/user/user_controller.dart';
 
-class UsedLanguagesOverviewPage extends StatefulWidget {
-  const UsedLanguagesOverviewPage({Key? key}) : super(key: key);
+class ReposLanguagesOverviewPage extends StatefulWidget {
+  const ReposLanguagesOverviewPage({Key? key}) : super(key: key);
 
   @override
-  State<UsedLanguagesOverviewPage> createState() => _UsedLanguagesOverviewPageState();
+  State<ReposLanguagesOverviewPage> createState() => _ReposLanguagesOverviewPageState();
 }
 
-class _UsedLanguagesOverviewPageState extends State<UsedLanguagesOverviewPage> {
+class _ReposLanguagesOverviewPageState extends State<ReposLanguagesOverviewPage> {
 
-  final controller = Get.find<MostUsedLanguagesController>();
+  final controller = Get.find<ReposLanguagesOverviewController>();
+  final userController = Get.find<UserController>();
 
   double ipc = 1.0;
   double ipc2 = 1.0;
@@ -38,7 +41,7 @@ class _UsedLanguagesOverviewPageState extends State<UsedLanguagesOverviewPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          //controller.getMostLanguages();
+          controller.getReposLanguagesOverview(userController.userName.value);
           setState(() {
             isPieLoaded = true;
             ipc = 30.0;
@@ -51,7 +54,7 @@ class _UsedLanguagesOverviewPageState extends State<UsedLanguagesOverviewPage> {
       ),
       body: Container(
        // width: 300,height: 300,
-        margin: EdgeInsets.all(40),
+        margin: const EdgeInsets.all(40),
         child: PieChart(
           PieChartData(
             sections: showingSections(),
@@ -69,7 +72,7 @@ class _UsedLanguagesOverviewPageState extends State<UsedLanguagesOverviewPage> {
                 });
             })
           ),
-          swapAnimationDuration: const Duration(milliseconds: 1375), // Optional
+          swapAnimationDuration: const Duration(milliseconds: 150), // Optional
           swapAnimationCurve: Curves.linear,
         )
       ),
@@ -79,7 +82,7 @@ class _UsedLanguagesOverviewPageState extends State<UsedLanguagesOverviewPage> {
 
 
   List<PieChartSectionData> showingSections() {
-    return List.generate(1, (i) {
+    return List.generate(3, (i) {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 25.0 : 16.0;
       final radius = isTouched ? 60.0 : 50.0;
