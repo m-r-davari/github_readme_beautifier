@@ -1,8 +1,6 @@
 import 'dart:convert';
-
 import 'package:github_readme_beautifier/core/network_manager/i_nework_manager.dart';
 import 'package:github_readme_beautifier/data/git_repos/datasource/i_git_repos.dart';
-import 'package:github_readme_beautifier/data/most_used_languages/datasource/i_most_used_languages_datasource.dart';
 import 'package:github_readme_beautifier/data/repos_languages_overview/datasource/i_repos_languages_overview_datasource.dart';
 
 class ReposLanguagesOverviewDatasource extends IReposLanguagesOverviewDatasource{
@@ -36,16 +34,47 @@ class ReposLanguagesOverviewDatasource extends IReposLanguagesOverviewDatasource
       int sumOfvalues = repoRawMap.values.toList().fold(0, (previousValue, element) => previousValue + element);
       Map<String,int> repoPercentMap = {};
       for(final langRawMap in repoRawMap.entries.toList()){
-        repoPercentMap[langRawMap.key] = (langRawMap.value / sumOfvalues * 100).toInt();
+        if((langRawMap.value / sumOfvalues * 100).toInt() > 0){
+          repoPercentMap[langRawMap.key] = (langRawMap.value / sumOfvalues * 100).round();
+        }
       }
       reposLangsPercentList.add(repoPercentMap);
     }
-    
-    //print('---repos raw data---- $reposLangsRawData ----');
-    print('---repos percens data---- $reposLangsPercentList ----');
 
-    return {'DDD':10};
-    //throw UnimplementedError();
+    Set<String> langsTitles = reposLangsPercentList.expand((element) => element.keys).toSet();
+
+    Map<String,int> data = {};
+    for(String langTitle in langsTitles){
+      int sum = reposLangsPercentList.fold(0, (previousValue, map) => previousValue + (map[langTitle] ?? 0));
+      if(sum ~/ reposLangsPercentList.length >= 1){
+        data[langTitle] = (sum / reposLangsPercentList.length).round();
+      }
+    }
+
+    int totalPercentLangsSum = data.values.toList().fold(0, (previousValue, element) => previousValue + element);
+    if(totalPercentLangsSum < 100){
+      data['other'] = 100 - totalPercentLangsSum;
+    }
+    else{
+      int tempPercent = totalPercentLangsSum;
+      while(tempPercent > 100){
+        final mapEntry = data.entries.reduce((min, entry) {
+          return entry.value < min.value ? entry : min;
+        });
+        print('----min map entry ---> $mapEntry');
+        tempPercent = tempPercent - mapEntry.value;
+        data.remove(mapEntry.key);
+      }
+      if(tempPercent < 100){
+        data['other'] = 100 - tempPercent;
+      }
+    }
+    
+    print('---repos percens data---- $reposLangsPercentList ----');
+    print('---repos last percens data---- $data ----');
+
+    return data;
+
   }
 
 
