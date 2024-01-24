@@ -1,9 +1,12 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:github_readme_beautifier/presentation/most_used_languages/controllers/most_used_languages_controller.dart';
+import 'package:github_readme_beautifier/core/states/states.dart';
 import 'package:github_readme_beautifier/presentation/repos_languages_overview/controllers/repos_languages_overview_controller.dart';
 import 'package:github_readme_beautifier/presentation/user/user_controller.dart';
+import 'package:github_readme_beautifier/resources/github_themes.dart';
+import 'package:github_readme_beautifier/resources/languages_themes.dart';
+import 'package:github_readme_beautifier/widgets/github_loading.dart';
 
 class ReposLanguagesOverviewPage extends StatefulWidget {
   const ReposLanguagesOverviewPage({Key? key}) : super(key: key);
@@ -16,17 +19,12 @@ class _ReposLanguagesOverviewPageState extends State<ReposLanguagesOverviewPage>
 
   final controller = Get.find<ReposLanguagesOverviewController>();
   final userController = Get.find<UserController>();
-
-  double ipc = 1.0;
-  double ipc2 = 1.0;
-  double ipc3 = 1.0;
-  double ipc4 = 1.0;
-
-  int touchedIndex = -1;
-  bool isPieLoaded = false;
+  final githubTheme = GithubThemes();
+  final LanguagesThemes langThemes = LanguagesThemes.instance;
 
   @override
   void initState() {
+    controller.getReposLanguagesOverview(userController.userName.value);
     super.initState();
   }
 
@@ -37,63 +35,73 @@ class _ReposLanguagesOverviewPageState extends State<ReposLanguagesOverviewPage>
         automaticallyImplyLeading: false,
         centerTitle: false,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Typewriter Text'),
+        title: const Text('Repos Language Overview'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          controller.getReposLanguagesOverview(userController.userName.value);
-          setState(() {
-            isPieLoaded = true;
-            ipc = 30.0;
-            ipc2 = 40.0;
-            ipc3 = 20.0;
-            ipc4 = 10.0;
-          });
+          //controller.getReposLanguagesOverview(userController.userName.value);
         },
         child: const Text('get'),
       ),
-      body: Container(
-       // width: 300,height: 300,
-        margin: const EdgeInsets.all(40),
-        child: PieChart(
-          PieChartData(
-            sections: showingSections(),
-            sectionsSpace: isPieLoaded ? 2 : 0,
-            pieTouchData: PieTouchData(
-                touchCallback: (flTouchEvent, pieTouchResponse) {
-                setState(() {
-                  final desiredTouch = flTouchEvent
-                  is! FlPointerExitEvent && flTouchEvent is! FlTapUpEvent;
-                  if (desiredTouch && pieTouchResponse!.touchedSection != null) {
-                    touchedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
-                  } else {
-                    touchedIndex = -1;
-                  }
-                });
-            })
-          ),
-          swapAnimationDuration: const Duration(milliseconds: 150), // Optional
-          swapAnimationCurve: Curves.linear,
-        )
-      ),
+      body: Obx((){
+
+        if (controller.state.value is LoadingState) {
+          return const Center(child: GithubLoading());
+        } else if (controller.state.value is SuccessState) {
+          Map<String, int> data = (controller.state.value as SuccessState).data;
+          if (data.isEmpty) {
+            return const Center(
+              child: Text(
+                textAlign: TextAlign.center,
+                'You don\'t have any individual Repo, or all of them are Forked repos.\n Must have at least 1 individual repo.',
+                style: TextStyle(color: Colors.red),
+              ),
+            );
+          }
+          return Container(
+            // width: 300,height: 300,
+              margin: const EdgeInsets.all(40),
+              child: PieChart(
+                PieChartData(
+                    sections: showingSections(data: data),
+                    sectionsSpace: 2,
+                    pieTouchData: PieTouchData(
+                        touchCallback: (flTouchEvent, pieTouchResponse) {
+                          final desiredTouch = flTouchEvent is! FlPointerExitEvent && flTouchEvent is! FlTapUpEvent;
+                          if (desiredTouch && pieTouchResponse!.touchedSection != null) {
+                            controller.touchedIndex.value = pieTouchResponse.touchedSection!.touchedSectionIndex;
+                          } else {
+                            controller.touchedIndex.value = -1;
+                          }
+                        })
+                ),
+                swapAnimationDuration: const Duration(milliseconds: 150), // Optional
+                swapAnimationCurve: Curves.linear,
+              )
+          );
+        } else {
+          String error = (controller.state.value as FailureState).error;
+          return Center(
+            child: Text(error),
+          );
+        }
+      }),
     );
   }
 
 
 
-  List<PieChartSectionData> showingSections() {
-    return List.generate(3, (i) {
-      final isTouched = i == touchedIndex;
+  List<PieChartSectionData> showingSections({required Map<String, int>? data}) {
+    if (data == null) {
+      return [];
+    }
+    return List.generate(data.length, (i) {
+      final isTouched = i == controller.touchedIndex.value;
       final fontSize = isTouched ? 25.0 : 16.0;
       final radius = isTouched ? 60.0 : 50.0;
-      const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
       return PieChartSectionData(
-        color: isPieLoaded
-            ? Colors.blueAccent
-            : Colors.grey,
-        value: isPieLoaded
-            ? i == 0 ? ipc : i==1 ? ipc2 : i==2? ipc3 : ipc4
-            : 100,
+        color: langThemes.languagesColors[data.keys.toList()[i]] ?? Colors.cyan,
+        value: data.values.toList()[i].toDouble(),
         title: '',
         radius: radius,
         titleStyle: TextStyle(

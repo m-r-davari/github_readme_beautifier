@@ -69,9 +69,6 @@ class ReposLanguagesOverviewDatasource extends IReposLanguagesOverviewDatasource
         data['other'] = 100 - tempPercent;
       }
     }
-    
-    print('---repos percens data---- $reposLangsPercentList ----');
-    print('---repos last percens data---- $data ----');
 
     return data;
 
