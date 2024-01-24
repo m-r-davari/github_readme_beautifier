@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
     FeatureModel('Github Meme View', '', 'assets/github_meme_thumbnail.gif'),
     FeatureModel('Typewriter Text View', '', 'assets/typewriter_text_thumbnail.gif'),
     FeatureModel('Most Used Languages', '', 'assets/most_used_language_thumbnail.gif'),
-    FeatureModel('Repos Languages Overview', '', 'assets/most_used_language_thumbnail.gif'),
+    FeatureModel('Repos Languages Overview', '', 'assets/repos_languages_overview_thumbnail.gif'),
   ]);
 
   @override
@@ -82,7 +82,7 @@ class FeatureCardItem extends StatelessWidget {
                     bottom: index == 0 ? 20 : 3,
                     child: Image.asset(
                       thumbnail,
-                      fit: index == 0 ? BoxFit.contain : BoxFit.cover,
+                      fit: index == 0 || index == 3 ? BoxFit.contain : BoxFit.cover,
                     )),
                 Align(
                   alignment: Alignment.bottomCenter,
@@ -91,7 +91,7 @@ class FeatureCardItem extends StatelessWidget {
                       alignment: Alignment.center,
                       color: Colors.black38,
                       child: Text(
-                        '$title${index == 3 ? ' (Coming Soon)' : ''}',
+                        '$title${index == 4 ? ' (Coming Soon)' : ''}',
                         maxLines: 1,
                         style: const TextStyle(color: Colors.white),
                       )),

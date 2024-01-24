@@ -53,7 +53,7 @@ class ReposLanguagesOverviewDatasource extends IReposLanguagesOverviewDatasource
 
     int totalPercentLangsSum = data.values.toList().fold(0, (previousValue, element) => previousValue + element);
     if(totalPercentLangsSum < 100){
-      data['other'] = 100 - totalPercentLangsSum;
+      data['Other'] = 100 - totalPercentLangsSum;
     }
     else{
       int tempPercent = totalPercentLangsSum;
@@ -66,7 +66,7 @@ class ReposLanguagesOverviewDatasource extends IReposLanguagesOverviewDatasource
         data.remove(mapEntry.key);
       }
       if(tempPercent < 100){
-        data['other'] = 100 - tempPercent;
+        data['Other'] = 100 - tempPercent;
       }
     }
 
@@ -88,7 +88,7 @@ class ReposLanguagesOverviewDatasource extends IReposLanguagesOverviewDatasource
           Map<String, int> intMap = {};
           element.forEach((key, value) {
             if (value is int) {
-              intMap[key.toLowerCase()] = value;
+              intMap[key] = value;
             }
           });
           dataList.add(intMap);

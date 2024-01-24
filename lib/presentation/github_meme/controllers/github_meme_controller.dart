@@ -91,6 +91,7 @@ class GithubMemeController extends GetxController{
       controller?.stop();
     }
     await Future.delayed(Duration.zero);
+    await _captureScreen();// to fix first screenshot time bug
     for(int i = 0 ; i < exportDuration/50 ; i++){
       for(var controller in gridsAnimControllers){
         if (controller!.status == AnimationStatus.forward){
