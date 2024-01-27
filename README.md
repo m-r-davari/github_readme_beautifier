@@ -65,6 +65,7 @@ You are welcomed to contribute, instead of copying the Idea or Code.
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_most_langs_dark.gif">
   <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_most_langs_light.gif" width="44%">
 </picture>
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/u3f_most_langs_dark.gif">
   <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/u3f_most_langs_light.gif" width="44%">
