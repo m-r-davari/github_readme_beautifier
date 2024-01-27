@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:github_readme_beautifier/presentation/exporter/exporter_controller.dart';
-import 'package:github_readme_beautifier/core/downloader/i_downloader.dart';
 import 'package:github_readme_beautifier/core/gif_maker/i_gif_maker.dart';
 import 'package:github_readme_beautifier/core/gif_optimizer/i_gif_optimizer.dart';
 import 'package:github_readme_beautifier/core/screenshot_maker/i_screenshot_maker.dart';
@@ -28,8 +27,9 @@ class TypeWriterController extends GetxController {
     typewriterRichTextKey.currentState!.replay();
   }
 
-  Future<void> export()async{
-    exporterController.fileName.value = 'typewriter_text';
+  Future<void> export({required String userName})async{
+    exporterController.gifs.clear();
+    exporterController.fileName.value = '${userName}_typewriter_text';
     isLight.value = true;
     List<Uint8List> lightTextFrames = [];
     double progress = 0;
@@ -61,12 +61,11 @@ class TypeWriterController extends GetxController {
     print('----dark frame lenght is : ---- ${darkTextFrames.length} -----');
 
     //creating gif
-    final originalTypewriterLightGif = await gifMaker.createGif(frames: lightTextFrames, fileName: 'typewriter_text_light',exportFileName: 'out_text_light',frameRate: '${lightTextFrames.length}',exportRate: '${lightTextFrames.length}',loopNum: loopCount, loopDelay: loopDelay);
+    final originalTypewriterLightGif = await gifMaker.createGif(frames: lightTextFrames, fileName: '${userName}_typewriter_text_light',frameRate: '${lightTextFrames.length}',exportRate: '${lightTextFrames.length}',loopNum: loopCount, loopDelay: loopDelay);
     final optimizedTypewriterLightGif = await gifOptimizer.optimizeGif(originalGif: originalTypewriterLightGif,);
-    final originalTypewriterDarkGif = await gifMaker.createGif(frames: darkTextFrames, fileName: 'typewriter_text_dark',exportFileName: 'out_text_dark',frameRate: '${darkTextFrames.length}',exportRate: '${lightTextFrames.length}',loopNum: loopCount, loopDelay: loopDelay);
+    final originalTypewriterDarkGif = await gifMaker.createGif(frames: darkTextFrames, fileName: '${userName}_typewriter_text_dark',frameRate: '${darkTextFrames.length}',exportRate: '${lightTextFrames.length}',loopNum: loopCount, loopDelay: loopDelay);
     final optimizedTypewriterDarkGif = await gifOptimizer.optimizeGif(originalGif: originalTypewriterDarkGif);//
 
-    //sfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffzzzzzzzzzzxxxc.
 
     print('---- json document is : --- $documentJson----');
     print('----plain text is  : ---- $documentPlainText --- txtLen is : ${documentPlainText.length} -- lighFLen is : ${lightTextFrames.length} --- darkFLen is : ${darkTextFrames.length}--');

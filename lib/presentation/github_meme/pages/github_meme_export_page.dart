@@ -119,7 +119,7 @@ class _GithubMemeExportPageState extends State<GithubMemeExportPage> with Ticker
                             children: [
                               ElevatedButton(
                                   onPressed: (){
-                                    controller.downloadGif(gifs[0],themeName: 'light');
+                                    controller.downloadGif(gifs[0],themeName: 'light',typeName: 'original');
                                   },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
@@ -135,7 +135,7 @@ class _GithubMemeExportPageState extends State<GithubMemeExportPage> with Ticker
                               const SizedBox(width: 16,),
                               ElevatedButton(
                                   onPressed: (){
-                                    controller.downloadGif(gifs[1],themeName: 'light',typeName: 'optimized_');
+                                    controller.downloadGif(gifs[1],themeName: 'light',typeName: 'optimized');
                                   },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
@@ -167,7 +167,7 @@ class _GithubMemeExportPageState extends State<GithubMemeExportPage> with Ticker
                             children: [
                               ElevatedButton(
                                   onPressed: (){
-                                    controller.downloadGif(gifs[2],themeName: 'dark');
+                                    controller.downloadGif(gifs[2],themeName: 'dark',typeName: 'original');
                                   },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
@@ -183,7 +183,7 @@ class _GithubMemeExportPageState extends State<GithubMemeExportPage> with Ticker
                               const SizedBox(width: 16,),
                               ElevatedButton(
                                   onPressed: (){
-                                    controller.downloadGif(gifs[3],themeName: 'dark',typeName: 'optimized_');
+                                    controller.downloadGif(gifs[3],themeName: 'dark',typeName: 'optimized');
                                   },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,

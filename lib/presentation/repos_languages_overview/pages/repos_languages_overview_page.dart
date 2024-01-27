@@ -26,7 +26,7 @@ class _ReposLanguagesOverviewPageState extends State<ReposLanguagesOverviewPage>
 
   @override
   void initState() {
-    controller.getReposLanguagesOverview(userController.userName.value);
+    controller.getReposLanguagesOverview(userName: userController.userName.value);
     super.initState();
   }
 
@@ -158,10 +158,10 @@ class _ReposLanguagesOverviewPageState extends State<ReposLanguagesOverviewPage>
                       },
                     );
                     if (ConstKeeper.isFFmpegLoaded.value) {
-                      await controller.export();
+                      await controller.export(userName: userController.userName.value);
                     } else {
                       await ConstKeeper.isFFmpegLoaded.stream.firstWhere((loaded) => loaded == true);
-                      await controller.export();
+                      await controller.export(userName: userController.userName.value);
                     }
                   },
                   child: const Text('Export'))

@@ -10,7 +10,7 @@ class GifMaker extends IGifMaker {
   @override
   Future<Uint8List> createGif(
       {required List<Uint8List> frames, String frameRate = '50', String exportRate = '20', required String fileName,
-      String loopNum = '0', String maxColors = '200', String exportFileName = 'output', bool loopDelay = false}) async {
+      String loopNum = '0', String maxColors = '200', bool loopDelay = false}) async {
 
     //frame rate changes from 24 to 50
     //because with reverse frames we have total 50 frames and if we want to use 24 fps export it will deduct frames and cause the
@@ -49,10 +49,10 @@ class GifMaker extends IGifMaker {
       '-loop', loopNum,
       '-r', exportRate,
       '-f', 'gif',
-      '$exportFileName.gif',
+      '$fileName.gif',
     ]);
-    final gifData = _fFmpeg.readFile('$exportFileName.gif');
-    _fFmpeg.unlink('$exportFileName.gif');
+    final gifData = _fFmpeg.readFile('$fileName.gif');
+    _fFmpeg.unlink('$fileName.gif');
     return gifData;
 
   }

@@ -35,11 +35,11 @@ class MostUsedLanguagesController extends GetxController {
     }
   }
 
-  Future<void> export() async {
+  Future<void> export({required String userName}) async {
     Map<String, int> langsData = (state.value as SuccessState).data;
     exporterController.progress.value = 0.0;
     List<Uint8List> lightFrames = [];
-    exporterController.fileName.value = 'most_used_language';
+    exporterController.fileName.value = '${userName}_most_langs';
 
     //formule inyeki : tedade item ha * duration haye widget stagred / 41 k fps baeshe
     //masalan : 6ta item lang darin va duration haye delay/duration stagred 500 mili sanie hast bayad
@@ -94,8 +94,7 @@ class MostUsedLanguagesController extends GetxController {
 
     final originalTypewriterLightGif = await gifMaker.createGif(
         frames: lightFrames,
-        fileName: 'most_langs_light',
-        exportFileName: 'out_most_langs_light',
+        fileName: '${userName}_most_langs_light',
         frameRate: '15',
         exportRate: '15');
     final optimizedTypewriterLightGif = await gifOptimizer.optimizeGif(
@@ -103,8 +102,7 @@ class MostUsedLanguagesController extends GetxController {
     );
     final originalTypewriterDarkGif = await gifMaker.createGif(
         frames: darkFrames,
-        fileName: 'most_langs_dark',
-        exportFileName: 'out_most_langs_dark',
+        fileName: '${userName}_most_langs_dark',
         frameRate: '15',
         exportRate: '15');
     final optimizedTypewriterDarkGif = await gifOptimizer.optimizeGif(originalGif: originalTypewriterDarkGif);

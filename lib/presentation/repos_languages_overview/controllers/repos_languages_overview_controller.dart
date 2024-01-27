@@ -24,7 +24,7 @@ class ReposLanguagesOverviewController extends GetxController {
   RxInt touchedIndex = (-1).obs;
 
 
-  Future<void> getReposLanguagesOverview(String userName) async {
+  Future<void> getReposLanguagesOverview({required String userName}) async {
     try {
       final result = await repository.getReposLanguagesOverview(userName: userName);
       print('---- sssss ---- $result');
@@ -38,11 +38,12 @@ class ReposLanguagesOverviewController extends GetxController {
 
 
 
-  Future<void> export() async {
+  Future<void> export({required String userName}) async {
+    exporterController.gifs.clear();
     Map<String, int> langsData = (state.value as SuccessState).data;
     exporterController.progress.value = 0.0;
     List<Uint8List> lightFrames = [];
-    exporterController.fileName.value = 'repos_languages_overview';
+    exporterController.fileName.value = '${userName}_langs_overview';
 
     //formule inyeki : tedade item ha * duration haye widget stagred / 41 k fps baeshe
     //masalan : 6ta item lang darin va duration haye delay/duration stagred 500 mili sanie hast bayad
@@ -52,6 +53,8 @@ class ReposLanguagesOverviewController extends GetxController {
     // edame formul ((10 * 73) / 41 => 17) va (200 / 41 => 4) va dar akhar (73 - 17 + 4) => 60
 
     if (langsData.length == 1) {
+      touchedIndex.value = 0;
+      await Future.delayed(const Duration(milliseconds: 100));
       final frame = await screenShotMaker.captureScreen(key: reposLangOverviewBoundryGlobalKey);
       lightFrames.add(frame);
     } else {
@@ -98,8 +101,7 @@ class ReposLanguagesOverviewController extends GetxController {
 
     final originalTypewriterLightGif = await gifMaker.createGif(
         frames: lightFrames,
-        fileName: 'repos_languages_overview_light',
-        exportFileName: 'out_repos_languages_overview_light',
+        fileName: '${userName}_langs_overview_light',
         frameRate: '15',
         exportRate: '15');
     final optimizedTypewriterLightGif = await gifOptimizer.optimizeGif(
@@ -107,8 +109,7 @@ class ReposLanguagesOverviewController extends GetxController {
     );
     final originalTypewriterDarkGif = await gifMaker.createGif(
         frames: darkFrames,
-        fileName: 'repos_languages_overview_dark',
-        exportFileName: 'out_repos_languages_overview_dark',
+        fileName: '${userName}_langs_overview_light',
         frameRate: '15',
         exportRate: '15');
     final optimizedTypewriterDarkGif = await gifOptimizer.optimizeGif(originalGif: originalTypewriterDarkGif);
