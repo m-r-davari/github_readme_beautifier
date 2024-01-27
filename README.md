@@ -81,7 +81,7 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/hzh_langs_overview_dark.gif">
-  <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/hzh_langs_overview_dark.gif" width="44%">
+  <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/hzh_langs_overview_light.gif" width="44%">
 </picture>
 
 ## How To Use
