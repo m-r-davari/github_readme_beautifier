@@ -23,6 +23,10 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 **Support 28 themes** like Default Github theme, Halloween Github theme, Flutter theme and many other themes.\
 \
 2 - **Typewriter Text**, it provides text with different styles and typewriter effect.
+\
+3 - **Most Used Languages**, it provides linear progress chart for most used languages in personal repos.
+\
+4 - **Most Used Languages**, it provides pie chart for repos languages overview.
 
 ## Next Version
 1 - **Commits Linear Chart**(coming soon), it provides commits linear chart from your github commits data.
