@@ -115,5 +115,5 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 ## Notes
 - This project has been developed using Flutter web and is still under development.
 - If your Exported Gif has some lag you can generate it again to have smooth Gif loops.
-- Consider using optimized GIF files; they have a smaller size without losing quality and will\ load faster on your README file, even with a low-speed network.
+- Consider using optimized GIF files; they have a smaller size without losing quality and will load faster on your README file, even with a low-speed network.
 
