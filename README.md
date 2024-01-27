@@ -107,7 +107,7 @@ You are welcomed to contribute, instead of copying the Idea or Code.
   <img alt="Image changing depending on Dark/Light Github theme mode." src="./light.png" width="100%">
 </picture>
 ```
-8 - Enjoy watching your github profile 😉.
+9 - Enjoy watching your github profile 😉.
 
 
 ## Notes
