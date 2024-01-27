@@ -14,8 +14,8 @@ class ExporterDialog extends GetView<ExporterController> {
       onWillPop: (()async=>false),
       child: Obx((){
         return AnimatedContainer(
-            //width: !controller.isFFmpegLoaded.value ? 120 : controller.progress.value < 1.0 ? 500 : null,//MediaQuery.of(context).size.width/1.2,
-            //height: !controller.isFFmpegLoaded.value ? 120 : controller.progress.value < 1.0 ? 120 : 600,
+            //width: !controllers.isFFmpegLoaded.value ? 120 : controllers.progress.value < 1.0 ? 500 : null,//MediaQuery.of(context).size.width/1.2,
+            //height: !controllers.isFFmpegLoaded.value ? 120 : controllers.progress.value < 1.0 ? 120 : 600,
             duration: const Duration(milliseconds: 600),
             child: !controller.isFFmpegLoaded.value ? Container(
               width: 120,height: 120,
