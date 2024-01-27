@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:github_readme_beautifier/presentation/user/user_controller.dart';
 import 'package:github_readme_beautifier/resources/github_themes.dart';
 import 'package:github_readme_beautifier/data/typewriter/models/span_model.dart';
 import 'package:github_readme_beautifier/presentation/typewriter_text/controllers/typewriter_controller.dart';
@@ -21,6 +22,7 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
   List<Span> spansModelList = [];
   double structFontSize = 16;
   final _typeWriterController = Get.find<TypeWriterController>();
+  final userController = Get.find<UserController>();
   String dropdownValue = '0';
   Map<String,String> loopMode = {
     '0' : '-1',
@@ -152,11 +154,11 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
                         },
                       );
                       if(ConstKeeper.isFFmpegLoaded.value){
-                        await _typeWriterController.export();
+                        await _typeWriterController.export(userName: userController.userName.value);
                       }
                       else{
                         await ConstKeeper.isFFmpegLoaded.stream.firstWhere((loaded) => loaded == true);
-                        await _typeWriterController.export();
+                        await _typeWriterController.export(userName: userController.userName.value);
                       }
                     },
                     child: const Row(
@@ -172,7 +174,7 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
                 ,
                 Container(
                   height: 35,
-                  padding: EdgeInsets.only(left: 8,right: 8),
+                  padding: const EdgeInsets.only(left: 8,right: 8),
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(16),border: Border.all(color: Colors.deepPurpleAccent,width: 1)),
                   child: Row(
                     children: [

@@ -20,6 +20,7 @@ class MostUsedLanguagesPage extends StatefulWidget {
 
 class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
   final controller = Get.find<MostUsedLanguagesController>();
+  final userController = Get.find<UserController>();
   final githubTheme = GithubThemes();
 
   @override
@@ -120,10 +121,10 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
                       },
                     );
                     if (ConstKeeper.isFFmpegLoaded.value) {
-                      await controller.export();
+                      await controller.export(userName: userController.userName.value);
                     } else {
                       await ConstKeeper.isFFmpegLoaded.stream.firstWhere((loaded) => loaded == true);
-                      await controller.export();
+                      await controller.export(userName: userController.userName.value);
                     }
                   },
                   child: const Text('Export')),

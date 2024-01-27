@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:github_readme_beautifier/presentation/user/user_controller.dart';
 import 'package:js/js.dart';
 import 'dart:html' as html;
 import 'dart:js' as js;
 import 'package:js/js_util.dart' as jsUtil;
 import 'package:github_readme_beautifier/resources/github_themes.dart';
-import 'package:github_readme_beautifier/utils/utils.dart';
 
 GlobalKey githubMemeBoundryGlobalKey = GlobalKey();
 
@@ -25,6 +25,7 @@ class GithubMemeController extends GetxController{
   List<AnimationController?> gridsAnimControllers = [];
   bool hasAnimListener = true;
   final ffmpeg = Get.find<FFmpeg>();
+  final userName = Get.find<UserController>().userName.value;
   GithubThemes themes = GithubThemes();
   Rx<bool> isLight = true.obs;
   RxDouble exportProgressValue = 0.0.obs;
@@ -91,6 +92,7 @@ class GithubMemeController extends GetxController{
       controller?.stop();
     }
     await Future.delayed(Duration.zero);
+    await _captureScreen();// to fix first screenshot time bug
     for(int i = 0 ; i < exportDuration/50 ; i++){
       for(var controller in gridsAnimControllers){
         if (controller!.status == AnimationStatus.forward){
@@ -188,7 +190,7 @@ class GithubMemeController extends GetxController{
 
     js.context.callMethod('webSaveAs', [
       html.Blob([gif]),
-      '${typeName}github_meme_$themeName.gif'
+      '${typeName}_${userName}_github_meme_$themeName.gif'
     ]);
 
   }
