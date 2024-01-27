@@ -124,8 +124,8 @@ class ReposLanguagesOverviewController extends GetxController {
     isLight.value = true;
     touchedIndex.value = -1;
 
-    print('----ligh frames ---- ${lightFrames.length} ----');
-    print('----dark frames ---- ${darkFrames.length} ----');
+    // print('----ligh frames ---- ${lightFrames.length} ----');
+    // print('----dark frames ---- ${darkFrames.length} ----');
   }
 
 

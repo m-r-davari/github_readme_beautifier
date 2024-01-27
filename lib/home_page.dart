@@ -15,8 +15,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<FeatureModel> features = List.of([
-    FeatureModel('Github Meme View', '', 'assets/github_meme_thumbnail.gif'),
-    FeatureModel('Typewriter Text View', '', 'assets/typewriter_text_thumbnail.gif'),
+    FeatureModel('Github Meme', '', 'assets/github_meme_thumbnail.gif'),
+    FeatureModel('Typewriter Text', '', 'assets/typewriter_text_thumbnail.gif'),
     FeatureModel('Most Used Languages', '', 'assets/most_used_language_thumbnail.gif'),
     FeatureModel('Repos Languages Overview', '', 'assets/repos_languages_overview_thumbnail.gif'),
   ]);
