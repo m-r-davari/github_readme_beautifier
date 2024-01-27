@@ -1,6 +1,6 @@
 # Github Readme Beautifier
 
-A web app to beautify and enhance your Github README file, that provides interesting widgets in PNG and GIF(animated) formats for both light & dark github theme.
+A web app to beautify and enhance your Github README file, that provides interesting widgets in GIF(animated) format for both light & dark github theme.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/github_meme_dark.gif">
@@ -28,8 +28,6 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 \
 4 - **Most Used Languages**, it provides pie chart for repos languages overview.
 
-## Next Version
-1 - **Commits Linear Chart**(coming soon), it provides commits linear chart from your github commits data.
 
 ## Samples
 
@@ -40,7 +38,7 @@ You are welcomed to contribute, instead of copying the Idea or Code.
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/github_meme_dark.gif">
   <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/github_meme_light.gif">
 </picture>
-\
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_github_meme_dark.gif">
   <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_github_meme_light.gif">
@@ -109,7 +107,7 @@ You are welcomed to contribute, instead of copying the Idea or Code.
   <img alt="Image changing depending on Dark/Light Github theme mode." src="./light.png" width="100%">
 </picture>
 ```
-8 - Enjoy watching your github profile 😉.
+9 - Enjoy watching your github profile 😉.
 
 
 ## Notes
