@@ -1,12 +1,12 @@
 import 'package:github_readme_beautifier/core/network_manager/i_nework_manager.dart';
-import 'package:github_readme_beautifier/data/git_repos/datasource/i_git_repos.dart';
-import 'package:github_readme_beautifier/data/most_used_languages/datasource/i_most_used_languages_datasource.dart';
+import 'package:github_readme_beautifier/data/git_repos/datasource/i_git_repos_remote_datasource.dart';
+import 'package:github_readme_beautifier/data/most_used_languages/datasource/i_most_used_languages_remote_datasource.dart';
 
-class MostUsedLanguagesDatasource extends IMostUsedLanguagesDatasource{
+class MostUsedLanguagesRemoteDatasource extends IMostUsedLanguagesRemoteDatasource{
 
   final INetworkManager networkManager;
   final IGitReposRemoteDataSource reposDataSource;
-  MostUsedLanguagesDatasource({required this.networkManager,required this.reposDataSource});
+  MostUsedLanguagesRemoteDatasource({required this.networkManager,required this.reposDataSource});
 
   @override
   Future<Map<String,int>> getMostUsedLanguages({required String userName})async{

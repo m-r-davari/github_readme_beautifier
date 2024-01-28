@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:github_readme_beautifier/core/states/states.dart';
 import 'package:github_readme_beautifier/presentation/user/user_controller.dart';
 import 'package:github_readme_beautifier/widgets/primary_button.dart';
 
@@ -54,28 +55,38 @@ class _UserPageState extends State<UserPage> {
             const SizedBox(
               height: 26,
             ),
-            PrimaryButton(
+            Obx(() => PrimaryButton(
               text: 'Continue',
-              onTap: (){
+              onTap: ()async{
                 if (textEditingController.text.isEmpty) {
                   Get.showSnackbar(const GetSnackBar(
                     title: 'Error',
                     message: 'Username can not be empty',
-                    duration: Duration(seconds: 5),
+                    duration: Duration(seconds: 3),
                   ));
                   return;
                 }
                 Get.closeCurrentSnackbar();
-                userController.userName.value = textEditingController.text;
-                if(mustDispose){
-                  Get.back();
+                await userController.getUserInfo(userName: textEditingController.text);
+                if(userController.state.value is SuccessState){
+                  userController.userName.value = textEditingController.text;
+                  if(mustDispose){
+                    Get.back();
+                  }
+                  else{
+                    Get.offNamed('/home_page');
+                  }
                 }
-                else{
-                  Get.offNamed('/home_page');
+                else if(userController.state.value is FailureState){
+                  Get.showSnackbar(const GetSnackBar(
+                    title: 'Error',
+                    message: 'Cannot Fetch User Info',
+                    duration: Duration(seconds: 3),
+                  ));
                 }
               },
-              isLoading: false,
-            )
+              isLoading: userController.state.value is LoadingState,
+            ))
           ],
         ),
       ),
