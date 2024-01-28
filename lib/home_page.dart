@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
     FeatureModel('Typewriter Text', '', 'assets/typewriter_text_thumbnail.gif'),
     FeatureModel('Most Used Languages', '', 'assets/most_used_language_thumbnail.gif'),
     FeatureModel('Repos Languages Overview', '', 'assets/repos_languages_overview_thumbnail.gif'),
+    FeatureModel('Github Friends', '', 'assets/repos_languages_overview_thumbnail.gif'),
   ]);
 
   @override
@@ -117,6 +118,9 @@ class FeatureCardItem extends StatelessWidget {
                             }
                             : index == 3 ? (){
                                 Get.toNamed('/repos_languages_overview_page');
+                            }
+                            : index == 4 ? (){
+                                Get.toNamed('/github_friends_list_page');
                             }
                             : null,
                         borderRadius: const BorderRadius.all(Radius.circular(16)),
