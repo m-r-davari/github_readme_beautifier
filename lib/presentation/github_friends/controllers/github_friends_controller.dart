@@ -8,7 +8,9 @@ class GithubFriendsController extends GetxController {
 
   Rx<UIState> state = Rx<UIState>(LoadingState());
   IGithubFriendsRepository repository = Get.find();
-
+  List<GithubFriendModel> selectedFriends = [];
+  final maxFriendsNum = 5;
+  Rx<bool> isLight = true.obs;
 
   Future<void> getGithubFriends({required String userName})async{
     try {
@@ -21,7 +23,6 @@ class GithubFriendsController extends GetxController {
     catch (e) {
       state.value = FailureState(error: e.toString());
     }
-
 
   }
 

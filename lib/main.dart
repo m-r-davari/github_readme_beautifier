@@ -16,6 +16,7 @@ import 'package:github_readme_beautifier/data/repos_languages_overview/datasourc
 import 'package:github_readme_beautifier/data/repos_languages_overview/repository/i_repos_languages_overview_repository.dart';
 import 'package:github_readme_beautifier/data/repos_languages_overview/repository/repos_languages_overview_repository.dart';
 import 'package:github_readme_beautifier/presentation/github_friends/controllers/github_friends_controller.dart';
+import 'package:github_readme_beautifier/presentation/github_friends/pages/github_friends_page.dart';
 import 'package:github_readme_beautifier/presentation/github_meme/controllers/github_meme_controller.dart';
 import 'package:github_readme_beautifier/presentation/github_meme/pages/github_meme_page.dart';
 import 'package:github_readme_beautifier/home_page.dart';
@@ -121,6 +122,15 @@ class MyApp extends StatelessWidget {
           binding: BindingsBuilder(() {
             Get.put<IGithubFriendsRemoteDatasource>(GithubFriendsRemoteDatasource(networkManager: Get.find<INetworkManager>()));
             Get.put<IGithubFriendsRepository>(GithubFriendsRepository(datasource: Get.find<IGithubFriendsRemoteDatasource>()));
+            Get.put(GithubFriendsController());
+          }),
+        )
+        ,
+        GetPage(
+          name: "/github_friends_page",
+          page: () => const GithubFriendsPage(),
+          transition: Transition.fade,
+          binding: BindingsBuilder(() {
             Get.put(GithubFriendsController());
           }),
         )

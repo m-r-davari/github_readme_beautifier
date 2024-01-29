@@ -15,6 +15,7 @@ class GithubFriendsListPage extends StatefulWidget {
 }
 
 class _GithubFriendsListPageState extends State<GithubFriendsListPage> {
+
   final githubFriendsController = Get.find<GithubFriendsController>();
   final userController = Get.find<UserController>();
 
@@ -32,12 +33,6 @@ class _GithubFriendsListPageState extends State<GithubFriendsListPage> {
         centerTitle: false,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Github Friends List'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          githubFriendsController.getGithubFriends(userName: userController.userName.value);
-        },
-        child: const Text('get'),
       ),
       body: Obx(() {
         if(githubFriendsController.state.value is LoadingState){
@@ -59,7 +54,7 @@ class _GithubFriendsListPageState extends State<GithubFriendsListPage> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text('Choose 3 of your Github followers',style: TextStyle(fontSize: 16,fontWeight: FontWeight.normal),),
+                Text('Choose ${githubFriendsController.maxFriendsNum} of your Github followers',style: const TextStyle(fontSize: 16,fontWeight: FontWeight.normal),),
                 const SizedBox(
                   height: 16,
                 ),
@@ -70,10 +65,19 @@ class _GithubFriendsListPageState extends State<GithubFriendsListPage> {
                     padding: const EdgeInsets.all(16),
                     itemBuilder: (ctx, index) {
                       return FriendsCheckItem(
+                        value: githubFriendsController.selectedFriends.contains(data[index]),
+                        enabled: githubFriendsController.selectedFriends.length < githubFriendsController.maxFriendsNum || githubFriendsController.selectedFriends.contains(data[index]),
                         friendName: data[index].login ?? '---',
                         friendAvatar: data[index].avatarUrl ?? '',
-                        onChange: (bool value) {
-                          //todo : add selected friends to list and pass it to next step
+                        onChange: (bool selected) {
+                          if(selected){
+                            githubFriendsController.selectedFriends.add(data[index]);
+                          }
+                          else{
+                            githubFriendsController.selectedFriends.remove(data[index]);
+                          }
+                          print('---- friends len ----- ${githubFriendsController.selectedFriends.length} ----');
+                          setState(() {});
                         },
                       );
                     },
@@ -86,7 +90,15 @@ class _GithubFriendsListPageState extends State<GithubFriendsListPage> {
                 ),
                 ElevatedButton(
                     onPressed: (){
-
+                      if(githubFriendsController.selectedFriends.isEmpty){
+                        Get.showSnackbar(const GetSnackBar(
+                          title: 'Error',
+                          message: 'Select At Least One Friend',
+                          duration: Duration(seconds: 3),
+                        ));
+                        return;
+                      }
+                      Get.toNamed('/github_friends_page');
                     },
                     child: const Text('Continue')
                 )
