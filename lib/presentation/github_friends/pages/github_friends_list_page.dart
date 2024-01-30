@@ -54,7 +54,7 @@ class _GithubFriendsListPageState extends State<GithubFriendsListPage> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text('Choose ${githubFriendsController.maxFriendsNum} of your Github followers',style: const TextStyle(fontSize: 16,fontWeight: FontWeight.normal),),
+                Text('Choose 3 to ${githubFriendsController.maxFriendsNum} of your Github followers',style: const TextStyle(fontSize: 16,fontWeight: FontWeight.normal),),
                 const SizedBox(
                   height: 16,
                 ),
@@ -76,7 +76,6 @@ class _GithubFriendsListPageState extends State<GithubFriendsListPage> {
                           else{
                             githubFriendsController.selectedFriends.remove(data[index]);
                           }
-                          print('---- friends len ----- ${githubFriendsController.selectedFriends.length} ----');
                           setState(() {});
                         },
                       );
@@ -90,10 +89,10 @@ class _GithubFriendsListPageState extends State<GithubFriendsListPage> {
                 ),
                 ElevatedButton(
                     onPressed: (){
-                      if(githubFriendsController.selectedFriends.isEmpty){
+                      if(githubFriendsController.selectedFriends.length < 3){
                         Get.showSnackbar(const GetSnackBar(
                           title: 'Error',
-                          message: 'Select At Least One Friend',
+                          message: 'Select At Least 3 Friend',
                           duration: Duration(seconds: 3),
                         ));
                         return;

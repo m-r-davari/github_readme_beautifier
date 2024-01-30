@@ -6,11 +6,12 @@ class GifMaker extends IGifMaker {
 
   final FFmpeg _fFmpeg;
   GifMaker(this._fFmpeg);
+  int createdGifCount = 0;
 
   @override
   Future<Uint8List> createGif(
       {required List<Uint8List> frames, String frameRate = '50', String exportRate = '20', required String fileName,
-      String loopNum = '0', String maxColors = '200', bool loopDelay = false}) async {
+      String loopNum = '0', String maxColors = '200', bool loopDelay = false,String bayer='5'}) async {
 
     //frame rate changes from 24 to 50
     //because with reverse frames we have total 50 frames and if we want to use 24 fps export it will deduct frames and cause the
@@ -25,14 +26,15 @@ class GifMaker extends IGifMaker {
     // '-r' is the frame rate of export it must be 24 and it effects the size of export gif higher -r will cause higher size.
     // best -r values is between 20~24.
 
-
+    createdGifCount +=1;
+    print('---- gifCreatedCount-- $createdGifCount --');
     for (int i = 0; i < frames.length; i++) {
-      _fFmpeg.writeFile(i < 10 ? '${fileName}_00$i.png' : i < 100 ? '${fileName}_0$i.png' : '${fileName}_$i.png', frames[i]);
+      _fFmpeg.writeFile(i < 10 ? '$fileName${createdGifCount}_00$i.png' : i < 100 ? '$fileName${createdGifCount}_0$i.png' : '$fileName${createdGifCount}_$i.png', frames[i]);
     }
 
     await _fFmpeg.run([
       '-framerate', frameRate,
-      '-i', '${fileName}_%03d.png',
+      '-i', '$fileName${createdGifCount}_%03d.png',
       '-vf', 'palettegen=max_colors=$maxColors',
       //palettegen //palettegen=max_colors=256 //'palettegen=stats_mode=single:max_colors=256'
       'palette.png',
@@ -40,19 +42,19 @@ class GifMaker extends IGifMaker {
 
     await _fFmpeg.run([
       '-framerate', frameRate,
-      '-i', '${fileName}_%03d.png',
+      '-i', '$fileName${createdGifCount}_%03d.png',
       '-i', 'palette.png',
-      '-lavfi', 'paletteuse=dither=bayer:bayer_scale=5${loopDelay ? ', setpts=\'if(eq(N,${frames.length - 1}),2/TB,PTS)\'' : ''}',
+      '-lavfi', 'paletteuse=dither=bayer:bayer_scale=$bayer${loopDelay ? ', setpts=\'if(eq(N,${frames.length - 1}),2/TB,PTS)\'' : ''}',
       //'-filter_complex', //'[0:v][1:v]paletteuse',//'[0:v][1:v]paletteuse=dither=bayer:bayer_scale=5'
       // [0:v][1:v]paletteuse=dither=floyd_steinberg //[0:v][1:v]paletteuse ////paletteuse
       //'-t', '1',
       '-loop', loopNum,
       '-r', exportRate,
       '-f', 'gif',
-      '$fileName.gif',
+      '$fileName$createdGifCount.gif',
     ]);
-    final gifData = _fFmpeg.readFile('$fileName.gif');
-    _fFmpeg.unlink('$fileName.gif');
+    final gifData = _fFmpeg.readFile('$fileName$createdGifCount.gif');
+    _fFmpeg.unlink('$fileName$createdGifCount.gif');
     return gifData;
 
   }

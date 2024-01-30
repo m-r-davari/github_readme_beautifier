@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:github_readme_beautifier/data/github_friends/models/github_firend_model.dart';
 import 'package:github_readme_beautifier/presentation/exporter/exporter_view.dart';
 import 'package:github_readme_beautifier/presentation/github_friends/controllers/github_friends_controller.dart';
+import 'package:github_readme_beautifier/presentation/user/user_controller.dart';
 import 'package:github_readme_beautifier/resources/github_themes.dart';
 import 'package:github_readme_beautifier/utils/const_keeper.dart';
 import 'package:github_readme_beautifier/widgets/github_text.dart';
@@ -17,7 +18,7 @@ class GithubFriendsPage extends StatefulWidget {
 
 class _GithubFriendsPageState extends State<GithubFriendsPage> {
   late List<Widget> imageSliders;
-  final CarouselController _carouselController = CarouselController();
+  final userController = Get.find<UserController>();
   final controller = Get.find<GithubFriendsController>();
   final githubTheme = GithubThemes();
 
@@ -41,8 +42,8 @@ class _GithubFriendsPageState extends State<GithubFriendsPage> {
           Padding(
             padding: const EdgeInsets.all(40),
             child: RepaintBoundary(
-              //key: reposLangOverviewBoundryGlobalKey,
-              child: Stack(
+              key: githubFriendsGlobalKey,
+              child: Obx(()=>Stack(
                 children: [
                   Positioned.fill(
                     child: Container(
@@ -79,8 +80,8 @@ class _GithubFriendsPageState extends State<GithubFriendsPage> {
                           ),
                           CarouselSlider(
                             items: imageSliders,
-                            options: CarouselOptions(enlargeCenterPage: true, height: 200, viewportFraction: 0.5),
-                            carouselController: _carouselController,
+                            options: CarouselOptions(enlargeCenterPage: true, height: 200, viewportFraction: 0.5,autoPlayAnimationDuration: const Duration(milliseconds: 250), autoPlayInterval: Duration(milliseconds: 100),autoPlay: false),
+                            carouselController: controller.carouselController,
                           ),
                           const SizedBox(
                             height: 10,
@@ -88,7 +89,7 @@ class _GithubFriendsPageState extends State<GithubFriendsPage> {
                         ],
                       ))
                 ],
-              ),
+              )),
             ),
           ),
           ElevatedButton(
@@ -105,10 +106,10 @@ class _GithubFriendsPageState extends State<GithubFriendsPage> {
                   },
                 );
                 if (ConstKeeper.isFFmpegLoaded.value) {
-                  //await controller.export(userName: userController.userName.value);
+                  await controller.export(userName: userController.userName.value);
                 } else {
                   await ConstKeeper.isFFmpegLoaded.stream.firstWhere((loaded) => loaded == true);
-                  //await controller.export(userName: userController.userName.value);
+                  await controller.export(userName: userController.userName.value);
                 }
               },
               child: const Text('Export'))
