@@ -87,8 +87,7 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 </picture>
 
 
-Github Friends             |  Github Friends
-:-------------------------:|:-------------------------:
+
 <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_typewriter_text_dark_loop.gif"><img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_typewriter_text_light_loop.gif" width="49%"></picture>  |  <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_typewriter_text_dark_loop.gif"><img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_typewriter_text_light_loop.gif" width="49%"></picture>
 
 ## How To Use
