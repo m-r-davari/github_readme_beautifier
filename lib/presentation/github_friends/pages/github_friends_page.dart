@@ -17,14 +17,12 @@ class GithubFriendsPage extends StatefulWidget {
 }
 
 class _GithubFriendsPageState extends State<GithubFriendsPage> {
-  late List<Widget> imageSliders;
   final userController = Get.find<UserController>();
   final controller = Get.find<GithubFriendsController>();
   final githubTheme = GithubThemes();
 
   @override
   void initState() {
-    imageSliders = generateSections(controller.selectedFriends);
     super.initState();
   }
 
@@ -37,13 +35,16 @@ class _GithubFriendsPageState extends State<GithubFriendsPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Github Friends'),
       ),
-      body: Column(
+      body: Obx(()=>Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
             padding: const EdgeInsets.all(40),
             child: RepaintBoundary(
               key: githubFriendsGlobalKey,
-              child: Obx(()=>Stack(
+              child: Stack(
                 children: [
                   Positioned.fill(
                     child: Container(
@@ -79,8 +80,12 @@ class _GithubFriendsPageState extends State<GithubFriendsPage> {
                             height: 16,
                           ),
                           CarouselSlider(
-                            items: imageSliders,
-                            options: CarouselOptions(enlargeCenterPage: true, height: 200, viewportFraction: 0.5,autoPlayAnimationDuration: const Duration(milliseconds: 250), autoPlayInterval: Duration(milliseconds: 100),autoPlay: false),
+                            items: generateSections(controller.selectedFriends),
+                            options: CarouselOptions(
+                              enlargeCenterPage: true,
+                              height: 200,
+                              viewportFraction: 0.5,
+                            ),
                             carouselController: controller.carouselController,
                           ),
                           const SizedBox(
@@ -89,78 +94,107 @@ class _GithubFriendsPageState extends State<GithubFriendsPage> {
                         ],
                       ))
                 ],
-              )),
+              ),
             ),
           ),
-          ElevatedButton(
-              onPressed: () async {
-                showDialog(
-                  context: Get.context!,
-                  barrierDismissible: false,
-                  builder: (context) {
-                    return const AlertDialog(
-                      backgroundColor: Colors.white,
-                      surfaceTintColor: Colors.white,
-                      content: ExporterDialog(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                  onPressed: () async {
+                    showDialog(
+                      context: Get.context!,
+                      barrierDismissible: false,
+                      builder: (context) {
+                        return const AlertDialog(
+                          backgroundColor: Colors.white,
+                          surfaceTintColor: Colors.white,
+                          content: ExporterDialog(),
+                        );
+                      },
                     );
+                    if (ConstKeeper.isFFmpegLoaded.value) {
+                      await controller.export(userName: userController.userName.value);
+                    } else {
+                      await ConstKeeper.isFFmpegLoaded.stream.firstWhere((loaded) => loaded == true);
+                      await controller.export(userName: userController.userName.value);
+                    }
                   },
-                );
-                if (ConstKeeper.isFFmpegLoaded.value) {
-                  await controller.export(userName: userController.userName.value);
-                } else {
-                  await ConstKeeper.isFFmpegLoaded.stream.firstWhere((loaded) => loaded == true);
-                  await controller.export(userName: userController.userName.value);
-                }
-              },
-              child: const Text('Export'))
+                  child: const Text('Export')),
+              const SizedBox(width: 16,),
+              Container(
+                height: 35,
+                padding: const EdgeInsets.only(left: 8,),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(16),border: Border.all(color: Colors.deepPurpleAccent,width: 1)),
+                child: Row(
+                  children: [
+                    const Text('Circle : : ',style: TextStyle(color: Colors.deepPurple),),
+                    const SizedBox(width: 8,),
+                    Switch(
+                        value: controller.isCircle.value,
+                        onChanged: (value){
+                          controller.isCircle.value = value;
+                        }
+                    )
+                  ],
+                ),
+              )
+            ],
+          )
         ],
-      ),
+      )),
     );
   }
 
   List<Widget> generateSections(List<GithubFriendModel> friends) {
     return friends
         .map((item) => Container(
-              margin: const EdgeInsets.all(5.0),
+              margin: const EdgeInsets.all(4.0),
+              decoration: BoxDecoration(
+                borderRadius: controller.isCircle.value ? BorderRadius.circular(100) : BorderRadius.circular(5),
+                border: Border.all(width: 1, color: controller.isLight.value ? githubTheme.lightBgColor : githubTheme.darkBgColor),
+              ),
               child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  child: Stack(
-                    children: <Widget>[
-                      Image.network(
-                        item.avatarUrl ?? '',
-                        fit: BoxFit.cover,
-                        width: 200.0,
-                        height: 200,
-                      ),
-                      Positioned(
-                        bottom: 0.0,
-                        left: 0.0,
-                        right: 0.0,
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [Color.fromARGB(200, 0, 0, 0), Color.fromARGB(0, 0, 0, 0)],
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                            ),
+                borderRadius: BorderRadius.all(controller.isCircle.value ? const Radius.circular(100.0) : const Radius.circular(5.0)),
+                child: Stack(
+                  children: <Widget>[
+                    Image.network(
+                      item.avatarUrl ?? '',
+                      fit: BoxFit.cover,
+                      width: 200.0,
+                      height: 200,
+                    ),
+                    Positioned(
+                      bottom: 0.0,
+                      left: 0.0,
+                      right: 0.0,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [Color.fromARGB(200, 0, 0, 0), Color.fromARGB(0, 0, 0, 0)],
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
                           ),
-                          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                          child: Text(
-                            item.login ?? '---',
-                            maxLines: 1,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                        child: Text(
+                          item.login ?? '---',
+                          textAlign: controller.isCircle.value ? TextAlign.center : TextAlign.start,
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize : controller.isCircle.value ? 14 : 20.0,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                    ],
-                  )),
+                    ),
+                  ],
+                ),
+              ),
             ))
         .toList();
   }
-  
-  
 }

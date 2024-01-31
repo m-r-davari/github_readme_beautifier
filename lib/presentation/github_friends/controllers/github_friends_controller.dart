@@ -25,6 +25,7 @@ class GithubFriendsController extends GetxController {
   IScreenshotMaker screenShotMaker = Get.find();
   IGifOptimizer gifOptimizer = Get.find();
   final CarouselController carouselController = CarouselController();
+  RxBool isCircle = false.obs;
 
   Future<void> getGithubFriends({required String userName})async{
     try {
@@ -43,6 +44,7 @@ class GithubFriendsController extends GetxController {
 
   Future<void> export({required String userName}) async {
 
+    isLight.value = true;
     exporterController.progress.value = 0.0;
     List<Uint8List> lightFrames = [];
     exporterController.fileName.value = '${userName}_github_friends';
@@ -67,7 +69,7 @@ class GithubFriendsController extends GetxController {
     isLight.value = false;
 
     List<Uint8List> darkFrames = [];
-    await Future.delayed(const Duration(milliseconds: 150));
+    await Future.delayed(const Duration(milliseconds: 500));
     for (int i = 0; i < selectedFriends.length; i++) {
       carouselController.animateToPage(i,duration: const Duration(milliseconds: 250));
       for (int j = 0; j < 15; j++) {
