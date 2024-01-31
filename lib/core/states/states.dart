@@ -3,6 +3,10 @@ abstract class UIState {
 }
 
 
+class InitialState extends UIState {
+
+}
+
 class LoadingState extends UIState {
 
 }

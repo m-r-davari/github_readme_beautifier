@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:github_readme_beautifier/core/network_manager/i_nework_manager.dart';
 import 'package:github_readme_beautifier/data/git_repos/models/git_repo_model.dart';
-import 'i_git_repos.dart';
+import 'i_git_repos_remote_datasource.dart';
 
 class GitReposRemoteDataSource extends IGitReposRemoteDataSource {
   

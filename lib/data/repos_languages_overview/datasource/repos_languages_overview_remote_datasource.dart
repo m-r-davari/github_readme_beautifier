@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'package:github_readme_beautifier/core/network_manager/i_nework_manager.dart';
-import 'package:github_readme_beautifier/data/git_repos/datasource/i_git_repos.dart';
-import 'package:github_readme_beautifier/data/repos_languages_overview/datasource/i_repos_languages_overview_datasource.dart';
+import 'package:github_readme_beautifier/data/git_repos/datasource/i_git_repos_remote_datasource.dart';
+import 'package:github_readme_beautifier/data/repos_languages_overview/datasource/i_repos_languages_overview_remote_datasource.dart';
 
-class ReposLanguagesOverviewDatasource extends IReposLanguagesOverviewDatasource{
+class ReposLanguagesOverviewRemoteDatasource extends IReposLanguagesOverviewRemoteDatasource{
 
   final INetworkManager networkManager;
   final IGitReposRemoteDataSource reposDataSource;
-  ReposLanguagesOverviewDatasource({required this.networkManager,required this.reposDataSource});
+  ReposLanguagesOverviewRemoteDatasource({required this.networkManager,required this.reposDataSource});
 
   @override
   Future<Map<String,int>> getReposLanguagesOverview({required String userName})async{

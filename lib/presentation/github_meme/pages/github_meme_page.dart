@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:ffmpeg_wasm/ffmpeg_wasm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';

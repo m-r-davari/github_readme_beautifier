@@ -26,8 +26,9 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 \
 3 - **Most Used Languages**, it provides linear progress chart for most used languages in personal repos.
 \
-4 - **Most Used Languages**, it provides pie chart for repos languages overview.
-
+4 - **Repos Languages Overview**, it provides pie chart for repos languages overview.
+\
+5 - **Github Friends**, it provides images slider of your Github friends.
 
 ## Samples
 
@@ -86,6 +87,19 @@ You are welcomed to contribute, instead of copying the Idea or Code.
   <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/master/assets/hzh_langs_overview_light.gif" width="44%">
 </picture>
 
+\
+**5 - Github Friends**
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/master/assets/mr_github_friends_dark.gif">
+  <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/master/assets/mr_github_friends_light.gif" width="44%">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/master/assets/mr_github_friends_circle_dark.gif">
+  <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/master/assets/mr_github_friends_circle_light.gif" width="44%">
+</picture>
+
 ## How To Use
 1 - Go to the web app from [**here**](https://m-r-davari.github.io/github_readme_beautifier).\
 2 - Enter your Github username.\
@@ -114,4 +128,5 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 - This project has been developed using Flutter web and is still under development.
 - If your Exported Gif has some lag you can generate it again to have smooth Gif loops.
 - Consider using optimized GIF files; they have a smaller size without losing quality and will load faster on your README file, even with a low-speed network.
+- If you want more image compression you can use this online tool [**ezgif**](https://ezgif.com/optimize).
 

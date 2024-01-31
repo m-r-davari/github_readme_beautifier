@@ -41,13 +41,6 @@ class MostUsedLanguagesController extends GetxController {
     List<Uint8List> lightFrames = [];
     exporterController.fileName.value = '${userName}_most_langs';
 
-    //formule inyeki : tedade item ha * duration haye widget stagred / 41 k fps baeshe
-    //masalan : 6ta item lang darin va duration haye delay/duration stagred 500 mili sanie hast bayad
-    //(6 * 500) / 41 beshe va adadi k dar miad => 73 dar loop for gharar migire
-    //chon ham ghable for va ham dakhelesh delay dasti darim meghdare b dast oomade (73) bayad menhaye delay dakhele for va bezafe delay
-    // ghabl az for beshe ta dar akhare gif delay nadashte bashim
-    // edame formul ((10 * 73) / 41 => 17) va (200 / 41 => 4) va dar akhar (73 - 17 + 4) => 60
-
     if (langsData.length == 1) {
       final frame = await screenShotMaker.captureScreen(key: mostLangsBoundryGlobalKey);
       lightFrames.add(frame);
@@ -117,7 +110,8 @@ class MostUsedLanguagesController extends GetxController {
     isLight.value = true;
     touchedIndex.value = -1;
 
-    print('----ligh frames ---- ${lightFrames.length} ----');
-    print('----dark frames ---- ${darkFrames.length} ----');
+    // print('----ligh frames ---- ${lightFrames.length} ----');
+    // print('----dark frames ---- ${darkFrames.length} ----');
   }
+
 }

@@ -26,6 +26,7 @@ dependencies:
   fl_chart: ^0.66.0
   flutter_svg: ^2.0.9
   flutter_staggered_animations: ^1.1.1
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:

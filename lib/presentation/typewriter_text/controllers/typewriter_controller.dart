@@ -36,7 +36,7 @@ class TypeWriterController extends GetxController {
     typewriterRichTextKey.currentState!.reset();
     await Future.delayed(const Duration(milliseconds: 200));
     while(progress*100 < 100){
-      print('----capture frame --- $progress ---');
+      // print('----capture frame --- $progress ---');
       final frame = await screenShotMaker.captureScreen(key: typeWriterBoundryGlobalKey);
       lightTextFrames.add(frame);
       progress = typewriterRichTextKey.currentState!.nextFrame();
@@ -44,7 +44,7 @@ class TypeWriterController extends GetxController {
       exporterController.progress.value = progress/2;
     }
     exporterController.progress.value = 0.5;
-    print('----light frame lenght is : ---- ${lightTextFrames.length} -----');
+    // print('----light frame lenght is : ---- ${lightTextFrames.length} -----');
     isLight.value = false;
     typewriterRichTextKey.currentState!.reset();
     List<Uint8List> darkTextFrames = [];
@@ -58,7 +58,7 @@ class TypeWriterController extends GetxController {
       await Future.delayed(const Duration(milliseconds: 10));
       exporterController.progress.value = progress < 1.0 ? 0.5+progress/2 : 0.99;
     }
-    print('----dark frame lenght is : ---- ${darkTextFrames.length} -----');
+    // print('----dark frame lenght is : ---- ${darkTextFrames.length} -----');
 
     //creating gif
     final originalTypewriterLightGif = await gifMaker.createGif(frames: lightTextFrames, fileName: '${userName}_typewriter_text_light',frameRate: '${lightTextFrames.length}',exportRate: '${lightTextFrames.length}',loopNum: loopCount, loopDelay: loopDelay);
@@ -67,8 +67,8 @@ class TypeWriterController extends GetxController {
     final optimizedTypewriterDarkGif = await gifOptimizer.optimizeGif(originalGif: originalTypewriterDarkGif);//
 
 
-    print('---- json document is : --- $documentJson----');
-    print('----plain text is  : ---- $documentPlainText --- txtLen is : ${documentPlainText.length} -- lighFLen is : ${lightTextFrames.length} --- darkFLen is : ${darkTextFrames.length}--');
+    // print('---- json document is : --- $documentJson----');
+    // print('----plain text is  : ---- $documentPlainText --- txtLen is : ${documentPlainText.length} -- lighFLen is : ${lightTextFrames.length} --- darkFLen is : ${darkTextFrames.length}--');
 
     exporterController.gifs.clear();
     exporterController.gifs.add(originalTypewriterLightGif);

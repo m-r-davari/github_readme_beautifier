@@ -2,6 +2,10 @@ import 'package:ffmpeg_wasm/ffmpeg_wasm.dart';
 import 'package:get/get.dart';
 import 'package:github_readme_beautifier/core/network_manager/dio_network_manager_web.dart';
 import 'package:github_readme_beautifier/core/network_manager/i_nework_manager.dart';
+import 'package:github_readme_beautifier/data/user/datasource/i_user_info_remote_datasource.dart';
+import 'package:github_readme_beautifier/data/user/datasource/user_info_remote_datasouce.dart';
+import 'package:github_readme_beautifier/data/user/repository/i_user_info_repository.dart';
+import 'package:github_readme_beautifier/data/user/repository/user_info_repository.dart';
 import 'package:github_readme_beautifier/presentation/exporter/exporter_controller.dart';
 import 'package:github_readme_beautifier/core/downloader/downloader.dart';
 import 'package:github_readme_beautifier/core/downloader/i_downloader.dart';
@@ -11,8 +15,8 @@ import 'package:github_readme_beautifier/core/gif_optimizer/gif_optimizer.dart';
 import 'package:github_readme_beautifier/core/gif_optimizer/i_gif_optimizer.dart';
 import 'package:github_readme_beautifier/core/screenshot_maker/i_screenshot_maker.dart';
 import 'package:github_readme_beautifier/core/screenshot_maker/screenshot_maker.dart';
-import 'package:github_readme_beautifier/data/git_repos/datasource/git_repos.dart';
-import 'package:github_readme_beautifier/data/git_repos/datasource/i_git_repos.dart';
+import 'package:github_readme_beautifier/data/git_repos/datasource/git_repos_remote_datasource.dart';
+import 'package:github_readme_beautifier/data/git_repos/datasource/i_git_repos_remote_datasource.dart';
 import 'package:github_readme_beautifier/presentation/user/user_controller.dart';
 import 'package:github_readme_beautifier/utils/const_keeper.dart';
 
@@ -29,7 +33,10 @@ class AppBindings extends Bindings {
     Get.put<INetworkManager>(DioNetworkManager(baseUrl: ConstKeeper.baseUrl));
     Get.put<IGitReposRemoteDataSource>(GitReposRemoteDataSource(networkManager: Get.find<INetworkManager>()));
 
-    Get.put(UserController(),permanent: true);
+
+    Get.put<IUserInfoRemoteDatasource>(UserInfoRemoteDatasource(networkManager: Get.find<INetworkManager>()));
+    Get.put<IUserInfoRepository>(UserInfoRepository(remoteDatasource: Get.find<IUserInfoRemoteDatasource>()));
+    Get.put<UserController>(UserController(),permanent: true);
 
   }
 
