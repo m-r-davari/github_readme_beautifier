@@ -26,7 +26,7 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 \
 3 - **Most Used Languages**, it provides linear progress chart for most used languages in personal repos.
 \
-4 - **Most Used Languages**, it provides pie chart for repos languages overview.
+4 - **Repos Languages Overview**, it provides pie chart for repos languages overview.
 \
 5 - **Github Friends**, it provides images slider of your Github friends.
 
