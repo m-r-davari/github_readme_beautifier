@@ -92,10 +92,11 @@ Github Friends             |  Github Friends
 <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_typewriter_text_dark_loop.gif"><img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_typewriter_text_light_loop.gif" width="49%"></picture>  |  <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_typewriter_text_dark_loop.gif"><img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_typewriter_text_light_loop.gif" width="49%"></picture>
 
 
-| Image | Images |
-|-------|--------|
-| <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_langs_overview_dark.gif"><img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_langs_overview_dark.gif" width="49%"></picture> | <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_github_friends_dark.gif"><img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_github_friends_dark.gif" width="49%"></picture> |
-|       | <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_typewriter_text_dark_loop.gif"><img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_typewriter_text_light_loop.gif" width="49%"></picture> |
+[![Image 1](/path/to/image1.jpg)](/link/to/image1)
+
+[![Image 2](/path/to/image2.jpg)](/link/to/image2)
+[![Image 3](/path/to/image3.jpg)](/link/to/image3)
+
 
 
 ## How To Use
