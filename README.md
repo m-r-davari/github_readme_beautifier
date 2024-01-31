@@ -86,18 +86,12 @@ You are welcomed to contribute, instead of copying the Idea or Code.
   <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/hzh_langs_overview_light.gif" width="44%">
 </picture>
 
+**5 - Github Friends**
 
-Github Friends             |  Github Friends
-:-------------------------:|:-------------------------:
-<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_typewriter_text_dark_loop.gif"><img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_typewriter_text_light_loop.gif" width="49%"></picture>  |  <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_typewriter_text_dark_loop.gif"><img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_typewriter_text_light_loop.gif" width="49%"></picture>
-
-
-[![Image 1](/path/to/image1.jpg)](/link/to/image1)
-
-[![Image 2](/path/to/image2.jpg)](/link/to/image2)
-[![Image 3](/path/to/image3.jpg)](/link/to/image3)
-
-
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_github_friends_dark.gif">
+  <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_github_friends_light.gif" width="44%">
+</picture>
 
 ## How To Use
 1 - Go to the web app from [**here**](https://m-r-davari.github.io/github_readme_beautifier).\
