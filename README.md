@@ -86,6 +86,7 @@ You are welcomed to contribute, instead of copying the Idea or Code.
   <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/hzh_langs_overview_light.gif" width="44%">
 </picture>
 
+\
 **5 - Github Friends**
 
 <picture>
