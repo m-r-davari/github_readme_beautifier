@@ -44,7 +44,7 @@ class _FriendsCheckItemState extends State<FriendsCheckItem> {
         },
         title: Text(widget.friendName),
         //subtitle: Text('subtitle'),
-        secondary: ClipRRect(borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),bottomLeft: Radius.circular(8)),child: Image.network(widget.friendAvatar,width: 50,height: 50,fit: BoxFit.fill,)),
+        secondary: ClipRRect(borderRadius: const BorderRadius.only(topLeft: Radius.circular(8),bottomLeft: Radius.circular(8)),child: Container()),
       ),
     );
   }
