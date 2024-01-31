@@ -95,8 +95,8 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_circle_github_friends_dark.gif">
-  <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mr_circle_github_friends_light.gif" width="44%">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mrc_github_friends_dark.gif">
+  <img alt="Image changing depending on Dark/Light Github theme mode." src="https://raw.githubusercontent.com/m-r-davari/github_readme_beautifier/dev/assets/mrc_github_friends_light.gif" width="44%">
 </picture>
 
 ## How To Use
