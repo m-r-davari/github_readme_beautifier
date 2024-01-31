@@ -65,6 +65,7 @@ class _GithubFriendsListPageState extends State<GithubFriendsListPage> {
                     padding: const EdgeInsets.all(16),
                     itemBuilder: (ctx, index) {
                       return FriendsCheckItem(
+                        key: UniqueKey(),
                         value: githubFriendsController.selectedFriends.contains(data[index]),
                         enabled: githubFriendsController.selectedFriends.length < githubFriendsController.maxFriendsNum || githubFriendsController.selectedFriends.contains(data[index]),
                         friendName: data[index].login ?? '---',
