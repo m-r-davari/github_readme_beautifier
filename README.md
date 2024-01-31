@@ -28,7 +28,7 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 \
 4 - **Most Used Languages**, it provides pie chart for repos languages overview.
 \
-4 - **Github Friends**, it provides images slider of your Github friends.
+5 - **Github Friends**, it provides images slider of your Github friends.
 
 ## Samples
 
