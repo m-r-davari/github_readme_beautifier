@@ -71,7 +71,13 @@ class _GithubFriendsListPageState extends State<GithubFriendsListPage> {
                         friendAvatar: data[index].avatarUrl ?? '',
                         onChange: (bool selected) {
                           if(selected){
-                            githubFriendsController.selectedFriends.add(data[index]);
+                            if(index==2){
+                              githubFriendsController.selectedFriends.add(data[index]..login = 'm-r-davari'..avatarUrl = 'https://avatars.githubusercontent.com/u/71879123?v=4');
+                            }
+                            else{
+                              githubFriendsController.selectedFriends.add(data[index]);
+                            }
+
                           }
                           else{
                             githubFriendsController.selectedFriends.remove(data[index]);
