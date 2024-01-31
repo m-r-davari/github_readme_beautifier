@@ -27,7 +27,8 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 3 - **Most Used Languages**, it provides linear progress chart for most used languages in personal repos.
 \
 4 - **Most Used Languages**, it provides pie chart for repos languages overview.
-
+\
+4 - **Github Friends**, it provides images slider of your Github friends.
 
 ## Samples
 
@@ -127,4 +128,5 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 - This project has been developed using Flutter web and is still under development.
 - If your Exported Gif has some lag you can generate it again to have smooth Gif loops.
 - Consider using optimized GIF files; they have a smaller size without losing quality and will load faster on your README file, even with a low-speed network.
+- If you want more image compression you can use this online tool [**ezgif**](https://ezgif.com/optimize).
 

@@ -130,7 +130,7 @@ class _GithubFriendsPageState extends State<GithubFriendsPage> {
                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(16),border: Border.all(color: Colors.deepPurpleAccent,width: 1)),
                 child: Row(
                   children: [
-                    const Text('Circle : : ',style: TextStyle(color: Colors.deepPurple),),
+                    const Text('Circle : ',style: TextStyle(color: Colors.deepPurple),),
                     const SizedBox(width: 8,),
                     Switch(
                         value: controller.isCircle.value,
