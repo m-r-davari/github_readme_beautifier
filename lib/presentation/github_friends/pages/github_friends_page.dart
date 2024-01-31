@@ -165,6 +165,9 @@ class _GithubFriendsPageState extends State<GithubFriendsPage> {
                       fit: BoxFit.cover,
                       width: 200.0,
                       height: 200,
+                      cacheWidth: 200,
+                      cacheHeight: 200,
+                      key: Key(item.login ?? friends.indexOf(item).toString()),
                     ),
                     Positioned(
                       bottom: 0.0,
