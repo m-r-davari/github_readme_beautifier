@@ -32,7 +32,6 @@ class Utils {
   static bool canNotExport(){
     final isWebMobile = kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android);
     return isWebMobile;
-    return ConstKeeper.isIos || ConstKeeper.isAndroid || ConstKeeper.isWindows || ConstKeeper.isMacOs || ConstKeeper.isLinux || ConstKeeper.isPhone || ConstKeeper.isTablet;
   }
 
 }
