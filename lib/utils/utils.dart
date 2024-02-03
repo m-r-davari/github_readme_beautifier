@@ -26,7 +26,7 @@ class Utils {
   }
 
   //--desire width and heigh of screen for export is : width : 1038.4000244140625 -- height : 715.2000122070312
-  //--desire size --- width : 1038.4000244140625 , height : 711.2000122070312.
+  //--desire size --- width : 1038.4000244140625 , height : 711.2000122070312
 
 
   static bool canNotExport(){
