@@ -141,6 +141,14 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
                 ,
                 ElevatedButton(
                     onPressed: ()async{
+                      if(!ConstKeeper.isWeb && !ConstKeeper.isDesktop){
+                        Get.showSnackbar(const GetSnackBar(
+                          title: 'Error',
+                          message: 'Use desktop web browser to export files.',
+                          duration: Duration(seconds: 3),
+                        ));
+                        return;
+                      }
                       showDialog(
                         context: Get.context!,
                         barrierDismissible: false,
