@@ -9,6 +9,7 @@ import 'package:github_readme_beautifier/utils/const_keeper.dart';
 import 'package:github_readme_beautifier/utils/hex_color.dart';
 import 'package:github_readme_beautifier/presentation/typewriter_text/widgets/typewriter_rich_text.dart';
 import 'package:github_readme_beautifier/presentation/exporter/exporter_view.dart';
+import 'package:github_readme_beautifier/utils/utils.dart';
 
 class TypewriterExportPage extends StatefulWidget {
   const TypewriterExportPage({Key? key}) : super(key: key);
@@ -141,6 +142,14 @@ class _TypewriterExportPageState extends State<TypewriterExportPage> {
                 ,
                 ElevatedButton(
                     onPressed: ()async{
+                      if(Utils.canNotExport()){
+                        Get.showSnackbar(const GetSnackBar(
+                          title: 'Error',
+                          message: 'Use desktop web browser to export files.',
+                          duration: Duration(seconds: 3),
+                        ));
+                        return;
+                      }
                       showDialog(
                         context: Get.context!,
                         barrierDismissible: false,

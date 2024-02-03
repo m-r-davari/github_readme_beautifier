@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:github_readme_beautifier/data/github_friends/models/github_firend_model.dart';
@@ -7,6 +8,7 @@ import 'package:github_readme_beautifier/presentation/github_friends/controllers
 import 'package:github_readme_beautifier/presentation/user/user_controller.dart';
 import 'package:github_readme_beautifier/resources/github_themes.dart';
 import 'package:github_readme_beautifier/utils/const_keeper.dart';
+import 'package:github_readme_beautifier/utils/utils.dart';
 import 'package:github_readme_beautifier/widgets/github_text.dart';
 
 class GithubFriendsPage extends StatefulWidget {
@@ -104,6 +106,14 @@ class _GithubFriendsPageState extends State<GithubFriendsPage> {
             children: [
               ElevatedButton(
                   onPressed: () async {
+                    if(Utils.canNotExport()){
+                      Get.showSnackbar(const GetSnackBar(
+                        title: 'Error',
+                        message: 'Use desktop web browser to export files.',
+                        duration: Duration(seconds: 3),
+                      ));
+                      return;
+                    }
                     showDialog(
                       context: Get.context!,
                       barrierDismissible: false,

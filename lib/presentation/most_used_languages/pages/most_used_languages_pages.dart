@@ -8,6 +8,7 @@ import 'package:github_readme_beautifier/presentation/most_used_languages/contro
 import 'package:github_readme_beautifier/presentation/user/user_controller.dart';
 import 'package:github_readme_beautifier/resources/github_themes.dart';
 import 'package:github_readme_beautifier/utils/const_keeper.dart';
+import 'package:github_readme_beautifier/utils/utils.dart';
 import 'package:github_readme_beautifier/widgets/github_loading.dart';
 import 'package:github_readme_beautifier/widgets/github_text.dart';
 
@@ -109,6 +110,14 @@ class _MostUsedLanguagesPageState extends State<MostUsedLanguagesPage> {
               ),
               ElevatedButton(
                   onPressed: () async {
+                    if(Utils.canNotExport()){
+                      Get.showSnackbar(const GetSnackBar(
+                        title: 'Error',
+                        message: 'Use desktop web browser to export files.',
+                        duration: Duration(seconds: 3),
+                      ));
+                      return;
+                    }
                     showDialog(
                       context: Get.context!,
                       barrierDismissible: false,
