@@ -8,6 +8,7 @@ import 'package:github_readme_beautifier/presentation/user/user_controller.dart'
 import 'package:github_readme_beautifier/resources/github_themes.dart';
 import 'package:github_readme_beautifier/resources/languages_themes.dart';
 import 'package:github_readme_beautifier/utils/const_keeper.dart';
+import 'package:github_readme_beautifier/utils/utils.dart';
 import 'package:github_readme_beautifier/widgets/github_loading.dart';
 import 'package:github_readme_beautifier/widgets/github_text.dart';
 
@@ -146,7 +147,7 @@ class _ReposLanguagesOverviewPageState extends State<ReposLanguagesOverviewPage>
               ),
               ElevatedButton(
                   onPressed: () async {
-                    if(!ConstKeeper.isWeb || !ConstKeeper.isDesktop){
+                    if(Utils.canNotExport()){
                       Get.showSnackbar(const GetSnackBar(
                         title: 'Error',
                         message: 'Use desktop web browser to export files.',
