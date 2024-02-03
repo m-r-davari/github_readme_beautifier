@@ -146,7 +146,7 @@ class _ReposLanguagesOverviewPageState extends State<ReposLanguagesOverviewPage>
               ),
               ElevatedButton(
                   onPressed: () async {
-                    if(!ConstKeeper.isWeb && !ConstKeeper.isDesktop){
+                    if(!ConstKeeper.isWeb || !ConstKeeper.isDesktop){
                       Get.showSnackbar(const GetSnackBar(
                         title: 'Error',
                         message: 'Use desktop web browser to export files.',
