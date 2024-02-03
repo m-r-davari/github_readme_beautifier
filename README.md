@@ -129,4 +129,5 @@ You are welcomed to contribute, instead of copying the Idea or Code.
 - If your Exported Gif has some lag you can generate it again to have smooth Gif loops.
 - Consider using optimized GIF files; they have a smaller size without losing quality and will load faster on your README file, even with a low-speed network.
 - If you want more image compression you can use this online tool [**ezgif**](https://ezgif.com/optimize).
+- Exporting files is only available on desktop web browsers(for now).
 

@@ -1,5 +1,8 @@
 import 'dart:math';
 
+import 'package:get/get.dart';
+import 'package:github_readme_beautifier/utils/const_keeper.dart';
+
 class Utils {
 
   int generateRandomNumFromRange(int min, int max){
