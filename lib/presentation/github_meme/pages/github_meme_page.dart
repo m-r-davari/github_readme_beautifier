@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:github_readme_beautifier/presentation/github_meme/widgets/github_grid_view.dart';
 import 'package:github_readme_beautifier/resources/github_themes.dart';
 import 'package:github_readme_beautifier/utils/const_keeper.dart';
+import 'package:github_readme_beautifier/utils/utils.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import '../controllers/github_meme_controller.dart';
 import 'github_meme_export_page.dart';
@@ -121,7 +122,7 @@ class _GithubMemePageState extends State<GithubMemePage> {
                 ),
                 ElevatedButton(
                     onPressed: () async {
-                      if(!ConstKeeper.isWeb && !ConstKeeper.isDesktop){
+                      if(Utils.canNotExport()){
                         Get.showSnackbar(const GetSnackBar(
                           title: 'Error',
                           message: 'Use desktop web browser to export files.',
